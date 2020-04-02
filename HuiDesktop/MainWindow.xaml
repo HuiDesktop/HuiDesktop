@@ -1,0 +1,56 @@
+﻿<Window x:Class="HuiDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HuiDesktop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Icon="Resources/GlobalIcon.ico">
+    <Window.Resources>
+        <local:VisibilityConverter x:Key="VisibilityConverter"/>
+        <local:CardColorConvert x:Key="CardColorConvert"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="158"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="HuiDesktop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Width="143" FontSize="24" FontFamily="Consolas" VerticalContentAlignment="Center"/>
+        <Label Content="Version 1.0.0" FontFamily="Consolas" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Grid.Column="1"/>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="41"/>
+            </Grid.RowDefinitions>
+            <Button Content="隐藏/显示启动配置" Click="Button_Click"/>
+            <Button Content="全局配置&#xD;&#xA;检查更新" Grid.Row="1" Click="Button_Settings_Click"/>
+            <Button Content="软件主页&#xD;&#xA;包下载" Grid.Row="2" Click="Button_Click_2"/>
+            <Button Content="查看包信息" Grid.Row="3" Click="Button_Click_1"/>
+            <Button Content="关于" Grid.Row="4" MouseRightButtonDown="Button_DevTools_MouseRightButtonDown" Click="Button_Click_3"/>
+            <Label x:Name="Label_Tip" Content="QwQ" Grid.Row="5" VerticalContentAlignment="Center" MouseDown="Label_Tip_MouseDown"/>
+        </Grid>
+        <ListView x:Name="ListView_Cards" Grid.Row="1" VerticalAlignment="Stretch" SelectionChanged="ListView_Cards_SelectionChanged" MouseDoubleClick="ListView_Cards_MouseDoubleClick">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="36">
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="设置为自动启动项目" Click="MenuItem_AutoRun_Click" CommandParameter="{Binding}"/>
+                                <MenuItem Header="隐藏/取消隐藏" Click="MenuItem_SwitchHide_Click" CommandParameter="{Binding}"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                        <Label HorizontalAlignment="Stretch" VerticalAlignment="Center" Content="{Binding Name}" ToolTip="{Binding Url}" Foreground="{Binding Converter={StaticResource CardColorConvert}}" FlowDirection="RightToLeft"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

@@ -1,0 +1,15 @@
+﻿<Window x:Class="HuiDesktop.DevelopTools"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HuiDesktop"
+        mc:Ignorable="d"
+        Title="DevelopTools" Height="137.603" Width="366.735">
+    <Grid>
+        <Label x:Name="Label_OpenFile" Content="Drag a file over here to open the file in correct encoding." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Background="#FFFFE9E9" PreviewDragEnter="Label_DragEnter" Drop="Label_OpenFile_Drop" AllowDrop="True"/>
+        <Label Content="Drag a folder over here to make a package" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Background="#FFE9FFE9" Width="337" PreviewDragEnter="Label_DragEnter" Drop="Label_Pack_Drop" AllowDrop="True"/>
+        <Button Content="Click the button to create a standard locakPackage" HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Width="337" Height="25" HorizontalContentAlignment="Left" Click="Button_NewLocalPackage_Click"/>
+
+    </Grid>
+</Window>

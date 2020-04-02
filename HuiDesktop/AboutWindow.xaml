@@ -1,0 +1,20 @@
+﻿<Window x:Class="HuiDesktop.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HuiDesktop"
+        mc:Ignorable="d"
+        Title="About" Height="317" Width="604" ResizeMode="NoResize">
+    <Grid>
+        <Image HorizontalAlignment="Left" Width="256" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Source="Resources/GlobalIcon.png"/>
+        <Label Content="HuiDesktop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Width="143" FontSize="24" FontFamily="Consolas" VerticalContentAlignment="Center" Margin="271,10,0,0"/>
+        <Label Content="Version 1.0.0" FontFamily="Consolas" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Margin="419,10,0,218" HorizontalAlignment="Left" Width="159"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="https://github.com/huix-oldcat/HuiDesktop" VerticalAlignment="Top" Width="307" Margin="271,63,0,0" VerticalContentAlignment="Center" FontFamily="Consolas" BorderThickness="0,0,0,1" IsReadOnly="True"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="https://desktop.huix.cc/" VerticalAlignment="Top" Width="307" Margin="271,91,0,0" VerticalContentAlignment="Center" FontFamily="Consolas" BorderThickness="0,0,0,1" IsReadOnly="True"/>
+        <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="https://www.mozilla.org/en-US/MPL/2.0/" VerticalAlignment="Top" Width="307" Margin="271,243,0,0" VerticalContentAlignment="Center" FontFamily="Consolas" BorderThickness="0,0,0,1" IsReadOnly="True"/>
+        <Label Content="License: MPL 2.0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="271,218,0,0"/>
+        <Label Content="本图标不包含于本开源项目中&#xD;&#xA;亦不适用于MPLv2许可证&#xD;&#xA;https://www.pixiv.net/artworks/80492184&#xD;&#xA;画师: Jecosine&#xD;&#xA;https://www.pixiv.net/users/29328513" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="271,119,0,0" Height="94" Width="307" BorderThickness="1" BorderBrush="Black"/>
+
+    </Grid>
+</Window>

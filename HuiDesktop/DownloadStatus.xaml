@@ -1,0 +1,15 @@
+﻿<Window x:Class="HuiDesktop.DownloadStatus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HuiDesktop"
+        mc:Ignorable="d"
+        Title="DownloadStatus" Height="129.236" Width="398.347" Closing="Window_Closing">
+    <Grid>
+        <Label x:Name="Label_FilePath" Content="FilePath" VerticalAlignment="Top" Margin="10,10,10,0"/>
+        <ProgressBar x:Name="ProgressBar_Progress" Margin="10,65,10,0" Height="23" VerticalAlignment="Top"/>
+        <Label x:Name="Label_Size" Content="FilePath" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,35,0,0" Width="200"/>
+        <Label x:Name="Label_Speed" Content="FilePath" VerticalAlignment="Top" Margin="215,35,0,0" HorizontalAlignment="Left" Width="165"/>
+    </Grid>
+</Window>
