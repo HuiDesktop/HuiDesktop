@@ -51,7 +51,7 @@ namespace HuiDesktop
             foreach (var i in info.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
 
             browser = new ChromiumWebBrowser();
-            browser.BrowserSettings = new BrowserSettings { WindowlessFrameRate = ApplicationInfo.FrameRate, LocalStorage = CefState.Enabled };
+            browser.BrowserSettings = new BrowserSettings { WindowlessFrameRate = GlobalSettings.FrameRate, LocalStorage = CefState.Enabled };
             AddChild(browser);
 
             api = new JsApi(this);

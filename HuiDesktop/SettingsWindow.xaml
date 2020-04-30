@@ -3,18 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
+
         xmlns:local="clr-namespace:HuiDesktop"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="300" Width="400">
+        Title="SettingsWindow" Height="392.175" Width="523">
     <Grid>
         <CheckBox x:Name="CheckBox_AutoRun" Content="自动启动" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Checked="CheckBox_AutoRun_CheckedChanged" Unchecked="CheckBox_AutoRun_CheckedChanged"/>
         <TextBox x:Name="TextBox_AutoRun" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Margin="10,30,10,0" VerticalContentAlignment="Center" IsEnabled="False"/>
-        <CheckBox x:Name="CheckBox_AutoCheckUpdate" Content="启动时检测更新" VerticalAlignment="Top" Margin="10,85,0,0" HorizontalAlignment="Left" Width="104" Click="CheckBox_AutoUpdate_Click"/>
-        <Button x:Name="Button_CheckUpdate" Content="检测更新" VerticalAlignment="Top" Margin="119,82,10,0" Click="Button_CheckUpdate_Click"/>
-        <Grid x:Name="Grid_Web" Margin="10,106,10,10"/>
+        <CheckBox x:Name="CheckBox_AutoCheckUpdate" Content="启动时检测更新" VerticalAlignment="Top" Margin="10,152,0,0" HorizontalAlignment="Left" Width="104" Click="CheckBox_AutoUpdate_Click"/>
+        <Button x:Name="Button_CheckUpdate" Content="检测更新" VerticalAlignment="Top" Margin="119,149,10,0" Click="Button_CheckUpdate_Click"/>
+        <Grid x:Name="Grid_Web" Margin="10,173,10,10"/>
         <Label Content="请在主界面右键配置设置自动启动项目" VerticalAlignment="Top" Margin="83,4,10,0" FontStyle="Italic" Foreground="Gray"/>
         <CheckBox IsEnabled="False" x:Name="CheckBox_AutoUpdate_Copy" Content="启动时下载包索引" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,61,0,0"/>
-        <Button IsEnabled="False" x:Name="Button_CheckUpdate_Copy" Content="包管理器(咕咕咕)" VerticalAlignment="Top" Margin="131,58,10,0"/>
+        <Button IsEnabled="False" x:Name="Button_CheckUpdate_Copy" Content="包管理器(V2.0功能，请耐心等候，谢谢支持！)" VerticalAlignment="Top" Margin="131,58,10,0"/>
+        <Label Content="帧率：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,81,0,0" Width="43"/>
+        <TextBox x:Name="TextBox_FrameRate" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="60" VerticalAlignment="Top" Width="68" Margin="58,82,0,0" VerticalContentAlignment="Center" input:InputMethod.IsInputMethodEnabled="False" TextChanged="TextBox_FrameRate_TextChanged"/>
+        <Button x:Name="Button_SaveFrameRate" Content="保存" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="131,82,0,0" Height="23" Click="Button_SaveFrameRate_Click"/>
+        <Label Content="范围10-60   重启生效  " VerticalAlignment="Top" Margin="211,82,10,0" FontStyle="Italic" Foreground="Gray" Height="23"/>
+        <CheckBox x:Name="CheckBox_DisableBlackList" Content="强制启用WebGL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" Checked="CheckBox_DisableBlackList_Checked"/>
+        <Label Content="不推荐，如果启动一个配置以后没显示可以试一下  &#xD;&#xA;不过要开这个说明这个软件您用起来可能会比较难受  " VerticalAlignment="Top" Margin="131,105,10,0" FontStyle="Italic" Foreground="Gray" Height="39"/>
 
     </Grid>
 </Window>

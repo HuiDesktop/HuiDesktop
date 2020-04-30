@@ -76,5 +76,38 @@ namespace HuiDesktop
                 else key.DeleteValue("AutoCheckUpdate", false);
             }
         }
+
+        public static int FrameRate
+        {
+            get
+            {
+                var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\HuixStudio\HuiDesktop");
+                var val = key.GetValue("FrameRate");
+                if (val == null || !(val is int)) return 60;
+                return (int)val;
+            }
+            set
+            {
+                var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\HuixStudio\HuiDesktop", true);
+                key.SetValue("FrameRate", value);
+            }
+        }
+
+        public static bool DisableBlackList
+        {
+            get
+            {
+                var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\HuixStudio\HuiDesktop");
+                var val = key.GetValue("DisableBlackList");
+                if (val == null || !(val is int)) return false;
+                return ((int)val) == 1;
+            }
+            set
+            {
+                var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\HuixStudio\HuiDesktop", true);
+                if (value) key.SetValue("DisableBlackList", 1);
+                else key.DeleteValue("DisableBlackList", false);
+            }
+        }
     }
 }

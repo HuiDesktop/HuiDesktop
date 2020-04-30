@@ -22,7 +22,13 @@ namespace HuiDesktop
                 UserDataPath = ApplicationInfo.RelativePath("BrowserStorage", "UserData"),
                 LogFile = ApplicationInfo.RelativePath("Debug.log"),
                 AcceptLanguageList = "zh-CN,en-US,en"
+                
             };
+            if (GlobalSettings.DisableBlackList)
+            {
+                settings.CefCommandLineArgs.Add("enable-webgl", "1");
+                settings.CefCommandLineArgs.Add("ignore-gpu-blacklist", "1");
+            }
             Cef.Initialize(settings);
         }
 
