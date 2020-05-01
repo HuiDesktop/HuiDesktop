@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:HuiDesktop"
         xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
-        Title="ForumWindow" Height="450" Width="800">
+        Title="ForumWindow" Height="550" Width="900">
     <Grid>
         <Button Content="Reload/Go" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="10,10,0,0" Click="Button_Click"/>
         <TextBox x:Name="TextBox_Address" Height="19" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Margin="139,10,10,0"/>

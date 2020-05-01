@@ -86,7 +86,7 @@ namespace HuiDesktop
                         if (System.IO.Directory.Exists(ApplicationInfo.RelativePath("backupPackages")) == false) System.IO.Directory.CreateDirectory(ApplicationInfo.RelativePath("backupPackages"));
                         System.IO.File.Move(file, ApplicationInfo.RelativePath("backupPackages", Guid.NewGuid().ToString() + downloadItem.SuggestedFileName));
                     }
-                    downloads[downloadItem.Id] = new DownloadStatus(file, downloadItem.TotalBytes);
+                    downloads[downloadItem.Id] = new DownloadStatus($"packages/{downloadItem.SuggestedFileName}", downloadItem.TotalBytes);
                     downloads[downloadItem.Id].Show();
                     callback.Continue(file, false);
                 }
@@ -96,8 +96,8 @@ namespace HuiDesktop
         {
             if (downloads.ContainsKey(downloadItem.Id) == false) return;
             downloads[downloadItem.Id].Update(downloadItem.ReceivedBytes, downloadItem.CurrentSpeed);
-            if (downloadItem.IsComplete) { downloads[downloadItem.Id].Close(); }
-            else if (downloads[downloadItem.Id].Abort) callback.Cancel();
+            if (downloadItem.IsComplete) downloads[downloadItem.Id].Finish();
+            if (downloads[downloadItem.Id].Abort) callback.Cancel();
         }
     }
 }

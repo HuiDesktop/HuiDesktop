@@ -46,8 +46,13 @@ namespace HuiDesktop
 
         public void Finish()
         {
+            if (System.Threading.Thread.CurrentThread.ManagedThreadId != Dispatcher.Thread.ManagedThreadId)
+            {
+                Dispatcher.Invoke(() => Finish());
+                return;
+            }
             _finish = true;
-            Label_Size.Content = "Finished";
+            Label_Speed.Content = "Finished";
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

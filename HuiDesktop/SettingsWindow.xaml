@@ -22,7 +22,7 @@
         <Button x:Name="Button_SaveFrameRate" Content="保存" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="131,82,0,0" Height="23" Click="Button_SaveFrameRate_Click"/>
         <Label Content="范围10-60   重启生效  " VerticalAlignment="Top" Margin="211,82,10,0" FontStyle="Italic" Foreground="Gray" Height="23"/>
         <CheckBox x:Name="CheckBox_DisableBlackList" Content="强制启用WebGL" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" Checked="CheckBox_DisableBlackList_Checked"/>
-        <Label Content="不推荐，如果启动一个配置以后没显示可以试一下  &#xD;&#xA;不过要开这个说明这个软件您用起来可能会比较难受  " VerticalAlignment="Top" Margin="131,105,10,0" FontStyle="Italic" Foreground="Gray" Height="39"/>
+        <Label Content="不推荐，如果启动一个配置以后没显示可以试一下，重启生效  &#xD;&#xA;不过要开这个说明这个软件您用起来可能会比较难受  " VerticalAlignment="Top" Margin="131,105,10,0" FontStyle="Italic" Foreground="Gray" Height="39"/>
 
     </Grid>
 </Window>
