@@ -6,9 +6,9 @@ A sweet tool based on Chromium(CefSharp)
 
 [官网(仅中文)](https://desktop.huix.cc)
 
-请到~~不存在的CI~~下载最新版本
+[![Build status](https://ci.appveyor.com/api/projects/status/gbg31pc2oms0ec9j/branch/master?svg=true)](https://ci.appveyor.com/project/huix-oldcat/huidesktop/branch/master)
 
-You can go to ??? to get the latest version
+请点击上面的徽标到CI下载最新构建版本
 
 ---
 

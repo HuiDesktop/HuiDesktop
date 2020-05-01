@@ -9,7 +9,7 @@
     <Grid>
         <Image HorizontalAlignment="Left" Width="256" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Source="Resources/GlobalIcon.png"/>
         <Label Content="HuiDesktop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Width="143" FontSize="24" FontFamily="Consolas" VerticalContentAlignment="Center" Margin="271,10,0,0"/>
-        <Label Content="Version 1.0.0" FontFamily="Consolas" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Margin="419,10,0,218" HorizontalAlignment="Left" Width="159"/>
+        <Label Content="Version 1.1.0" FontFamily="Consolas" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Margin="419,10,0,218" HorizontalAlignment="Left" Width="159"/>
         <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="https://github.com/huix-oldcat/HuiDesktop" VerticalAlignment="Top" Width="307" Margin="271,63,0,0" VerticalContentAlignment="Center" FontFamily="Consolas" BorderThickness="0,0,0,1" IsReadOnly="True"/>
         <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="https://desktop.huix.cc/" VerticalAlignment="Top" Width="307" Margin="271,91,0,0" VerticalContentAlignment="Center" FontFamily="Consolas" BorderThickness="0,0,0,1" IsReadOnly="True"/>
         <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="https://www.mozilla.org/en-US/MPL/2.0/" VerticalAlignment="Top" Width="307" Margin="271,243,0,0" VerticalContentAlignment="Center" FontFamily="Consolas" BorderThickness="0,0,0,1" IsReadOnly="True"/>

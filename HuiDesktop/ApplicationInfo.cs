@@ -20,8 +20,6 @@ namespace HuiDesktop
             full[0] = BaseFolder;
             return Path.Combine(full);
         }
-
-        internal static int FrameRate => 60;
     }
 
     public class Permission
