@@ -37,7 +37,7 @@ namespace HuiDesktop
         {
             Task<string> update = null;
             string result;
-            if (GlobalSettings.AutoCheckUpdate) update = ServiceConnection.GetUpdate();
+            if (GlobalSettings.AutoCheckUpdate) update = ServiceConnection.GetUpdate(); 
             InitializeComponent();
             if (Environment.GetCommandLineArgs().Length == 2 && Environment.GetCommandLineArgs()[1] == "--autorun")
             {
@@ -55,11 +55,14 @@ namespace HuiDesktop
                             new BasicWindow(found.First()).Show();
                             if (update != null)
                             {
-                                result = update.Result;
-                                if (result != "Latest" && result != "Error")
+                                Task.Factory.StartNew(() =>
                                 {
-                                    MessageBox.Show("检测到更新, 请打开主软件->设置界面查看", "HuiDesktop");
-                                }
+                                    result = update.Result;
+                                    if (result != "Latest" && result != "Error")
+                                    {
+                                        MessageBox.Show("检测到更新, 请打开主软件->设置界面查看", "HuiDesktop");
+                                    }
+                                });
                             }
                         }
                     }
@@ -67,16 +70,20 @@ namespace HuiDesktop
                 Close();
                 return;
             }
+            Label_Version.Content += ApplicationInfo.Version;
             var info = new List<Package.StartupInfo>();
             RefreshList();
-            Task.Factory.StartNew(() =>
+            if (update != null)
             {
-                result = update.Result;
-                if (result != "Latest" && result != "Error")
+                Task.Factory.StartNew(() =>
                 {
-                    MessageBox.Show("检测到更新, 请打开主软件->设置界面查看", "HuiDesktop");
-                }
-            });
+                    result = update.Result;
+                    if (result != "Latest" && result != "Error")
+                    {
+                        MessageBox.Show("检测到更新, 请打开主软件->设置界面查看", "HuiDesktop");
+                    }
+                });
+            }
         }
 
         private void ListView_Cards_SelectionChanged(object sender, SelectionChangedEventArgs e)
