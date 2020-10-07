@@ -11,18 +11,10 @@ namespace HuiDesktop
     {
         public async static Task<string> GetUpdate()
         {
-            try
-            {
-                var client = new HttpClient();
-                client.Timeout = new TimeSpan(0, 0, 5);
-                var res = await client.GetAsync($"https://desktop.huix.cc/backend/software/{ApplicationInfo.Version}/status");
-                if (res.StatusCode == System.Net.HttpStatusCode.OK) return await res.Content.ReadAsStringAsync();
-                return "Error";
-            }
-            catch (Exception)
-            {
-                return "Error";
-            }
+            var client = new HttpClient();
+            var res = await client.GetAsync("https://desktop.huix.cc/api/update/1.0.0.0/check");
+            if (res.StatusCode == System.Net.HttpStatusCode.OK) return await res.Content.ReadAsStringAsync();
+            return "Error";
         }
     }
 }

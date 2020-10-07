@@ -22,7 +22,6 @@ namespace HuiDesktop
         public AboutWindow()
         {
             InitializeComponent();
-            Label_Version.Content += ApplicationInfo.Version;
         }
     }
 }

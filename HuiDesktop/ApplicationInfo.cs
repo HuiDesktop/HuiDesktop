@@ -10,14 +10,6 @@ namespace HuiDesktop
 {
     static class ApplicationInfo
     {
-        internal static string Version
-        {
-            get
-            {
-                var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-                return $"{version.Major}.{version.Minor}.{version.Build}";
-            }
-        }
         internal static string BaseFolder => AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
         internal static string CefSharpFolder => Path.Combine(BaseFolder, Environment.Is64BitProcess ? "x64" : "x86");
 
