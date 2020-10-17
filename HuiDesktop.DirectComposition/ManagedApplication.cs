@@ -4,6 +4,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using HuiDesktop.DirectComposition.DirectX;
+using Vortice.Direct3D11;
+using System.Threading;
 
 namespace HuiDesktop.DirectComposition
 {
@@ -15,8 +18,9 @@ namespace HuiDesktop.DirectComposition
         public MainWindow mainWindow;
         public HitTestWindow hitTestWindow;
         public event Action<Point> OnMouseLeftDown;
-        public event Action<Point> OnMouseLeftUp; 
-        internal Device device;
+        public event Action<Point> OnMouseLeftUp;
+        private Device device;
+        private ID3D11DeviceContext ctx;
 
         bool ready;
 
@@ -41,11 +45,11 @@ namespace HuiDesktop.DirectComposition
                 DebugHelper.CheckWin32Error();
             }
 
-            mainWindow = new MainWindow("HuiDesktop Direct Composition Target", 1024, 1024);
-            device = new Device(this);
-            hitTestWindow = new HitTestWindow(8, 8, this, device.RequestHitTest);
-            device.OnStartCopy += () => hitTestWindow.blockUpdate = true;
-            device.OnCopiedBitmap += hitTestWindow.OnMapped;
+            device = new Device(out ctx);
+            mainWindow = new MainWindow(1024, 1024, ctx, device);
+            //hitTestWindow = new HitTestWindow(8, 8, this, device.RequestHitTest);
+            //device.OnStartCopy += () => hitTestWindow.blockUpdate = true;
+            //device.OnCopiedBitmap += hitTestWindow.OnMapped;
 
             ready = true;
         }
@@ -121,12 +125,20 @@ namespace HuiDesktop.DirectComposition
 
         public void Run()
         {
+            const int PM_REMOVE = 1;
             Message msg = new Message();
             while (msg.Value != (uint)WindowMessage.Quit)
             {
-                User32.GetMessage(out msg, IntPtr.Zero, 0, 0);
-                User32.TranslateMessage(ref msg);
-                User32.DispatchMessage(ref msg);
+                if (User32.PeekMessage(out msg, IntPtr.Zero, 0, 0, PM_REMOVE))
+                {
+                    User32.TranslateMessage(ref msg);
+                    User32.DispatchMessage(ref msg);
+                }
+                else
+                {
+                    mainWindow.Render(ctx);
+                }
+                Thread.Sleep(1);
             }
         }
     }

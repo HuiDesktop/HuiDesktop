@@ -28,6 +28,7 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -57,17 +65,21 @@
     <Compile Include="Cef\CefApplication.cs" />
     <Compile Include="Cef\DirectCompositionRenderHandler.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="D3DFlipHelper.cs" />
     <Compile Include="DComp.cs" />
+    <Compile Include="DirectX\Binder.cs" />
+    <Compile Include="DirectX\Device.cs" />
+    <Compile Include="DirectX\Effect.cs" />
+    <Compile Include="DirectX\Geometry.cs" />
+    <Compile Include="DirectX\SwapChain.cs" />
+    <Compile Include="DirectX\Texture2D.cs" />
     <Compile Include="HitTestWindow.cs" />
     <Compile Include="Interop\DComp.cs" />
     <Compile Include="Interop\DebugHelper.cs" />
-    <Compile Include="Device.cs" />
     <Compile Include="Interop\Gdi32.cs" />
     <Compile Include="Interop\Helper.cs" />
     <Compile Include="Interop\Kernel32.cs" />
-    <Compile Include="Interop\MainWindow.cs" />
     <Compile Include="Interop\User32.cs" />
+    <Compile Include="MainWindow.cs" />
     <Compile Include="ManagedApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -91,5 +103,6 @@
       <Version>1.8.17</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

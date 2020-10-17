@@ -11,9 +11,9 @@ namespace HuiDesktop.DirectComposition.Cef
     class DirectCompositionRenderHandler : IRenderHandler
     {
         private MainWindow window;
-        private Action<Rectangle, IntPtr> RequestRenderToMainWindow;
+        private Action<IntPtr> RequestRenderToMainWindow;
 
-        public DirectCompositionRenderHandler(Action<Rectangle, IntPtr> requestRenderToMainWindow, MainWindow window)
+        public DirectCompositionRenderHandler(Action<IntPtr> requestRenderToMainWindow, MainWindow window)
         {
             RequestRenderToMainWindow = requestRenderToMainWindow;
             this.window = window;
@@ -41,14 +41,10 @@ namespace HuiDesktop.DirectComposition.Cef
             return new Rect(0, 0, window.Width, window.Height);
         }
 
-        bool skip;
-
         public void OnAcceleratedPaint(PaintElementType type, Rect dirtyRect, IntPtr sharedHandle)
         {
             if (type != PaintElementType.View) return;
-            if (skip) { skip = false;return; }
-            skip = true;
-            RequestRenderToMainWindow(new Rectangle(dirtyRect.X, dirtyRect.Y, dirtyRect.Width, dirtyRect.Height), sharedHandle);
+            RequestRenderToMainWindow(sharedHandle); //TODO: I think the dirtyRect is useless
         }
 
         public void OnCursorChange(IntPtr cursor, CursorType type, CursorInfo customCursorInfo)

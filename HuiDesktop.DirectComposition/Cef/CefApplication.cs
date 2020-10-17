@@ -22,7 +22,7 @@ namespace HuiDesktop.DirectComposition
         {
             application = new ManagedApplication();
             browser = new ChromiumWebBrowser(string.Empty, null, null, false);
-            browser.RenderHandler = new DirectCompositionRenderHandler(application.device.RequestRenderSharedTexture, application.mainWindow);
+            browser.RenderHandler = new DirectCompositionRenderHandler(application.mainWindow.UpdateFrame, application.mainWindow);
 
             var info = new WindowInfo();
             info.SetAsWindowless(IntPtr.Zero);
