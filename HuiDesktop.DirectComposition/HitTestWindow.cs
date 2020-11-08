@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Vortice.Direct3D11;
+using Vortice.DXGI;
 
 namespace HuiDesktop.DirectComposition
 {
@@ -15,34 +17,55 @@ namespace HuiDesktop.DirectComposition
         public int Width { get; }
         public int Height { get; }
         public IntPtr Handle { get; private set; }
-        public ManagedApplication ParentApplication { get; }
-        public Point Position => position;
+        public MainWindow ParentWindow { get; }
         // 阻止鼠标捕获线程发送拷贝指令
         // 由渲染进程在渲染指令发送给GPU前设置，由本窗口UpdateLayeredWindow以后复位
         // 本标志保证OnMapped使用scan0时不会突然暴毙
         public bool blockUpdate;
+        public IDXGISurface texture;
 
         private IntPtr screenDC, memDC;
         private Thread trackMouseThread;
-        // 窗口应该移动到的位置，由鼠标捕获线程写入，UpdateLayeredWindow读取
-        private Point position;
         // 在UpdateLayeredWindow使用，与窗口大小相同
         private Size bitmapSize;
         // 发送拷贝指令
         private readonly Action<Rectangle> requestCopyBitmap;
-        public HitTestWindow(int width, int height, ManagedApplication parentApplication, Action<Rectangle> requestCopyBitmap)
+
+        public HitTestWindow(int width, int height, MainWindow parentWindow, Action<Rectangle> requestCopyBitmap, ID3D11Device device)
         {
             Width = width;
             Height = height;
-            ParentApplication = parentApplication;
+            ParentWindow = parentWindow;
             bitmapSize = new Size(Width, Height);
             this.requestCopyBitmap = requestCopyBitmap;
 
             CreateWindow();
             InitGdi();
+            CreateTexture(device);
             trackMouseThread = new Thread(MonUpdate);
             trackMouseThread.IsBackground = true;
             trackMouseThread.Start();
+        }
+
+        private void CreateTexture(ID3D11Device device)
+        {
+            texture = device.CreateTexture2D(new Texture2DDescription
+            {
+                Width = Width,
+                Height = Height,
+                Format = Format.B8G8R8A8_UNorm,
+                MipLevels = 1,
+                ArraySize = 1,
+                SampleDescription = new SampleDescription
+                {
+                    Count = 1,
+                    Quality = 0
+                },
+                Usage = Vortice.Direct3D11.Usage.Staging,
+                CpuAccessFlags = CpuAccessFlags.Read,
+                BindFlags = BindFlags.None,
+                OptionFlags = ResourceOptionFlags.None
+            }).QueryInterface<IDXGISurface>();
         }
 
         private void CreateWindow()
@@ -83,16 +106,15 @@ namespace HuiDesktop.DirectComposition
                 if (!blockUpdate)
                 {
                     User32.GetCursorPos(out cursorPoint);
-                    if (ParentApplication.mainWindow.Rect.Contains(cursorPoint))
+                    if (ParentWindow.Rect.Contains(cursorPoint))
                     {
-                        var rect = new Rectangle(cursorPoint.X - (Width / 2) - ParentApplication.mainWindow.Rect.X,
-                                                 cursorPoint.Y - (Height / 2) - ParentApplication.mainWindow.Rect.Y,
+                        var rect = new Rectangle(cursorPoint.X - (Width / 2) - ParentWindow.Rect.X,
+                                                 cursorPoint.Y - (Height / 2) - ParentWindow.Rect.Y,
                                                  Width, Height);
                         if (rect.X < 0) rect.X = 0;
-                        else if (rect.X + rect.Width > ParentApplication.mainWindow.Width) rect.X = ParentApplication.mainWindow.Width - rect.Width;
+                        else if (rect.X + rect.Width > ParentWindow.Width) rect.X = ParentWindow.Width - rect.Width;
                         if (rect.Y < 0) rect.Y = 0;
-                        else if (rect.Y + rect.Height > ParentApplication.mainWindow.Height) rect.Y = ParentApplication.mainWindow.Height - rect.Height;
-                        position = new Point(ParentApplication.mainWindow.Left + rect.X, ParentApplication.mainWindow.Top + rect.Y);
+                        else if (rect.Y + rect.Height > ParentWindow.Height) rect.Y = ParentWindow.Height - rect.Height;
                         requestCopyBitmap(rect);
                     }
                 }
@@ -113,7 +135,7 @@ namespace HuiDesktop.DirectComposition
 
         // 渲染线程在完成拷贝以后的回调
         // 由blockUpdate保证中途scan0对应内容不会变化
-        public void OnMapped(int pitch, IntPtr scan0)
+        public void OnMapped(int pitch, IntPtr scan0, Rectangle rect)
         {
             using (var managedBitmap = new Bitmap(Width, Height, pitch, System.Drawing.Imaging.PixelFormat.Format32bppArgb, scan0))
             {
@@ -123,6 +145,8 @@ namespace HuiDesktop.DirectComposition
                 {
                     DebugHelper.CheckWin32Error();
                 }
+
+                var position = new Point(ParentWindow.Left + rect.Left, ParentWindow.Top + rect.Top);
 
                 if (!User32.UpdateLayeredWindow(Handle, screenDC, ref position, ref bitmapSize, memDC, ref zeroPoint, 0,
                     ref blendFunc, (int)User32.UpdateLayeredWindowFlags.Alpha))

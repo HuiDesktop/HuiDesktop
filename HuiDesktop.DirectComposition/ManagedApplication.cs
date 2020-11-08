@@ -16,7 +16,6 @@ namespace HuiDesktop.DirectComposition
         public static readonly string WndClassName = "DxTestWindow";
         public readonly WNDPROC windowProc;
         public MainWindow mainWindow;
-        public HitTestWindow hitTestWindow;
         public event Action<Point> OnMouseLeftDown;
         public event Action<Point> OnMouseLeftUp;
         private Device device;
@@ -61,7 +60,7 @@ namespace HuiDesktop.DirectComposition
         {
             if (!ready) return User32.DefWindowProc(hWnd, msg, wParam, lParam);
 
-            if (hWnd == hitTestWindow?.Handle)
+            if (hWnd == mainWindow.hitTestWindow?.Handle)
             {
                 switch ((WindowMessage)msg)
                 {
@@ -92,7 +91,7 @@ namespace HuiDesktop.DirectComposition
                 case WindowMessage.RButtonDown:
                     isMouseDown = true;
                     User32.GetCursorPos(out cursorPos);
-                    User32.SetCapture(hitTestWindow!.Handle); //一般窗口出来用户点的时候这个已经初始化了吧
+                    User32.SetCapture(mainWindow.hitTestWindow!.Handle); //一般窗口出来用户点的时候这个已经初始化了吧
                     break;
                 case WindowMessage.RButtonUp:
                 case WindowMessage.NcRButtonUp:

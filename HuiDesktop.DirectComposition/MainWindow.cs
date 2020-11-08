@@ -16,6 +16,9 @@ namespace HuiDesktop.DirectComposition
     {
         Device device;
         SwapChain swapChain;
+        bool copyToHitTestEvent = false;
+        Rectangle hitTestRect;
+        public HitTestWindow hitTestWindow;
 
         #region In a layer
         Geometry? geometry;
@@ -75,6 +78,7 @@ namespace HuiDesktop.DirectComposition
             swapChain = device.CreateSwapChain(ctx, width, height);
             Debug.Assert(swapChain != null);
             device.InitDC(Handle, swapChain);
+            hitTestWindow = new(8, 8, this, (rect) => { this.hitTestRect = rect; copyToHitTestEvent = true; }, device.nativeDevice);
         }
 
         public void UpdateFrame(IntPtr sharedHandler)
@@ -140,6 +144,14 @@ namespace HuiDesktop.DirectComposition
 
 
                 swapChain.Present(0);
+
+                if (copyToHitTestEvent)
+                {
+                    copyToHitTestEvent = false;
+                    swapChain.CopyRegion(ctx, hitTestWindow.texture.QueryInterface<ID3D11Resource>(), hitTestRect);
+                    var mapped = hitTestWindow.texture.Map(Vortice.DXGI.MapFlags.Read);
+                    hitTestWindow.OnMapped(mapped.Pitch, mapped.PBits, hitTestRect);
+                }
             }
         }
 

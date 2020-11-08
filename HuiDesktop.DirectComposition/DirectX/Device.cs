@@ -53,7 +53,7 @@ float4 main(VS_OUTPUT input) : SV_Target
             FeatureLevel.Level_11_1
         };
 
-        private readonly ID3D11Device device;
+        public readonly ID3D11Device nativeDevice;
         //private readonly ID3D11DeviceContext ctx;
 
         //public ID3D11DeviceContext ImmedidateContext => ctx;
@@ -64,13 +64,13 @@ float4 main(VS_OUTPUT input) : SV_Target
                               driverType: DriverType.Hardware,
                               flags: DeviceCreationFlags.BgraSupport,
                               featureLevels: featureLevels,
-                              device: out device,
+                              device: out nativeDevice,
                               immediateContext: out ctx).CheckError();
         }
 
         public Texture2D OpenSharedResource(IntPtr sharedHandle)
         {
-            var texture = device.OpenSharedResource<ID3D11Texture2D>(sharedHandle);
+            var texture = nativeDevice.OpenSharedResource<ID3D11Texture2D>(sharedHandle);
             ShaderResourceViewDescription? desc = null;
             if ((texture.Description.BindFlags & BindFlags.ShaderResource) != 0)
             {
@@ -81,7 +81,7 @@ float4 main(VS_OUTPUT input) : SV_Target
                     Texture2D = new Texture2DShaderResourceView { MipLevels = 1, MostDetailedMip = 0 }
                 };
             }
-            var shaderResourceView = device.CreateShaderResourceView(texture.QueryInterface<ID3D11Resource>(), desc);
+            var shaderResourceView = nativeDevice.CreateShaderResourceView(texture.QueryInterface<ID3D11Resource>(), desc);
             return new Texture2D(texture, shaderResourceView, sharedHandle);
         }
 
@@ -93,7 +93,7 @@ float4 main(VS_OUTPUT input) : SV_Target
 
         public void InitDC(IntPtr handle, SwapChain swapChain)
         {
-            var dc_device = new DCompositionDevice(device.QueryInterface<IDXGIDevice>());
+            var dc_device = new DCompositionDevice(nativeDevice.QueryInterface<IDXGIDevice>());
             var dc_target = dc_device.CreateTargetForHwnd(handle, true);
             var dc_visual = dc_device.CreateVisual();
             swapChain.SetDCVisualContent(dc_visual);

@@ -15,6 +15,7 @@ namespace HuiDesktop.DirectComposition.DirectX
         private ID3D11BlendState blendState;
         private IDXGISwapChain swapchain;
         private ID3D11RenderTargetView renderTargetView;
+        private ID3D11Texture2D backBuffer; //TODO: Release before resize
 
         public SwapChain(ID3D11SamplerState samplerState, ID3D11BlendState blendState, IDXGISwapChain swapchain, ID3D11RenderTargetView renderTargetView)
         {
@@ -22,6 +23,7 @@ namespace HuiDesktop.DirectComposition.DirectX
             this.blendState = blendState;
             this.swapchain = swapchain;
             this.renderTargetView = renderTargetView;
+            backBuffer = swapchain.GetBuffer<ID3D11Texture2D>(0);
         }
 
         public void Clear(ID3D11DeviceContext ctx)
@@ -55,6 +57,11 @@ namespace HuiDesktop.DirectComposition.DirectX
         {
             visual.SetContent(swapchain).CheckError();
         }
+
+        public void CopyRegion(ID3D11DeviceContext ctx, ID3D11Resource dest, Rectangle rect)
+        {
+            ctx.CopySubresourceRegion(dest, 0, 0, 0, 0, backBuffer, 0, new(rect.X, rect.Y, 0, rect.X + rect.Width, rect.Y + rect.Height, 1));
+        }
     }
 
     partial class Device
@@ -70,7 +77,7 @@ namespace HuiDesktop.DirectComposition.DirectX
                 throw new ArgumentException($"{nameof(height)} shoule greater than 0");
             }
 
-            var dxgi_device = device.QueryInterface<IDXGIDevice>();
+            var dxgi_device = nativeDevice.QueryInterface<IDXGIDevice>();
             dxgi_device.GetAdapter(out var adapter).CheckError();
             var dxgi_factory = adapter.GetParent<IDXGIFactory2>();
 
@@ -87,7 +94,7 @@ namespace HuiDesktop.DirectComposition.DirectX
             });
             var back_buffer = swapchain.GetBuffer<IDXGISurface2>(0);
 
-            var rtv = device.CreateRenderTargetView(back_buffer.QueryInterface<ID3D11Texture2D>());
+            var rtv = nativeDevice.CreateRenderTargetView(back_buffer.QueryInterface<ID3D11Texture2D>());
             ctx.OMSetRenderTargets(rtv);
             ctx.RSSetViewport(new Viewport
             {
@@ -99,7 +106,7 @@ namespace HuiDesktop.DirectComposition.DirectX
                 Y = 0
             });
 
-            var samplerState = device.CreateSamplerState(new SamplerDescription
+            var samplerState = nativeDevice.CreateSamplerState(new SamplerDescription
             {
                 AddressU = TextureAddressMode.Clamp,
                 AddressV = TextureAddressMode.Clamp,
@@ -130,7 +137,7 @@ namespace HuiDesktop.DirectComposition.DirectX
                     RenderTargetWriteMask = ColorWriteEnable.All
                 };
             }
-            var blendState = device.CreateBlendState(blend_description);
+            var blendState = nativeDevice.CreateBlendState(blend_description);
 
             return new SwapChain(samplerState, blendState, swapchain, rtv);
         }

@@ -33,8 +33,8 @@ namespace HuiDesktop.DirectComposition.DirectX
         public Effect CreateEffect(string vertexCode, string vertexEntry, string vertexModel, string pixelCode, string pixelEntry, string pixelModel)
         {
             var vsBlob = CompileShader(vertexCode, vertexEntry, vertexModel);
-            var vshader = device.CreateVertexShader(vsBlob.BufferPointer, vsBlob.BufferSize);
-            var layout = device.CreateInputLayout(new InputElementDescription[]
+            var vshader = nativeDevice.CreateVertexShader(vsBlob.BufferPointer, vsBlob.BufferSize);
+            var layout = nativeDevice.CreateInputLayout(new InputElementDescription[]
             {
                 new InputElementDescription
                 {
@@ -58,7 +58,7 @@ namespace HuiDesktop.DirectComposition.DirectX
                 }
             }, vsBlob);
             var psBlob = CompileShader(pixelCode, pixelEntry, pixelModel);
-            var pshader = device.CreatePixelShader(psBlob.BufferPointer, psBlob.BufferSize);
+            var pshader = nativeDevice.CreatePixelShader(psBlob.BufferPointer, psBlob.BufferSize);
             return new Effect(layout, vshader, pshader);
         }
 

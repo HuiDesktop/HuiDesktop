@@ -64,7 +64,6 @@
     <Compile Include="CefInit.cs" />
     <Compile Include="Cef\CefApplication.cs" />
     <Compile Include="Cef\DirectCompositionRenderHandler.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="DComp.cs" />
     <Compile Include="DirectX\Binder.cs" />
     <Compile Include="DirectX\Device.cs" />

@@ -108,7 +108,7 @@ namespace HuiDesktop.DirectComposition.DirectX
             };
 
             return new Geometry(primitiveTopology: PrimitiveTopology.TriangleStrip,
-                                buffer: device.CreateBuffer(vertices, bufferDescription),
+                                buffer: nativeDevice.CreateBuffer(vertices, bufferDescription),
                                 strides: Unsafe.SizeOf<SimpleVertex>(),
                                 vertices: 4);
         }
