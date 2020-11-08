@@ -51,10 +51,8 @@ namespace HuiDesktop.DirectComposition
             //Task.Factory.StartNew(() =>
             //{
             //    Thread.Sleep(5000);
-            //    application.mainWindow.Width = application.mainWindow.Height = 512;
+            //    application.mainWindow.Size = new(512, 512);
             //    browser.GetBrowserHost().WasResized();
-            //    application.device.newSize = new System.Drawing.Size(512, 512);
-            //    application.device.needResize = true;
             //});
         }
 

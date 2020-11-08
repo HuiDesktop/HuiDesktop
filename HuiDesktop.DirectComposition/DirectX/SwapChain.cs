@@ -62,6 +62,28 @@ namespace HuiDesktop.DirectComposition.DirectX
         {
             ctx.CopySubresourceRegion(dest, 0, 0, 0, 0, backBuffer, 0, new(rect.X, rect.Y, 0, rect.X + rect.Width, rect.Y + rect.Height, 1));
         }
+
+        internal void Resize(ID3D11DeviceContext ctx, System.Drawing.Size size)
+        {
+            backBuffer.Dispose();
+            ctx.OMSetRenderTargets(0, Array.Empty<ID3D11RenderTargetView>());
+            renderTargetView.Dispose();
+
+            var description = swapchain.Description;
+            swapchain.ResizeBuffers(2, size.Width, size.Height, description.BufferDescription.Format, description.Flags).CheckError();
+            backBuffer = swapchain.GetBuffer<ID3D11Texture2D>(0);
+
+            var device = ctx.Device;
+            var rtvDesc = new RenderTargetViewDescription
+            {
+                ViewDimension = RenderTargetViewDimension.Texture2D,
+                Texture2D = new Texture2DRenderTargetView { MipSlice = 0 },
+                Format = description.BufferDescription.Format
+            };
+            renderTargetView = device.CreateRenderTargetView(backBuffer, rtvDesc);
+            ctx.OMSetRenderTargets(1, new ID3D11RenderTargetView[] { renderTargetView });
+            ctx.RSSetViewport(new(size.Width, size.Height));
+        }
     }
 
     partial class Device
@@ -77,7 +99,7 @@ namespace HuiDesktop.DirectComposition.DirectX
                 throw new ArgumentException($"{nameof(height)} shoule greater than 0");
             }
 
-            var dxgi_device = nativeDevice.QueryInterface<IDXGIDevice>();
+            using var dxgi_device = nativeDevice.QueryInterface<IDXGIDevice>();
             dxgi_device.GetAdapter(out var adapter).CheckError();
             var dxgi_factory = adapter.GetParent<IDXGIFactory2>();
 
@@ -92,19 +114,15 @@ namespace HuiDesktop.DirectComposition.DirectX
                 Width = width,
                 Height = height
             });
-            var back_buffer = swapchain.GetBuffer<IDXGISurface2>(0);
 
-            var rtv = nativeDevice.CreateRenderTargetView(back_buffer.QueryInterface<ID3D11Texture2D>());
-            ctx.OMSetRenderTargets(rtv);
-            ctx.RSSetViewport(new Viewport
+            ID3D11RenderTargetView rtv;
+            using (var backBuffer = swapchain.GetBuffer<IDXGISurface2>(0))
+            using (var backBufferD3DTexture = backBuffer.QueryInterface<ID3D11Texture2D>())
             {
-                Width = width,
-                Height = height,
-                MinDepth = 0,
-                MaxDepth = 1,
-                X = 0,
-                Y = 0
-            });
+                rtv = nativeDevice.CreateRenderTargetView(backBufferD3DTexture);
+            }
+            ctx.OMSetRenderTargets(rtv);
+            ctx.RSSetViewport(new Viewport(width, height));
 
             var samplerState = nativeDevice.CreateSamplerState(new SamplerDescription
             {

@@ -27,11 +27,12 @@ namespace HuiDesktop.DirectComposition
         SpinLock textureLock = new SpinLock();
         #endregion
 
+        bool resized = false;
         public IntPtr Handle { get; }
         public int Left { get; set; }
         public int Top { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
         public string Title { get; }
         public Rectangle Rect
         {
@@ -40,8 +41,22 @@ namespace HuiDesktop.DirectComposition
             {
                 Left = value.X;
                 Top = value.Y;
+                if (Width != value.Width || Height != value.Height)
+                {
+                    Width = value.Width;
+                    Height = value.Height;
+                    resized = true;
+                }
+            }
+        }
+        public Size Size
+        {
+            get => new(Width, Height);
+            set
+            {
                 Width = value.Width;
                 Height = value.Height;
+                resized = true;
             }
         }
 
@@ -102,22 +117,12 @@ namespace HuiDesktop.DirectComposition
             }
             using (new Binder(swapChain, ctx))
             {
-                /*
-                TODO: resize
-                if (resize_)
+                if (resized)
                 {
-                    RECT rc;
-                    GetClientRect(hwnd(), &rc);
-                    auto const width = rc.right - rc.left;
-                    auto const height = rc.bottom - rc.top;
-                    if (width && height)
-                    {
-                        resize_ = false;
-                        composition_->resize(sync_interval_ != 0, width, height);
-                        swapchain_->resize(width, height);
-                    }
+                    swapChain.Resize(ctx, Size);
+                    resized = false;
                 }
-                }*/
+
                 swapChain.Clear(ctx);
 
                 //I only want to write only one layer!
