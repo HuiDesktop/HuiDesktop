@@ -143,6 +143,7 @@ namespace HuiDesktop.DirectComposition
                 this.button = button;
                 point = position;
                 joke = busy = true;
+                window.CaptureMouse();
             }
 
             private void MouseMove(Point position)
@@ -153,7 +154,6 @@ namespace HuiDesktop.DirectComposition
                 if (joke && (vector.X > 3 || vector.Y > 3 || vector.X < -3 || vector.Y < -3))
                 {
                     joke = false;
-                    window.CaptureMouse();
                     Debug.WriteLine("Moving");
                     browser.GetBrowser().MainFrame.ExecuteJavaScriptAsync(CallWithTryCatch($"huiDesktop_DragMove_OnMouse{button}Down()"), browser.Address);
                 }

@@ -5,6 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HuiDesktop"
         mc:Ignorable="d"
-        Title="HuiDesktop" WindowStyle="None" AllowsTransparency="True" Background="Transparent" SizeChanged="Window_SizeChanged" Icon="Resources/GlobalIcon.ico" Closing="Window_Closing">
+        Title="HuiDesktop" WindowStyle="None" AllowsTransparency="True" Background="Transparent" SizeChanged="Window_SizeChanged" Closing="Window_Closing">
 </Window>
 

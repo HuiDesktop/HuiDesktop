@@ -70,7 +70,7 @@ namespace HuiDesktop.DirectComposition
                 {
                     case WindowMessage.MouseMove:
                         if (mainWindow.hitTestWindow.captured)
-                            Debug.WriteLine(GetRelativePoint());
+                            mainWindow.MouseMove(GetRelativePoint());
                         return IntPtr.Zero;
                     case WindowMessage.Destroy:
                         User32.PostQuitMessage(0);

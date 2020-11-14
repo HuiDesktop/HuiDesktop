@@ -111,19 +111,6 @@ namespace HuiDesktop.DirectComposition
                     User32.GetCursorPos(out cursorPoint);
                     if (ParentWindow.Rect.Contains(cursorPoint))
                     {
-                        // 鼠标移动的消息由这里模拟发出
-                        Point relativePos = new(cursorPoint.X - ParentWindow.Left, cursorPoint.Y - ParentWindow.Top);
-
-                        if (relativePos != lastRelativePos)
-                        {
-                            lastRelativePos = relativePos;
-                            if (relativePos.X >= 0 && relativePos.Y >= 0)
-                            {
-                                ParentWindow.MouseMove(relativePos);
-                            }
-                        }
-
-
                         var rect = new Rectangle(cursorPoint.X - (Width / 2) - ParentWindow.Rect.X,
                                                  cursorPoint.Y - (Height / 2) - ParentWindow.Rect.Y,
                                                  Width, Height);

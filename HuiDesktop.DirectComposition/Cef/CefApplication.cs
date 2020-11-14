@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using CefSharp.Handler;
 using CefSharp.OffScreen;
 using HuiDesktop.DirectComposition.Cef;
 using System;

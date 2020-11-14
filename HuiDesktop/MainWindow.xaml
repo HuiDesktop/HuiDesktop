@@ -20,7 +20,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Label Content="HuiDesktop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Width="143" FontSize="24" FontFamily="Consolas" VerticalContentAlignment="Center"/>
-        <Label Content="Version 1.1.0" FontFamily="Consolas" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Grid.Column="1"/>
+        <Label Content="Version 1.2 Close test #2" FontFamily="Consolas" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Grid.Column="1"/>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>

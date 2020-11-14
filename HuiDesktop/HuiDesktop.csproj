@@ -66,9 +66,6 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BasicWindow.xaml.cs">
-      <DependentUpon>BasicWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DevelopTools.xaml.cs">
       <DependentUpon>DevelopTools.xaml</DependentUpon>
     </Compile>
@@ -97,10 +94,6 @@
     </Compile>
     <Compile Include="Win32Api.cs" />
     <Page Include="AboutWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="BasicWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,6 +174,10 @@
     <ProjectReference Include="..\HuiDesktop.DirectComposition\HuiDesktop.DirectComposition.csproj">
       <Project>{d8ec10b2-5418-42f7-8fa3-be62c7ea3be3}</Project>
       <Name>HuiDesktop.DirectComposition</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HuiDesktop.Wpf\HuiDesktop.Wpf.csproj">
+      <Project>{e52c4750-d65d-4751-9c90-ed99b75647ab}</Project>
+      <Name>HuiDesktop.Wpf</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
