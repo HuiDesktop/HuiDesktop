@@ -49,7 +49,7 @@ namespace HuiDesktop
             string basePath = ApplicationInfo.RelativePath("localPackages", System.Guid.NewGuid().ToString());
             Directory.CreateDirectory(basePath);
             Directory.CreateDirectory(Path.Combine(basePath, "files"));
-            File.WriteAllText(Path.Combine(basePath, "package.json"), Properties.Resources.DefaultPackageInfoJson);
+            File.WriteAllText(Path.Combine(basePath, "package.json"), Launcher.Properties.Resources.DefaultPackageInfoJson);
         }
     }
 }

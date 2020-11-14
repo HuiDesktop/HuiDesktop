@@ -13,6 +13,7 @@ namespace HuiDesktop.Package
 
         public static IPackage LoadPackage(string filename)
         {
+
             var fs = File.OpenRead(filename);
             var s = new BinaryFileHelper(fs);
             try

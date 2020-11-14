@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HuiDesktop.Launcher.Properties {
+namespace HuiDesktop.Properties {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace HuiDesktop.Launcher.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace HuiDesktop.Launcher.Properties {
         ///   返回此类使用的缓存的 ResourceManager 实例。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HuiDesktop.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace HuiDesktop.Launcher.Properties {
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,22 +61,22 @@ namespace HuiDesktop.Launcher.Properties {
         }
         
         /// <summary>
-        ///   查找类似 {
-        ///  &quot;strongName&quot;: &quot;&quot;,
-        ///  &quot;friendlyName&quot;: &quot;&quot;,
-        ///  &quot;description&quot;: &quot;&quot;,
-        ///  &quot;startInfo&quot;: [
-        ///	{
-        ///	  &quot;name&quot;: &quot;&quot;,
-        ///	  &quot;url&quot;: &quot;http://huidesktop/&quot;,
-        ///	  &quot;dependencies&quot;: [&quot;cc.huix.?&quot;]
-        ///	}
-        ///  ]
-        ///} 的本地化字符串。
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
-        internal static string DefaultPackageInfoJson {
+        public static System.Drawing.Icon GlobalIcon {
             get {
-                return ResourceManager.GetString("DefaultPackageInfoJson", resourceCulture);
+                object obj = ResourceManager.GetObject("GlobalIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap GlobalIcon1 {
+            get {
+                object obj = ResourceManager.GetObject("GlobalIcon1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

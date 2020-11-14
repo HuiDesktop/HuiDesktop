@@ -7,8 +7,8 @@
     <ProjectGuid>{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HuiDesktop.CommonInterface</RootNamespace>
-    <AssemblyName>HuiDesktop.CommonInterface</AssemblyName>
+    <RootNamespace>HuiDesktop</RootNamespace>
+    <AssemblyName>HuiDesktop.Core</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,11 @@
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="IPackage.cs" />
     <Compile Include="PackageManager.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServiceConnection.cs" />
     <Compile Include="StartupInfo.cs" />
     <Compile Include="V3Package.cs" />
@@ -64,6 +70,19 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GlobalIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GlobalIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
