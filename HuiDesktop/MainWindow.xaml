@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HuiDesktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Icon="Resources/GlobalIcon.ico">
+        Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <local:VisibilityConverter x:Key="VisibilityConverter"/>
         <local:CardColorConvert x:Key="CardColorConvert"/>

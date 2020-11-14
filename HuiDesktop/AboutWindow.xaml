@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="About" Height="317" Width="604" ResizeMode="NoResize">
     <Grid>
-        <Image HorizontalAlignment="Left" Width="256" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Source="Resources/GlobalIcon.png"/>
+        <Image HorizontalAlignment="Left" Width="256" Height="256" Margin="10,10,0,0" VerticalAlignment="Top" Source="GlobalIcon.png"/>
         <Label Content="HuiDesktop" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48" Width="143" FontSize="24" FontFamily="Consolas" VerticalContentAlignment="Center" Margin="271,10,0,0"/>
         <Label Content="Version 1.1.0" FontFamily="Consolas" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Margin="419,10,0,218" HorizontalAlignment="Left" Width="159"/>
         <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="https://github.com/huix-oldcat/HuiDesktop" VerticalAlignment="Top" Width="307" Margin="271,63,0,0" VerticalContentAlignment="Center" FontFamily="Consolas" BorderThickness="0,0,0,1" IsReadOnly="True"/>
