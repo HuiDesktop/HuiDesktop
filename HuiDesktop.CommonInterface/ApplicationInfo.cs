@@ -8,12 +8,12 @@ using System.Net.Http;
 
 namespace HuiDesktop
 {
-    static class ApplicationInfo
+    public static class ApplicationInfo
     {
-        internal static string BaseFolder => AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
-        internal static string CefSharpFolder => Path.Combine(BaseFolder, Environment.Is64BitProcess ? "x64" : "x86");
+        public static string BaseFolder => AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+        public static string CefSharpFolder => Path.Combine(BaseFolder, Environment.Is64BitProcess ? "x64" : "x86");
 
-        internal static string RelativePath(params string[] paths)
+        public static string RelativePath(params string[] paths)
         {
             string[] full = new string[paths.Length + 1];
             paths.CopyTo(full, 1);

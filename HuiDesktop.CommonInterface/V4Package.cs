@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HuiDesktop.Package
 {
-    class V4Package : IExportablePackage
+    public class V4Package : IExportablePackage
     {
         public string strongName;
         public string friendlyName;
@@ -31,7 +31,7 @@ namespace HuiDesktop.Package
             if (Directory.Exists(folder) == false) throw new DirectoryNotFoundException(folder);
             if (File.Exists(Path.Combine(folder, "package.json")) == false) throw new FileNotFoundException("package.json");
             var root = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(Path.Combine(folder, "package.json")));
-            if (root == null) throw new FileFormatException("package.json");
+            if (root == null) throw new Exception("package.json");
             strongName = root.Value<string>("strongName");
             friendlyName = root.Value<string>("friendlyName");
             description = root.Value<string>("description");

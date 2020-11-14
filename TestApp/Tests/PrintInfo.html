@@ -1,0 +1,21 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Size Change Test</title>
+    <meta charset="utf-8" />
+</head>
+<body style="background: green; font-family: monospace">
+    <p>
+        Working area: <span id="wa"></span><br />
+        Screen: <span id="sc"></span><br />
+    </p>
+</body>
+</html>
+<script>
+    huiDesktop.Window.Width = 384;
+    huiDesktop.Window.Height = 256;
+    let wa = huiDesktop.WorkingArea;
+    let sc = huiDesktop.Screen;
+    document.getElementById("wa").innerText = `(${wa.Left}, ${wa.Top}) | ${wa.Width} x ${wa.Height}`
+    document.getElementById("sc").innerText = `${sc.Width} x ${sc.Height}`
+</script>

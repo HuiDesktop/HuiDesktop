@@ -69,7 +69,6 @@
     <Compile Include="BasicWindow.xaml.cs">
       <DependentUpon>BasicWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BrowserResourceManager.cs" />
     <Compile Include="DevelopTools.xaml.cs">
       <DependentUpon>DevelopTools.xaml</DependentUpon>
     </Compile>
@@ -82,22 +81,14 @@
     <Compile Include="ForumWindow.xaml.cs">
       <DependentUpon>ForumWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSettings.cs" />
-    <Compile Include="Package\BinaryFileHelper.cs" />
-    <Compile Include="Package\PackageManager.cs" />
-    <Compile Include="Package\IPackage.cs" />
-    <Compile Include="Package\PackageManagerWindow.xaml.cs">
+    <Compile Include="PackageManagerWindow.xaml.cs">
       <DependentUpon>PackageManagerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Package\StartupInfo.cs" />
-    <Compile Include="Package\V3Package.cs" />
-    <Compile Include="Package\V4Package.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ServiceConnection.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -137,15 +128,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ApplicationInfo.cs" />
-    <Compile Include="CefStartupInitialize.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Package\PackageManagerWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="PackageManagerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SettingsWindow.xaml">
       <SubType>Designer</SubType>
@@ -186,7 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
-      <Version>79.1.360</Version>
+      <Version>75.1.143</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
@@ -194,6 +183,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="GlobalIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HuiDesktop.CommonInterface\HuiDesktop.Core.csproj">
+      <Project>{6d5b86b4-dab4-4ddc-a025-03cddea5409a}</Project>
+      <Name>HuiDesktop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HuiDesktop.DirectComposition\HuiDesktop.DirectComposition.csproj">
+      <Project>{d8ec10b2-5418-42f7-8fa3-be62c7ea3be3}</Project>
+      <Name>HuiDesktop.DirectComposition</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

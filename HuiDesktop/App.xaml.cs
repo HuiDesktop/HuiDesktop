@@ -46,7 +46,6 @@ namespace HuiDesktop
             else Package.PackageManager.LoadLocalPackages(ApplicationInfo.RelativePath("localPackages"));
 
             AppDomain.CurrentDomain.AssemblyResolve += CefStartupInitialize.Resolver;
-            CefStartupInitialize.InitializeCefSharp();
         }
     }
 }

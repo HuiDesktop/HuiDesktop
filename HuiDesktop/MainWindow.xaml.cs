@@ -21,7 +21,7 @@ namespace HuiDesktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private BasicWindow start;
+        private object start;
         private bool showHiddenItems = false;
 
         private void RefreshList()
@@ -98,9 +98,18 @@ namespace HuiDesktop
                 if (item.isDependencyComplete == false) Label_Tip.Content = "包依赖不全!";
                 else
                 {
-                    start = new BasicWindow(item);
-                    start.Show();
+#if !OLD_RENDERING
+                    var requestHandler = new RequestHandler();
+                    requestHandler.AddPackage(item.fromPackage);
+                    foreach (var i in item.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
+                    start = new DirectComposition.CefApplication(item.url, requestHandler);
                     Close();
+                    (start as DirectComposition.CefApplication).Run();
+#else
+                    start = new BasicWindow(item);
+                    (start as BasicWindow).Show();
+                    Close();
+#endif
                 }
             }
         }
@@ -166,7 +175,7 @@ namespace HuiDesktop
             new AboutWindow().ShowDialog();
         }
 
-        #region 彩蛋
+#region 彩蛋
 
         private int _eg = 0;
 
@@ -181,7 +190,7 @@ namespace HuiDesktop
             }
         }
 
-        #endregion
+#endregion
     }
 
     public class VisibilityConverter : IValueConverter

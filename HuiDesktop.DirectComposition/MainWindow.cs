@@ -1,13 +1,8 @@
 ﻿using HuiDesktop.DirectComposition.DirectX;
 using HuiDesktop.DirectComposition.Interop;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Vortice.Direct3D11;
 
 namespace HuiDesktop.DirectComposition
@@ -17,10 +12,12 @@ namespace HuiDesktop.DirectComposition
         Device device;
         SwapChain swapChain;
         bool copyToHitTestEvent = false;
+        bool minimized = false;
+        bool ignoreClick = false;
         Rectangle hitTestRect;
         public HitTestWindow hitTestWindow;
 
-        #region In a layer
+        #region In one layer
         Geometry? geometry;
         Effect? effect;
         Texture2D? texture;
@@ -28,24 +25,92 @@ namespace HuiDesktop.DirectComposition
         #endregion
 
         bool resized = false;
+        private int width;
+        private int height;
+        private int left;
+        private int top;
+        private bool topmost = false;
+
         public IntPtr Handle { get; }
-        public int Left { get; set; }
-        public int Top { get; set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
         public string Title { get; }
+        public bool Minimized { get => minimized; set => minimized = value; }
+        public int Left
+        {
+            get => left;
+            set
+            {
+                if (value != left)
+                {
+                    left = value;
+                    LocationChanged();
+                }
+            }
+        }
+        public int Top
+        {
+            get => top;
+            set
+            {
+                if (value != top)
+                {
+                    top = value;
+                    LocationChanged();
+                }
+            }
+        }
+        public int Width
+        {
+            get => width;
+            set
+            {
+                if (value != width)
+                {
+                    width = value;
+                    SizeChanged();
+                }
+            }
+        }
+        public int Height
+        {
+            get => height;
+            set
+            {
+                if (value != height)
+                {
+                    height = value;
+                    SizeChanged();
+                }
+            }
+        }
         public Rectangle Rect
         {
             get => new Rectangle(Left, Top, Width, Height);
             set
             {
-                Left = value.X;
-                Top = value.Y;
-                if (Width != value.Width || Height != value.Height)
+                if (left != value.X || top != value.Y)
                 {
-                    Width = value.Width;
-                    Height = value.Height;
-                    resized = true;
+                    Left = value.X;
+                    Top = value.Y;
+                    LocationChanged();
+                }
+                if (width != value.Width || height != value.Height)
+                {
+                    width = value.Width;
+                    height = value.Height;
+                    SizeChanged();
+                }
+            }
+        }
+        public Point Location
+        {
+            get => new(Left, Top);
+            set
+            {
+                if (left != value.X || top != value.Y)
+                {
+                    Left = value.X;
+                    Top = value.Y;
+                    LocationChanged();
                 }
             }
         }
@@ -54,11 +119,36 @@ namespace HuiDesktop.DirectComposition
             get => new(Width, Height);
             set
             {
-                Width = value.Width;
-                Height = value.Height;
-                resized = true;
+                if (width != value.Width || height != value.Height)
+                {
+                    width = value.Width;
+                    height = value.Height;
+                    SizeChanged();
+                }
             }
         }
+
+        public Action LocationChanged { get; set; } = () => { };//TODO
+        public Action SizeChanged { get; set; } = () => { };
+        public bool Topmost
+        {
+            get => topmost;
+            set
+            {
+                if (value == topmost)
+                {
+                    return;
+                }
+                topmost = value;
+                User32.SetWindowPos(Handle, topmost ? new IntPtr(-1) : new(-2), Left, Top, Width, Height, 0);
+            }
+        }
+
+        public bool ShowInTaskbar { get; set; }//TODO
+        public bool IgnoreClick { get; set; }
+        public Action<MouseButton, Point> MouseDown { get; set; }
+        public Action<MouseButton, Point> MouseUp { get; set; }
+        public Action<Point> MouseMove { get; internal set; }
 
         public MainWindow(int width, int height, ID3D11DeviceContext ctx, Device device)
         {
@@ -72,7 +162,7 @@ namespace HuiDesktop.DirectComposition
             Top = 0;
 
             WindowStyles style = WindowStyles.WS_POPUP;
-            WindowExStyles styleEx = WindowExStyles.WS_EX_NOREDIRECTIONBITMAP | WindowExStyles.WS_EX_TOPMOST;
+            WindowExStyles styleEx = WindowExStyles.WS_EX_NOREDIRECTIONBITMAP;
             Handle = User32.CreateWindowEx((int)styleEx, ManagedApplication.WndClassName, Title, (int)style, Left, Top,
                                              width, height, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
 
@@ -91,9 +181,23 @@ namespace HuiDesktop.DirectComposition
             #endregion
 
             swapChain = device.CreateSwapChain(ctx, width, height);
-            Debug.Assert(swapChain != null);
             device.InitDC(Handle, swapChain);
             hitTestWindow = new(8, 8, this, (rect) => { this.hitTestRect = rect; copyToHitTestEvent = true; }, device.nativeDevice);
+
+            SizeChanged += () => { resized = true; MoveWindow(); };
+            LocationChanged += () => MoveWindow();
+        }
+
+        internal void ReleaseCapture()
+        {
+            User32.ReleaseCapture();
+            hitTestWindow.captured = false;
+        }
+
+        internal void CaptureMouse()
+        {
+            User32.SetCapture(hitTestWindow.Handle);
+            hitTestWindow.captured = true;
         }
 
         public void UpdateFrame(IntPtr sharedHandler)
@@ -148,10 +252,12 @@ namespace HuiDesktop.DirectComposition
                 textureLock.Exit();
 
 
-                swapChain.Present(0);
+                swapChain.Present(1);
 
-                if (copyToHitTestEvent)
+                if (copyToHitTestEvent && new Rectangle(new(), Size).Contains(hitTestRect))
                 {
+                    //TODO: Known bug: 修改Size以后这里可能会出错(鼠标在老大小（小）和新大小（大）之间)估计是BackBuffer是老大小的原因
+                    //TODO: 感觉只有鼠标在窗口内的时候动画才是全速的，不知为啥
                     copyToHitTestEvent = false;
                     swapChain.CopyRegion(ctx, hitTestWindow.texture.QueryInterface<ID3D11Resource>(), hitTestRect);
                     var mapped = hitTestWindow.texture.Map(Vortice.DXGI.MapFlags.Read);

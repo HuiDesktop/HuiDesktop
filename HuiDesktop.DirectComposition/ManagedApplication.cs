@@ -53,29 +53,39 @@ namespace HuiDesktop.DirectComposition
             ready = true;
         }
 
-        bool isMouseDown;
-        Point cursorPos;
-
         private IntPtr ProcessWindowMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
             if (!ready) return User32.DefWindowProc(hWnd, msg, wParam, lParam);
 
+            Point GetRelativePoint()
+            {
+                var cursorPoint = GetPointByLParam(lParam);
+                return new(
+                            cursorPoint.X + mainWindow.hitTestWindow.Left - mainWindow.Left,
+                            cursorPoint.Y + mainWindow.hitTestWindow.Top - mainWindow.Top);
+            }
             if (hWnd == mainWindow.hitTestWindow?.Handle)
             {
                 switch ((WindowMessage)msg)
                 {
+                    case WindowMessage.MouseMove:
+                        if (mainWindow.hitTestWindow.captured)
+                            Debug.WriteLine(GetRelativePoint());
+                        return IntPtr.Zero;
                     case WindowMessage.Destroy:
                         User32.PostQuitMessage(0);
                         return IntPtr.Zero;
-                    case WindowMessage.MouseMove:
-                        if (isMouseDown)
-                        {
-                            User32.GetCursorPos(out Point point);
-                            mainWindow.Left += point.X - cursorPos.X;
-                            mainWindow.Top += point.Y - cursorPos.Y;
-                            cursorPos = point;
-                            mainWindow.MoveWindow();
-                        }
+                    case WindowMessage.LButtonDown:
+                        mainWindow.MouseDown(MouseButton.Left, GetRelativePoint());
+                        return IntPtr.Zero;
+                    case WindowMessage.LButtonUp:
+                        mainWindow.MouseUp(MouseButton.Left, GetRelativePoint());
+                        return IntPtr.Zero;
+                    case WindowMessage.RButtonDown:
+                        mainWindow.MouseDown(MouseButton.Right, GetRelativePoint());
+                        return IntPtr.Zero;
+                    case WindowMessage.RButtonUp:
+                        mainWindow.MouseUp(MouseButton.Right, GetRelativePoint());
                         return IntPtr.Zero;
                 }
                 User32.PostMessage(mainWindow.Handle, (WindowMessage)msg, wParam, lParam);
@@ -87,34 +97,8 @@ namespace HuiDesktop.DirectComposition
                 case WindowMessage.Destroy:
                     User32.PostQuitMessage(0);
                     break;
-                case WindowMessage.NcLButtonDown:
-                case WindowMessage.RButtonDown:
-                    isMouseDown = true;
-                    User32.GetCursorPos(out cursorPos);
-                    User32.SetCapture(mainWindow.hitTestWindow!.Handle); //一般窗口出来用户点的时候这个已经初始化了吧
-                    break;
-                case WindowMessage.RButtonUp:
-                case WindowMessage.NcRButtonUp:
-                    isMouseDown = false;
-                    User32.ReleaseCapture();
-                    break;
-                case WindowMessage.LButtonDown:
-                    OnMouseLeftDown?.Invoke(GetVirtualPos());
-                    break;
-                case WindowMessage.LButtonUp:
-                    OnMouseLeftUp?.Invoke(GetVirtualPos());
-                    break;
-                case WindowMessage.Move:
-                    mainWindow.Rect = new Rectangle(GetPointByLParam(lParam), new Size(mainWindow.Width, mainWindow.Height));
-                    break;
             }
             return User32.DefWindowProc(hWnd, msg, wParam, lParam);
-        }
-
-        private Point GetVirtualPos()
-        {
-            User32.GetCursorPos(out Point point);
-            return new Point(point.X - mainWindow.Left, point.Y - mainWindow.Top);
         }
 
         private Point GetPointByLParam(IntPtr lParam)

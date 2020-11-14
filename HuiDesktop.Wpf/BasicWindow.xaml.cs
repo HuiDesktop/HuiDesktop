@@ -3,7 +3,6 @@ using CefSharp.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,7 +29,6 @@ namespace HuiDesktop
 
         public BasicWindow(Package.StartupInfo info)
         {
-            CefInitialize.InitializeCefSharp();
             InitializeComponent();
 
             Top = 0;
@@ -102,30 +100,6 @@ namespace HuiDesktop
             notifyIcon.Visible = false;
             Cef.Shutdown();
             Environment.Exit(0);
-        }
-    }
-
-    static class CefInitialize
-    {
-        public static void InitializeCefSharp()
-        {
-            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
-            CefSharpSettings.WcfEnabled = true;
-
-            var settings = new CefSettings
-            {
-                BrowserSubprocessPath = System.IO.Path.Combine(ApplicationInfo.CefSharpFolder, "CefSharp.BrowserSubprocess.exe"),
-                CachePath = ApplicationInfo.RelativePath("BrowserStorage", "Cache"),
-                UserDataPath = ApplicationInfo.RelativePath("BrowserStorage", "UserData"),
-                LogFile = ApplicationInfo.RelativePath("Debug.log"),
-                AcceptLanguageList = "zh-CN,en-US,en"
-            };
-            if (GlobalSettings.DisableBlackList)
-            {
-                settings.CefCommandLineArgs.Add("enable-webgl", "1");
-                settings.CefCommandLineArgs.Add("ignore-gpu-blacklist", "1");
-            }
-            Cef.Initialize(settings);
         }
     }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HuiDesktop
 {
-    static class ServiceConnection
+    public static class ServiceConnection
     {
         public async static Task<string> GetUpdate()
         {

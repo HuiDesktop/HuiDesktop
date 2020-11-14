@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HuiDesktop
 {
@@ -34,7 +32,7 @@ namespace HuiDesktop
         }
     }
 
-    class RequestHandler : CefSharp.Handler.RequestHandler
+    public class RequestHandler : CefSharp.Handler.RequestHandler
     {
         protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser chromiumWebBrowser,
             IBrowser browser, IFrame frame, IRequest request, bool isNavigation, bool isDownload,

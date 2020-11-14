@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace HuiDesktop
 {
-    internal static class GlobalSettings
+    public static class GlobalSettings
     {
         public static bool AutoRun
         {

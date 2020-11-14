@@ -28,7 +28,7 @@ namespace HuiDesktop.DirectComposition.DirectX
 
         public void Clear(ID3D11DeviceContext ctx)
         {
-            ctx.ClearRenderTargetView(renderTargetView, new Color4(0, 0, 1, 1));
+            ctx.ClearRenderTargetView(renderTargetView, new Color4(0, 0, 0, 0));
         }
 
         public void Present(int syncInterval)

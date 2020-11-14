@@ -16,11 +16,14 @@ namespace HuiDesktop.DirectComposition
     {
         public int Width { get; }
         public int Height { get; }
+        public int Left { get; private set; }
+        public int Top { get; private set; }
         public IntPtr Handle { get; private set; }
         public MainWindow ParentWindow { get; }
         // 阻止鼠标捕获线程发送拷贝指令
         // 由渲染进程在渲染指令发送给GPU前设置，由本窗口UpdateLayeredWindow以后复位
         // 本标志保证OnMapped使用scan0时不会突然暴毙
+        public bool captured = false;
         public bool blockUpdate;
         public IDXGISurface texture;
 
@@ -100,7 +103,7 @@ namespace HuiDesktop.DirectComposition
         // 每次while以后Sleep(1)保证CPU占用
         private void MonUpdate()
         {
-            Point cursorPoint;
+            Point cursorPoint, lastRelativePos = new(-1, -1);
             while (true)
             {
                 if (!blockUpdate)
@@ -108,6 +111,19 @@ namespace HuiDesktop.DirectComposition
                     User32.GetCursorPos(out cursorPoint);
                     if (ParentWindow.Rect.Contains(cursorPoint))
                     {
+                        // 鼠标移动的消息由这里模拟发出
+                        Point relativePos = new(cursorPoint.X - ParentWindow.Left, cursorPoint.Y - ParentWindow.Top);
+
+                        if (relativePos != lastRelativePos)
+                        {
+                            lastRelativePos = relativePos;
+                            if (relativePos.X >= 0 && relativePos.Y >= 0)
+                            {
+                                ParentWindow.MouseMove(relativePos);
+                            }
+                        }
+
+
                         var rect = new Rectangle(cursorPoint.X - (Width / 2) - ParentWindow.Rect.X,
                                                  cursorPoint.Y - (Height / 2) - ParentWindow.Rect.Y,
                                                  Width, Height);
@@ -128,7 +144,7 @@ namespace HuiDesktop.DirectComposition
         private static User32.BLENDFUNCTION blendFunc = new User32.BLENDFUNCTION
         {
             BlendOp = AC_SRC_OVER,
-            SourceConstantAlpha = 1,
+            SourceConstantAlpha = 255,
             AlphaFormat = AC_SRC_ALPHA,
             BlendFlags = 0
         };
@@ -147,6 +163,8 @@ namespace HuiDesktop.DirectComposition
                 }
 
                 var position = new Point(ParentWindow.Left + rect.Left, ParentWindow.Top + rect.Top);
+                Left = position.X;
+                Top = position.Y;
 
                 if (!User32.UpdateLayeredWindow(Handle, screenDC, ref position, ref bitmapSize, memDC, ref zeroPoint, 0,
                     ref blendFunc, (int)User32.UpdateLayeredWindowFlags.Alpha))

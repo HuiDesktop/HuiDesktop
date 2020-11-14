@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HuiDesktop.Package
 {
-    internal class PackageManager
+    public class PackageManager
     {
         public static Dictionary<string, IPackage> packages = new Dictionary<string, IPackage>();
 

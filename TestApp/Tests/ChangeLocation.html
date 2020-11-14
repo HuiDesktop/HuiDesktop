@@ -1,0 +1,37 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Size Change Test</title>
+    <meta charset="utf-8" />
+</head>
+<body style="background: green; font-size: 32px">
+    <center>QwQ</center>
+</body>
+</html>
+<script>
+    huiDesktop.Window.Width = 128;
+    huiDesktop.Window.Height = 64;
+    setInterval(() => {
+        if (huiDesktop.Window.Left == 50) {
+            if (huiDesktop.Window.Top == 50) {
+                huiDesktop.Window.Left = 40;
+            } else {
+                huiDesktop.Window.Top += 10
+            }
+        } else if (huiDesktop.Window.Top == 50) {
+            if (huiDesktop.Window.Left == 0) {
+                huiDesktop.Window.Top = 40;
+            } else {
+                huiDesktop.Window.Left -= 10;
+            }
+        } else if (huiDesktop.Window.Left == 0) {
+            if (huiDesktop.Window.Top == 0) {
+                huiDesktop.Window.Left = 10;
+            } else {
+                huiDesktop.Window.Top -= 10;
+            }
+        } else if (huiDesktop.Window.Top == 0) {
+            huiDesktop.Window.Left += 10;
+        }
+    }, 10);
+</script>

@@ -59,7 +59,7 @@ namespace HuiDesktop.DirectComposition.Cef
 
         public void OnPaint(PaintElementType type, Rect dirtyRect, IntPtr buffer, int width, int height)
         {
-            throw new InvalidOperationException("Expect OnAcceleratedPaint");
+            //throw new InvalidOperationException("Expect OnAcceleratedPaint");
         }
 
         public void OnPopupShow(bool show)
