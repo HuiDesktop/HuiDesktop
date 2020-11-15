@@ -76,7 +76,6 @@ namespace HuiDesktop.DirectComposition
             {
                 renderThread.Start();
                 browser.Load(address);
-                browser.ShowDevTools();
             };
 
             notifyIcon.Text = "HuiDesktop";

@@ -182,7 +182,7 @@ namespace HuiDesktop.DirectComposition
 
             swapChain = device.CreateSwapChain(ctx, width, height);
             device.InitDC(Handle, swapChain);
-            hitTestWindow = new(8, 8, this, (rect) => { this.hitTestRect = rect; copyToHitTestEvent = true; }, device.nativeDevice);
+            hitTestWindow = new(MyConfiguration.GlobalConfig.HitTestSize, MyConfiguration.GlobalConfig.HitTestSize, this, (rect) => { this.hitTestRect = rect; copyToHitTestEvent = true; }, device.nativeDevice);
 
             SizeChanged += () => { resized = true; MoveWindow(); };
             LocationChanged += () => MoveWindow();

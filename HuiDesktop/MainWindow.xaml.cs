@@ -39,6 +39,8 @@ namespace HuiDesktop
             string result;
             if (GlobalSettings.AutoCheckUpdate) update = ServiceConnection.GetUpdate();
             InitializeComponent();
+            var rendererType = MyConfiguration.GlobalConfig.UseDirectComposition ? "DirectComposition" : "WPF";
+            SoftwareDetail.Content = $"{ApplicationInfo.VersionName}\n{rendererType}";
             if (Environment.GetCommandLineArgs().Length == 2 && Environment.GetCommandLineArgs()[1] == "--autorun")
             {
                 string s = GlobalSettings.AutoRunItem;
@@ -98,18 +100,21 @@ namespace HuiDesktop
                 if (item.isDependencyComplete == false) Label_Tip.Content = "包依赖不全!";
                 else
                 {
-#if !OLD_RENDERING
-                    var requestHandler = new RequestHandler();
-                    requestHandler.AddPackage(item.fromPackage);
-                    foreach (var i in item.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
-                    start = new DirectComposition.CefApplication(item.url, requestHandler);
-                    Close();
-                    (start as DirectComposition.CefApplication).Run();
-#else
-                    start = new BasicWindow(item);
-                    (start as BasicWindow).Show();
-                    Close();
-#endif
+                    if (MyConfiguration.GlobalConfig.UseDirectComposition)
+                    {
+                        var requestHandler = new RequestHandler();
+                        requestHandler.AddPackage(item.fromPackage);
+                        foreach (var i in item.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
+                        start = new DirectComposition.CefApplication(item.url, requestHandler);
+                        Close();
+                        (start as DirectComposition.CefApplication).Run();
+                    }
+                    else
+                    {
+                        start = new BasicWindow(item);
+                        (start as BasicWindow).Show();
+                        Close();
+                    }
                 }
             }
         }

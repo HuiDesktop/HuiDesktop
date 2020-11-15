@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +50,7 @@
     <Compile Include="BrowserResourceManager.cs" />
     <Compile Include="BinaryFileHelper.cs" />
     <Compile Include="CefStartupInitialize.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="IPackage.cs" />
     <Compile Include="PackageManager.cs" />
