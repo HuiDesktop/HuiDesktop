@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.Core", "HuiDeskt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.Wpf", "HuiDesktop.Wpf\HuiDesktop.Wpf.csproj", "{E52C4750-D65D-4751-9C90-ED99B75647AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.NextGen", "HuiDesktop.NextGen\HuiDesktop.NextGen.csproj", "{DE473904-2DFD-41C9-BD25-9A72803C7F1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,14 @@ Global
 		{E52C4750-D65D-4751-9C90-ED99B75647AB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E52C4750-D65D-4751-9C90-ED99B75647AB}.Release|x64.ActiveCfg = Release|Any CPU
 		{E52C4750-D65D-4751-9C90-ED99B75647AB}.Release|x64.Build.0 = Release|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Debug|x64.Build.0 = Debug|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Release|x64.ActiveCfg = Release|Any CPU
+		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
