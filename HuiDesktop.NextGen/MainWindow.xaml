@@ -3,10 +3,41 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
         xmlns:local="clr-namespace:HuiDesktop.NextGen"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Label Content="HuiDesktop" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label Content="NextGen" HorizontalAlignment="Left" Margin="160,22,0,0" VerticalAlignment="Top"/>
+        <Label Content="version: 2.0.0" HorizontalAlignment="Left" Margin="220,22,0,0" VerticalAlignment="Top"/>
+        <Button Content="新建一个应用" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="145"/>
+        <Button Content="预置包管理" Margin="487,55,160,0" VerticalAlignment="Top"/>
+        <Button Content="首选项" Margin="637,55,10,0" VerticalAlignment="Top"/>
+        <pu:WaterfallViewer Margin="10,100,10,10" Groups="5" ChildrenShape="Square" BorderBrush="LightGray" BorderThickness="1">
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+            <Grid Background="#EEEEEE" />
+            <Grid Background="#DDDDDD" />
+        </pu:WaterfallViewer>
     </Grid>
 </Window>

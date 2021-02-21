@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:HuiDesktop.NextGen"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="pack://application:,,,/Panuon.UI.Silver;component/Control.xaml" />
     </Application.Resources>
 </Application>
