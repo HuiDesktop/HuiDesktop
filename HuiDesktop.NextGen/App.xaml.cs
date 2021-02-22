@@ -13,5 +13,11 @@ namespace HuiDesktop.NextGen
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            FileSystemManager.SetPath();
+            ModuleManager.LoadModules(FileSystemManager.ModulePath);
+            base.OnStartup(e);
+        }
     }
 }

@@ -12,7 +12,7 @@
         <Label Content="NextGen" HorizontalAlignment="Left" Margin="160,22,0,0" VerticalAlignment="Top"/>
         <Label Content="version: 2.0.0" HorizontalAlignment="Left" Margin="220,22,0,0" VerticalAlignment="Top"/>
         <Button Content="新建一个应用" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="145" Click="CreateSandboxButtonClick"/>
-        <Button Content="预置包管理" Margin="487,55,160,0" VerticalAlignment="Top"/>
+        <Button Content="预置包管理" Margin="487,55,160,0" VerticalAlignment="Top" Click="ModuleManageButtonClick"/>
         <Button Content="首选项" Margin="637,55,10,0" VerticalAlignment="Top"/>
         <pu:WaterfallViewer Margin="10,100,10,10" Groups="5" ChildrenShape="Square" BorderBrush="LightGray" BorderThickness="1">
             <Grid Background="#EEEEEE" />

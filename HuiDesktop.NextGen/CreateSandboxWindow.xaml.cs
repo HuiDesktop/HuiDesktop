@@ -17,9 +17,9 @@ namespace HuiDesktop.NextGen
     /// <summary>
     /// CreateSandbox.xaml 的交互逻辑
     /// </summary>
-    public partial class CreateSandbox : Window
+    public partial class CreateSandboxWindow : Window
     {
-        public CreateSandbox()
+        public CreateSandboxWindow()
         {
             InitializeComponent();
             StartupModules.ItemsSource = new List<string> { "Browser模式（HTTP）", "Browser模式（本地文件）" };

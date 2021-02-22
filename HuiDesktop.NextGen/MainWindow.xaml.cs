@@ -27,7 +27,12 @@ namespace HuiDesktop.NextGen
 
         private void CreateSandboxButtonClick(object sender, RoutedEventArgs e)
         {
-            new CreateSandbox().ShowDialog();
+            new CreateSandboxWindow().ShowDialog();
+        }
+
+        private void ModuleManageButtonClick(object sender, RoutedEventArgs e)
+        {
+            new ModuleManagerWindow().ShowDialog();
         }
     }
 }
