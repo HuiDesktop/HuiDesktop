@@ -27,6 +27,21 @@ namespace HuiDesktop.NextGen
         }
     }
 
+    class ModuleForList
+    {
+        public readonly Module module;
+
+        public ModuleForList(Module module)
+        {
+            this.module = module;
+        }
+
+        public override string ToString()
+        {
+            return $"{module.FriendlyName}({module.Name})";
+        }
+    }
+
     public static class ModuleManager
     {
         public static Dictionary<Guid, Module> ModuleDictionary { get; private set; } = new Dictionary<Guid, Module>();
@@ -70,10 +85,10 @@ namespace HuiDesktop.NextGen
             }
         }
 
-        public static void LoadModules(string basePath)
+        public static void LoadModules()
         {
             ModuleDictionary = new Dictionary<Guid, Module>();
-            var logger = new Logger(basePath);
+            var logger = new Logger(FileSystemManager.ModulePath);
             void TryLoadModule(string path)
             {
                 var configFile = Path.Combine(path, "config.json");
@@ -151,16 +166,16 @@ namespace HuiDesktop.NextGen
             }
             try
             {
-                if (Directory.Exists(basePath))
+                if (Directory.Exists(FileSystemManager.ModulePath))
                 {
-                    foreach (var path in Directory.EnumerateDirectories(basePath))
+                    foreach (var path in Directory.EnumerateDirectories(FileSystemManager.ModulePath))
                     {
                         TryLoadModule(path);
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"{basePath} not exists.");
+                    Console.WriteLine($"{FileSystemManager.ModulePath} not exists.");
                 }
             }
             catch (Exception e)

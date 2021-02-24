@@ -16,7 +16,8 @@ namespace HuiDesktop.NextGen
         protected override void OnStartup(StartupEventArgs e)
         {
             FileSystemManager.SetPath();
-            ModuleManager.LoadModules(FileSystemManager.ModulePath);
+            ModuleManager.LoadModules();
+            SandboxManager.LoadSandboxes();
             base.OnStartup(e);
         }
     }

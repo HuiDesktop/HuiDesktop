@@ -55,7 +55,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="CreateSandboxWindow.xaml">
+    <Compile Include="CreateSandboxDialog.xaml.cs">
+      <DependentUpon>CreateSandboxDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SandboxManager.cs" />
+    <Compile Include="SandboxPreview.xaml.cs">
+      <DependentUpon>SandboxPreview.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CreateSandboxDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SandboxManageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -67,8 +78,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CreateSandboxWindow.xaml.cs">
-      <DependentUpon>CreateSandboxWindow.xaml</DependentUpon>
+    <Compile Include="SandboxManageWindow.xaml.cs">
+      <DependentUpon>SandboxManageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileSystemManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -76,6 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ModuleManagerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SandboxPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

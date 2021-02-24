@@ -23,16 +23,36 @@ namespace HuiDesktop.NextGen
         public MainWindow()
         {
             InitializeComponent();
+            LoadSandboxes();
+        }
+
+        private void LoadSandboxes()
+        {
+            SandboxWaterfallViewer.Children.Clear();
+            foreach (var i in SandboxManager.SandboxDictionary)
+            {
+                SandboxWaterfallViewer.Children.Add(new SandboxPreview(i.Value, LoadSandboxes));
+            }
         }
 
         private void CreateSandboxButtonClick(object sender, RoutedEventArgs e)
         {
-            new CreateSandboxWindow().ShowDialog();
+            var win = new CreateSandboxDialog();
+            win.ShowDialog();
+            if (win.DialogResult == true && !string.IsNullOrEmpty(win.SandboxName))
+            {
+                new SandboxManageWindow(win.SandboxName).ShowDialog();
+                SandboxManager.LoadSandboxes();
+                LoadSandboxes();
+            }
         }
 
         private void ModuleManageButtonClick(object sender, RoutedEventArgs e)
         {
             new ModuleManagerWindow().ShowDialog();
+            ModuleManager.LoadModules();
+            SandboxManager.LoadSandboxes();
+            LoadSandboxes();
         }
     }
 }

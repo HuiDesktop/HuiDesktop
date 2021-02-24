@@ -25,21 +25,6 @@ namespace HuiDesktop.NextGen
             LoadList();
         }
 
-        class ModuleForList
-        {
-            public readonly Module module;
-
-            public ModuleForList(Module module)
-            {
-                this.module = module;
-            }
-
-            public override string ToString()
-            {
-                return $"{module.FriendlyName}({module.Name})";
-            }
-        }
-
         private void LoadList()
         {
             var list = new List<ModuleForList>();
@@ -69,7 +54,7 @@ namespace HuiDesktop.NextGen
 
         private void RefreshListButtonClicked(object sender, RoutedEventArgs e)
         {
-            ModuleManager.LoadModules(FileSystemManager.ModulePath);
+            ModuleManager.LoadModules();
             LoadList();
         }
 
