@@ -24,6 +24,33 @@ namespace HuiDesktop.NextGen
         {
             InitializeComponent();
             LoadSandboxes();
+            VersionLabel.Content = UpdateService.Version;
+            if (AppConfig.Instance.AutoCheckUpdate)
+            {
+                UpdateNotifyLabel.Content = "正在检测更新...";
+                UpdateService.GetLatestVersion().ContinueWith(task =>
+                {
+                    if (string.IsNullOrEmpty(task.Result))
+                    {
+                        Dispatcher.Invoke(() => UpdateNotifyLabel.Content = "更新检测失败");
+                    }
+                    else if (task.Result == UpdateService.Version)
+                    {
+                        Dispatcher.Invoke(() => UpdateNotifyLabel.Content = "当前为最新版本");
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            UpdateNotifyLabel.Content = "点击更新：" + task.Result;
+                            UpdateNotifyLabel.MouseDown += (_, __) =>
+                            {
+                                System.Diagnostics.Process.Start(UpdateService.ViewUpdatePage);
+                            };
+                        });
+                    }
+                });
+            }
         }
 
         private void LoadSandboxes()

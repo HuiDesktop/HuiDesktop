@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,13 +56,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppConfig.cs" />
+    <Compile Include="AppConfigWindow.xaml.cs">
+      <DependentUpon>AppConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreateSandboxDialog.xaml.cs">
       <DependentUpon>CreateSandboxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NextGenRequestHandler.cs" />
     <Compile Include="SandboxManager.cs" />
     <Compile Include="SandboxPreview.xaml.cs">
       <DependentUpon>SandboxPreview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UpdateService.cs" />
+    <Page Include="AppConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateSandboxDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -129,12 +140,25 @@
     <PackageReference Include="AvalonEdit">
       <Version>6.0.1</Version>
     </PackageReference>
+    <PackageReference Include="CefSharp.Common">
+      <Version>75.1.143</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Panuon.UI.Silver">
       <Version>1.1.3.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HuiDesktop.CommonInterface\HuiDesktop.Core.csproj">
+      <Project>{6d5b86b4-dab4-4ddc-a025-03cddea5409a}</Project>
+      <Name>HuiDesktop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HuiDesktop.Wpf\HuiDesktop.Wpf.csproj">
+      <Project>{e52c4750-d65d-4751-9c90-ed99b75647ab}</Project>
+      <Name>HuiDesktop.Wpf</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
