@@ -15,6 +15,8 @@ namespace HuiDesktop.NextGen
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            AppDomain.CurrentDomain.AssemblyResolve += CefStartupInitialize.Resolver;
+
             FileSystemManager.SetPath();
             ModuleManager.LoadModules();
             SandboxManager.LoadSandboxes();

@@ -46,9 +46,9 @@ namespace HuiDesktop.NextGen
             ModuleNameTextBox.Text = module.ToString();
             EntryTextBox.Text = module.module.Entry;
             GuidTextBox.Text = module.module.Guid.ToString();
-            if (EntryTextBox.Text.StartsWith($"hdt://{GuidTextBox.Text}/", StringComparison.OrdinalIgnoreCase))
+            if (EntryTextBox.Text.StartsWith($"https://huidesktop/{GuidTextBox.Text}/", StringComparison.OrdinalIgnoreCase))
             {
-                EntryTextBox.Text = "<ModuleRoot>/" + EntryTextBox.Text.Substring($"hdt://{GuidTextBox.Text}/".Length);
+                EntryTextBox.Text = "<ModuleRoot>/" + EntryTextBox.Text.Substring($"https://huidesktop/{GuidTextBox.Text}/".Length);
             }
         }
 

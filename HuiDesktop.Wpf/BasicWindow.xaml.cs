@@ -25,11 +25,23 @@ namespace HuiDesktop
         public ChromiumWebBrowser browser;
         public NotifyIcon notifyIcon = new NotifyIcon();
         private JsApi api;
-        private RequestHandler requestHandler;
 
         public BasicWindow(Package.StartupInfo info)
         {
-            CefInitialize.InitializeCefSharp();
+            var requestHandler = new RequestHandler();
+            requestHandler.AddPackage(info.fromPackage);
+            foreach (var i in info.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
+            Startup(requestHandler, info.url, GlobalSettings.DisableBlackList);
+        }
+
+        public BasicWindow(RequestHandler requestHandler, string url, bool disableBlackList)
+        {
+            Startup(requestHandler, url, disableBlackList);
+        }
+
+        public void Startup(RequestHandler requestHandler, string url, bool disableBlackList)
+        {
+            CefInitialize.InitializeCefSharp(disableBlackList);
             InitializeComponent();
 
             Top = 0;
@@ -47,12 +59,8 @@ namespace HuiDesktop
             notifyIcon.ContextMenu.MenuItems.Add(new System.Windows.Forms.MenuItem("设置", ContextMenu_Settings));
             notifyIcon.ContextMenu.MenuItems.Add(new System.Windows.Forms.MenuItem("退出", ContextMenu_Exit));
 
-            requestHandler = new RequestHandler();
-            requestHandler.AddPackage(info.fromPackage);
-            foreach (var i in info.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
-
             browser = new ChromiumWebBrowser();
-            browser.BrowserSettings = new BrowserSettings { WindowlessFrameRate = GlobalSettings.FrameRate, LocalStorage = CefState.Enabled };
+            browser.BrowserSettings = new BrowserSettings { WindowlessFrameRate = 60, LocalStorage = CefState.Enabled };
             AddChild(browser);
 
             api = new JsApi(this);
@@ -61,7 +69,7 @@ namespace HuiDesktop
             browser.JavascriptObjectRepository.Register("huiDesktopAsync", api, true, new BindingOptions { CamelCaseJavascriptNames = false });
             browser.MenuHandler = new NullMenuHandler();
 
-            browser.Address = info.url;
+            browser.Address = url;
         }
 
         private void NotifyIcon_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -106,7 +114,7 @@ namespace HuiDesktop
 
     static class CefInitialize
     {
-        public static void InitializeCefSharp()
+        public static void InitializeCefSharp(bool disableBlackList)
         {
             CefSharpSettings.LegacyJavascriptBindingEnabled = true;
             CefSharpSettings.WcfEnabled = true;
@@ -119,7 +127,7 @@ namespace HuiDesktop
                 LogFile = ApplicationInfo.RelativePath("Debug.log"),
                 AcceptLanguageList = "zh-CN,en-US,en"
             };
-            if (GlobalSettings.DisableBlackList)
+            if (disableBlackList)
             {
                 settings.CefCommandLineArgs.Add("enable-webgl", "1");
                 settings.CefCommandLineArgs.Add("ignore-gpu-blacklist", "1");
@@ -236,6 +244,8 @@ namespace HuiDesktop
                 if (button != e.ChangedButton) return;
                 e.Handled = true;
                 busy = false;
+                System.Diagnostics.Debug.WriteLine("Up");
+                System.Diagnostics.Debug.Flush();
                 Mouse.Capture(null);
                 browser.GetBrowser().MainFrame.ExecuteJavaScriptAsync(CallWithTryCatch($"huiDesktop_DragMove_OnMouse{button}{(joke ? "Click" : "Up")}()"), browser.Address);
             }

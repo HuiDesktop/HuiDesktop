@@ -59,7 +59,12 @@ namespace HuiDesktop.NextGen
 
         private void RunButtonClicked(object sender, RoutedEventArgs e)
         {
-
+            if (sandbox.MainModule != null)
+            {
+                var win = new BasicWindow(new NextGenRequestHandler(sandbox), sandbox.MainModule.Entry, AppConfig.Instance.ForceWebGL);
+                win.Show();
+                Application.Current.MainWindow.Close();
+            }
         }
 
         private void ManageButtonClicked(object sender, RoutedEventArgs e)

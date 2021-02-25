@@ -54,5 +54,10 @@ namespace HuiDesktop.NextGen
             SandboxManager.LoadSandboxes();
             LoadSandboxes();
         }
+
+        private void AppConfigButtonClicked(object sender, RoutedEventArgs e)
+        {
+            new AppConfigWindow().ShowDialog();
+        }
     }
 }
