@@ -102,33 +102,33 @@ namespace HuiDesktop.NextGen
 
         private void Window_Drop(object sender, DragEventArgs e)
         {
-            foreach (var file in e.Data.GetData(DataFormats.FileDrop) as string[])
-            {
-                try
-                {
-                    using (var fs = File.OpenRead(file))
-                    using (var zip = new ZipArchive(fs, ZipArchiveMode.Read))
-                    {
-                        if (zip.GetEntry("hdt.desc") is var descEntry)
-                        {
-                            using (var desc = descEntry.Open())
-                            using (var sr = new StreamReader(desc))
-                            {
-                                if (sr.ReadLine() != "HuiDesktop.NextGen Package")
-                                {
-                                    Debug.WriteLine("Failed: Special line");
-                                    continue;
-                                }
-                                switch (sr.ReadLine())
-                                {
-                                    case "Sandbox":
-                                        var dialog = new CreateSandboxDialog();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            //foreach (var file in e.Data.GetData(DataFormats.FileDrop) as string[])
+            //{
+            //    try
+            //    {
+            //        using (var fs = File.OpenRead(file))
+            //        using (var zip = new ZipArchive(fs, ZipArchiveMode.Read))
+            //        {
+            //            if (zip.GetEntry("hdt.desc") is var descEntry)
+            //            {
+            //                using (var desc = descEntry.Open())
+            //                using (var sr = new StreamReader(desc))
+            //                {
+            //                    if (sr.ReadLine() != "HuiDesktop.NextGen Package")
+            //                    {
+            //                        Debug.WriteLine("Failed: Special line");
+            //                        continue;
+            //                    }
+            //                    switch (sr.ReadLine())
+            //                    {
+            //                        case "Sandbox":
+            //                            var dialog = new CreateSandboxDialog();
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 }
