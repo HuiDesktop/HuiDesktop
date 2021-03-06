@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,6 +88,47 @@ namespace HuiDesktop.NextGen
         private void AppConfigButtonClicked(object sender, RoutedEventArgs e)
         {
             new AppConfigWindow().ShowDialog();
+        }
+
+        private void OpenUserDataFolderClicked(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", FileSystemManager.BasePath);
+        }
+
+        private void Window_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effects = DragDropEffects.Copy;
+        }
+
+        private void Window_Drop(object sender, DragEventArgs e)
+        {
+            foreach (var file in e.Data.GetData(DataFormats.FileDrop) as string[])
+            {
+                try
+                {
+                    using (var fs = File.OpenRead(file))
+                    using (var zip = new ZipArchive(fs, ZipArchiveMode.Read))
+                    {
+                        if (zip.GetEntry("hdt.desc") is var descEntry)
+                        {
+                            using (var desc = descEntry.Open())
+                            using (var sr = new StreamReader(desc))
+                            {
+                                if (sr.ReadLine() != "HuiDesktop.NextGen Package")
+                                {
+                                    Debug.WriteLine("Failed: Special line");
+                                    continue;
+                                }
+                                switch (sr.ReadLine())
+                                {
+                                    case "Sandbox":
+                                        var dialog = new CreateSandboxDialog();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

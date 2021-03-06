@@ -44,10 +44,15 @@ namespace HuiDesktop.DirectComposition
             browser.MenuHandler = new NullMenuHandler();
             browser.RenderHandler = new DirectCompositionRenderHandler(application.mainWindow.UpdateFrame, application.mainWindow);
             api = new(application.mainWindow, browser);
-            browser.JavascriptObjectRepository.Register(name: "huiDesktop",
-                                                        objectToBind: api,
-                                                        isAsync: false,
-                                                        options: new BindingOptions { CamelCaseJavascriptNames = false });
+            browser.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
+            browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
+            {
+                if (e.ObjectName == CefSharp.Internals.JavascriptObjectRepository.LegacyObjects)
+                {
+                    //ADD YOUR LEGACY
+                    e.ObjectRepository.Register(name: "huiDesktop", objectToBind: api, isAsync: false);
+                }
+            };
 
             var info = new WindowInfo();
             info.SetAsWindowless(IntPtr.Zero);

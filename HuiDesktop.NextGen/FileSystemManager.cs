@@ -9,16 +9,18 @@ namespace HuiDesktop.NextGen
 {
     static class FileSystemManager
     {
+        public static string BasePath { get; set; }
         public static string ModulePath { get; private set; }
         public static string SandboxPath { get; private set; }
         public static string AppConfigPath { get; private set; }
 
         public static void SetPath()
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "HuixStudio", "HuiDesktopNextGen");
-            ModulePath = Path.Combine(path, "Modules");
-            SandboxPath = Path.Combine(path, "Sandboxes");
-            AppConfigPath= Path.Combine(path, "config.json");
+            if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Files"))) BasePath = Path.Combine(Environment.CurrentDirectory, "Files");
+            else BasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "HuixStudio", "HuiDesktopNextGen");
+            ModulePath = Path.Combine(BasePath, "Modules");
+            SandboxPath = Path.Combine(BasePath, "Sandboxes");
+            AppConfigPath= Path.Combine(BasePath, "config.json");
             if (!Directory.Exists(ModulePath)) Directory.CreateDirectory(ModulePath);
             if (!Directory.Exists(SandboxPath)) Directory.CreateDirectory(SandboxPath);
             AppConfig.Load();

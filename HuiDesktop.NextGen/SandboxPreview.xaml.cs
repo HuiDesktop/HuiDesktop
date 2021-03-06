@@ -61,10 +61,22 @@ namespace HuiDesktop.NextGen
         {
             if (sandbox.MainModule != null)
             {
-                var win = new BasicWindow(new NextGenRequestHandler(sandbox), sandbox.MainModule.Entry, AppConfig.Instance.ForceWebGL);
-                win.Show();
+                Wpf();
                 Application.Current.MainWindow.Close();
             }
+        }
+
+        private void Wpf()
+        {
+            var win = new BasicWindow(new NextGenRequestHandler(sandbox), sandbox.MainModule.Entry, AppConfig.Instance.ForceWebGL);
+            win.Show();
+        }
+
+        private void Dc()
+        {
+            var requestHandler = new NextGenRequestHandler(sandbox);
+            var start = new DirectComposition.CefApplication(sandbox.MainModule.Entry, requestHandler);
+            start.Run();
         }
 
         private void ManageButtonClicked(object sender, RoutedEventArgs e)

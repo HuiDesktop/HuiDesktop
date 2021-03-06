@@ -6,7 +6,7 @@
         xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
         xmlns:local="clr-namespace:HuiDesktop.NextGen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" AllowDrop="True" DragEnter="Window_DragEnter" Drop="Window_Drop">
     <Grid>
         <Label Content="HuiDesktop" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="24"/>
         <Label Content="NextGen" HorizontalAlignment="Left" Margin="160,22,0,0" VerticalAlignment="Top"/>
@@ -15,8 +15,9 @@
         <Button Content="预置包管理" Margin="487,55,160,0" VerticalAlignment="Top" Click="ModuleManageButtonClick"/>
         <Button Content="首选项" Margin="637,55,10,0" VerticalAlignment="Top" Click="AppConfigButtonClicked"/>
         <pu:WaterfallViewer x:Name="SandboxWaterfallViewer" Margin="10,100,10,10" Groups="5" ChildrenShape="Square" BorderBrush="LightGray" BorderThickness="1"/>
-        <Button IsEnabled="False" Content="管理无效应用文件夹" HorizontalAlignment="Left" Margin="160,55,0,0" VerticalAlignment="Top" Width="145" Click="CreateSandboxButtonClick"/>
+        <Button Content="打开用户数据目录" HorizontalAlignment="Left" Margin="160,55,0,0" VerticalAlignment="Top" Width="145" Click="OpenUserDataFolderClicked"/>
         <Label x:Name="UpdateNotifyLabel" Content="自动检测更新被禁用" HorizontalAlignment="Left" Margin="637,22,0,0" VerticalAlignment="Top" Width="145"/>
         <Label Content="内测版本，不代表最终品质" HorizontalAlignment="Left" Margin="310,22,0,0" VerticalAlignment="Top"/>
+        <Label Content="直接拖入.hdp即可导入" HorizontalAlignment="Left" Margin="310,53,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

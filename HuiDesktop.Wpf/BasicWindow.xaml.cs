@@ -65,9 +65,16 @@ namespace HuiDesktop
 
             api = new JsApi(this);
             browser.RequestHandler = requestHandler;
-            browser.JavascriptObjectRepository.Register("huiDesktop", api, false, new BindingOptions { CamelCaseJavascriptNames = false });
-            browser.JavascriptObjectRepository.Register("huiDesktopAsync", api, true, new BindingOptions { CamelCaseJavascriptNames = false });
             browser.MenuHandler = new NullMenuHandler();
+            browser.JavascriptObjectRepository.Settings.LegacyBindingEnabled = true;
+            browser.JavascriptObjectRepository.ResolveObject += (s, e) =>
+            {
+                if (e.ObjectName == CefSharp.Internals.JavascriptObjectRepository.LegacyObjects)
+                {
+                    //ADD YOUR LEGACY
+                    e.ObjectRepository.Register(name: "huiDesktop", objectToBind: api, isAsync: false);
+                }
+            };
 
             browser.Address = url;
         }
@@ -116,7 +123,6 @@ namespace HuiDesktop
     {
         public static void InitializeCefSharp(bool disableBlackList)
         {
-            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
             CefSharpSettings.WcfEnabled = true;
 
             var settings = new CefSettings
