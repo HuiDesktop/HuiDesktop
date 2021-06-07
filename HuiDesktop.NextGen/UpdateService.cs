@@ -17,7 +17,7 @@ namespace HuiDesktop.NextGen
         {
             var client = new HttpClient();
             var res = await client.GetAsync("https://stable-service.huix.cc/update/huidesktop/latest.html");
-            if (res.IsSuccessStatusCode) return await res.Content.ReadAsStringAsync();
+            if (res.IsSuccessStatusCode) return (await res.Content.ReadAsStringAsync()).Trim();
             return string.Empty;
         }
     }

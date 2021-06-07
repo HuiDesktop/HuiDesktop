@@ -36,7 +36,10 @@
         <CheckBox IsChecked="{Binding Path=JoinSharePlan}" x:Name="CheckUpdateOnStartup_Copy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center"/>
         <Button Content="查看日志上传记录" HorizontalAlignment="Left" VerticalAlignment="Center" Width="352" Grid.Row="5" Grid.Column="2" Margin="0,2"/>
         <Label Grid.Row="6" Content="手动检查更新：" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="检查更新" HorizontalAlignment="Left" VerticalAlignment="Center" Width="240" Grid.Row="6" Grid.Column="1" Margin="0,2" Click="CheckUpdateButtonClicked"/>
+        <Button x:Name="CheckUpdateButton" Content="检查更新" HorizontalAlignment="Left" VerticalAlignment="Center" Width="240" Grid.Row="6" Grid.Column="1" Margin="0,2" Click="CheckUpdateButtonClicked"/>
         <Button FontFamily="{StaticResource FontAwesome}" Content="&#xF00C;" FontSize="24" HorizontalAlignment="Right" Width="40" Click="SaveButtonClicked" Grid.Column="2"/>
+        <Label x:Name="UpdateInfoLabel" Content="QwQ" Grid.Column="2" Grid.Row="6"/>
+        <Label Grid.Row="0" Content="请保存 ——&gt;" HorizontalAlignment="Left" FontSize="24" Grid.Column="2" Background="Yellow" Foreground="Red"/>
+        <Label Grid.Row="7" Content="内测版本强制启动时上传记录，谢谢支持！" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Width="352"/>
     </Grid>
 </Window>

@@ -32,9 +32,35 @@ namespace HuiDesktop.NextGen
             DialogResult = true;
         }
 
-        private void CheckUpdateButtonClicked(object sender, RoutedEventArgs e)
+        async private void CheckUpdateButtonClicked(object sender, RoutedEventArgs e)
         {
-
+            CheckUpdateButton.IsEnabled = false;
+            UpdateInfoLabel.Content = "检查中...";
+            try
+            {
+                var r = await UpdateService.GetLatestVersion();
+                if (!string.IsNullOrEmpty(r) && r != UpdateService.Version)
+                {
+                    UpdateInfoLabel.Content = "检测到最新版，正在打开浏览器";
+                    System.Diagnostics.Process.Start(UpdateService.ViewUpdatePage);
+                }
+                else if (r == UpdateService.Version)
+                {
+                    UpdateInfoLabel.Content = "是最新版，好耶ヾ(✿ﾟ▽ﾟ)ノ";
+                }
+                else
+                {
+                    UpdateInfoLabel.Content = "检查失败";
+                }
+            }
+            catch
+            {
+                
+            }
+            finally
+            {
+                CheckUpdateButton.IsEnabled = true;
+            }
         }
     }
 }

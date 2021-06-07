@@ -26,6 +26,22 @@ namespace HuiDesktop.NextGen
         public MainWindow()
         {
             InitializeComponent();
+
+            VersionLabel.Content = $"version: {UpdateService.Version}";
+
+            object operation = null;
+            operation = HuiDesktopProtocolHelper.CheckType(Environment.GetCommandLineArgs());
+            if (operation != null)
+            {
+                if (operation is HuiDesktopProtocolHelper.DownloadPackageRequest downloadPackageRequest)
+                {
+                    var win = new DownloadPackageDialog(downloadPackageRequest.path, downloadPackageRequest.name);
+                    if (win.ShowDialog() == true)
+                    {
+                        SandboxManager.LoadSandboxes();
+                    }
+                }
+            }
             LoadSandboxes();
             VersionLabel.Content = UpdateService.Version;
             if (AppConfig.Instance.AutoCheckUpdate)
@@ -129,6 +145,11 @@ namespace HuiDesktop.NextGen
             //        }
             //    }
             //}
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(UpdateService.ViewUpdatePage);
         }
     }
 }

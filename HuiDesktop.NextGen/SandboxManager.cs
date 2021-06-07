@@ -52,5 +52,12 @@ namespace HuiDesktop.NextGen
                 }
             }
         }
+
+        public static string CreateEmptySandbox(string name)
+        {
+            var r = Path.Combine(FileSystemManager.SandboxPath, name);
+            Directory.CreateDirectory(r);
+            return r;
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace HuiDesktop.NextGen
 
         public static void SetPath()
         {
-            if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Files"))) BasePath = Path.Combine(Environment.CurrentDirectory, "Files");
+            if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files"))) BasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files");
             else BasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "HuixStudio", "HuiDesktopNextGen");
             ModulePath = Path.Combine(BasePath, "Modules");
             SandboxPath = Path.Combine(BasePath, "Sandboxes");

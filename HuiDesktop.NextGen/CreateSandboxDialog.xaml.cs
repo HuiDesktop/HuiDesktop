@@ -23,9 +23,10 @@ namespace HuiDesktop.NextGen
     {
         public string SandboxName => SandboxNameTextBox.Text;
 
-        public CreateSandboxDialog()
+        public CreateSandboxDialog(string defaultName = "")
         {
             InitializeComponent();
+            SandboxNameTextBox.Text = defaultName;
             Height = 23 + 40 + SystemParameters.CaptionHeight; // 23: TextBox | 20: Blank
         }
 
