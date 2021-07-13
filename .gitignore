@@ -244,3 +244,6 @@ paket-files/
 .DS_Store
 /Src
 /TestApp/Tests/node_modules
+
+# HuiDesktop NextGen build
+/NextGenBuild
