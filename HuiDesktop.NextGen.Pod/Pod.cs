@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -55,15 +56,26 @@ namespace HuiDesktop.NextGen.Pod
         /// <summary>
         /// 便于枚举此Pod实现的feature
         /// </summary>
-        public IEnumerator<string> Features => features.GetEnumerator();
+        public IEnumerable<string> Features => features.AsEnumerable();
 
         /// <summary>
         /// 便于枚举此Pod的依赖
         /// </summary>
-        public IEnumerator<PodDependency> Dependencies => dependencies.AsEnumerable().GetEnumerator();
+        public IEnumerable<PodDependency> Dependencies => dependencies.AsEnumerable();
 
         public Pod(Guid id, string name, string setupUrl, string launchUrl, string root, string[] features, PodDependency[] dependencies)
         {
+            if (id == Guid.Empty) throw new ArgumentException("零GUID被禁止使用", nameof(id));
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("空名称被禁止使用", nameof(name));
+            if (!Directory.Exists(root)) throw new ArgumentException("路径不存在", nameof(root));
+            foreach (var i in features)
+            {
+                if (!Regex.IsMatch(i, "^[a-zA-Z][a-zA-Z0-9.]+$")) throw new FormatException($"无效的Feature名称: \"{i}\"");
+            }
+            foreach (var i in dependencies)
+            {
+                if (!Regex.IsMatch(i.FeatureName, "^[a-zA-Z][a-zA-Z0-9.]+$")) throw new FormatException($"无效的Feature名称: \"{i.FeatureName}\"");
+            }
             Id = id;
             Name = name;
             SetupUrl = setupUrl;
@@ -73,6 +85,7 @@ namespace HuiDesktop.NextGen.Pod
             this.dependencies = dependencies;
         }
 
+#pragma warning disable CS0649
         private class PodJson
         {
             public Guid id;
@@ -82,6 +95,7 @@ namespace HuiDesktop.NextGen.Pod
             public string[] features;
             public string[] dependencies;
         }
+#pragma warning restore CS0649
 
         /// <summary>
         /// 从文件夹加载Pod

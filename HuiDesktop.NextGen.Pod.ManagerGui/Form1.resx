@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox2.Text" xml:space="preserve">
-    <value>《请先在右侧选择一个包，此为示例数据》
-GUID: EBC689F4-5565-4405-B164-6873AF8E3928
-Name: 长门-默认-碧蓝航线
-Setup URL:
-Launch URL: http://huidesktop/cc.huix.azurLane.frameword/index.html
-Features:
-    cc.huix.azurLane.autoGeneratePod
-Dependencies:
-    [Required]cc.huix.azurLane.frameword=87FF23A8-886B-4BD1-BBCE-B07199DBC8FF
-    [Optional]cc.huix.antiDisturb=7627C6B9-3793-4F53-AB2B-922DBE14AA35</value>
-  </data>
+  <metadata name="label1.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

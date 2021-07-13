@@ -29,69 +29,71 @@ namespace HuiDesktop.NextGen.Pod.ManagerGui
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button1 = new System.Windows.Forms.Button();
-            this.PodListBox = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            System.Windows.Forms.Label label1;
+            this.readPodsButton = new System.Windows.Forms.Button();
+            this.podListBox = new System.Windows.Forms.ListBox();
+            this.rootTextBox = new System.Windows.Forms.TextBox();
+            this.infoTextBox = new System.Windows.Forms.TextBox();
+            label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 415);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(236, 21);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "读取所有Pod";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // PodListBox
-            // 
-            this.PodListBox.FormattingEnabled = true;
-            this.PodListBox.ItemHeight = 12;
-            this.PodListBox.Location = new System.Drawing.Point(12, 12);
-            this.PodListBox.Name = "PodListBox";
-            this.PodListBox.Size = new System.Drawing.Size(236, 400);
-            this.PodListBox.TabIndex = 1;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(311, 415);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(477, 21);
-            this.textBox1.TabIndex = 2;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(252, 418);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "根路径：";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(252, 418);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(53, 12);
+            label1.TabIndex = 3;
+            label1.Text = "根路径：";
             // 
-            // textBox2
+            // readPodsButton
             // 
-            this.textBox2.Location = new System.Drawing.Point(254, 12);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(534, 397);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Text = resources.GetString("textBox2.Text");
+            this.readPodsButton.Location = new System.Drawing.Point(12, 415);
+            this.readPodsButton.Name = "readPodsButton";
+            this.readPodsButton.Size = new System.Drawing.Size(236, 21);
+            this.readPodsButton.TabIndex = 0;
+            this.readPodsButton.Text = "读取所有Pod";
+            this.readPodsButton.UseVisualStyleBackColor = true;
+            this.readPodsButton.Click += new System.EventHandler(this.ReadAllPods);
+            // 
+            // podListBox
+            // 
+            this.podListBox.FormattingEnabled = true;
+            this.podListBox.ItemHeight = 12;
+            this.podListBox.Location = new System.Drawing.Point(12, 12);
+            this.podListBox.Name = "podListBox";
+            this.podListBox.Size = new System.Drawing.Size(236, 400);
+            this.podListBox.TabIndex = 1;
+            this.podListBox.SelectedIndexChanged += new System.EventHandler(this.PodListBoxSelectedIndexChanged);
+            // 
+            // rootTextBox
+            // 
+            this.rootTextBox.Location = new System.Drawing.Point(311, 415);
+            this.rootTextBox.Name = "rootTextBox";
+            this.rootTextBox.Size = new System.Drawing.Size(477, 21);
+            this.rootTextBox.TabIndex = 2;
+            // 
+            // infoTextBox
+            // 
+            this.infoTextBox.Location = new System.Drawing.Point(254, 12);
+            this.infoTextBox.Multiline = true;
+            this.infoTextBox.Name = "infoTextBox";
+            this.infoTextBox.ReadOnly = true;
+            this.infoTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.infoTextBox.Size = new System.Drawing.Size(534, 397);
+            this.infoTextBox.TabIndex = 4;
+            this.infoTextBox.Text = "Welcome!";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.PodListBox);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.infoTextBox);
+            this.Controls.Add(label1);
+            this.Controls.Add(this.rootTextBox);
+            this.Controls.Add(this.podListBox);
+            this.Controls.Add(this.readPodsButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
@@ -103,11 +105,10 @@ namespace HuiDesktop.NextGen.Pod.ManagerGui
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox PodListBox;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button readPodsButton;
+        private System.Windows.Forms.ListBox podListBox;
+        private System.Windows.Forms.TextBox rootTextBox;
+        private System.Windows.Forms.TextBox infoTextBox;
     }
 }
 
