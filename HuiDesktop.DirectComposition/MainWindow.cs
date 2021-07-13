@@ -261,7 +261,7 @@ namespace HuiDesktop.DirectComposition
                     copyToHitTestEvent = false;
                     swapChain.CopyRegion(ctx, hitTestWindow.texture.QueryInterface<ID3D11Resource>(), hitTestRect);
                     var mapped = hitTestWindow.texture.Map(Vortice.DXGI.MapFlags.Read);
-                    hitTestWindow.OnMapped(mapped.Pitch, mapped.PBits, hitTestRect);
+                    hitTestWindow.OnMapped(mapped.Pitch, mapped.BitsPointer, hitTestRect);
                 }
             }
         }
