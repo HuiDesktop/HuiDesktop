@@ -1,9 +1,0 @@
-{
-  "scripts": {
-    "serve": "npx static-server -p 9080"
-  },
-  "private": true,
-  "dependencies": {
-    "static-server": "^2.2.1"
-  }
-}
