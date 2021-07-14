@@ -1,7 +1,9 @@
 ﻿using CefSharp;
 using CefSharp.Wpf;
+using HuiDesktop.Wpf.Play;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,6 +75,7 @@ namespace HuiDesktop
                 {
                     //ADD YOUR LEGACY
                     e.ObjectRepository.Register(name: "huiDesktop", objectToBind: api, isAsync: false);
+                    e.ObjectRepository.Register("huiDesktopPlay", new PlayApi(browser), isAsync: false);
                 }
             };
 
@@ -139,6 +142,44 @@ namespace HuiDesktop
                 settings.CefCommandLineArgs.Add("ignore-gpu-blacklist", "1");
             }
             CefSharp.Cef.Initialize(settings);
+        }
+    }
+
+    class PlayApi
+    {
+        KeyboardHook hook;
+        string name = null;
+        ChromiumWebBrowser browser;
+
+        public static string CallWithTryCatch(string name)
+            => $"try{{{name}}}catch(e){{}}";
+
+        public PlayApi(ChromiumWebBrowser browser)
+        {
+            this.browser = browser;
+            hook = new KeyboardHook();
+            hook.OnKeyDownEvent += x =>
+            {
+                Debug.WriteLine(x, "key down");
+                if (name != null)
+                {
+                    browser.GetBrowser().MainFrame.ExecuteJavaScriptAsync(CallWithTryCatch($"{name}(0, {x})"));
+                }
+            };
+            hook.OnKeyUpEvent += x =>
+            {
+                Debug.WriteLine(x, "key up");
+                if (name != null)
+                {
+                    browser.GetBrowser().MainFrame.ExecuteJavaScriptAsync(CallWithTryCatch($"{name}(1, {x})"));
+                }
+            };
+            hook.SetHook();
+        }
+
+        public void SetReceiver(string name)
+        {
+            this.name = name;
         }
     }
 
