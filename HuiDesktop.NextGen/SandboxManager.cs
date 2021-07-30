@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HuiDesktop.NextGen
 {
+    [Obsolete]
     public class Sandbox
     {
         public string SandboxName { get; }
@@ -32,6 +33,7 @@ namespace HuiDesktop.NextGen
         }
     }
 
+    [Obsolete]
     static class SandboxManager
     {
         public static Dictionary<string, Sandbox> SandboxDictionary { get; private set; } = new Dictionary<string, Sandbox>();

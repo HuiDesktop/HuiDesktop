@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace HuiDesktop.NextGen
 {
 
+    [Obsolete]
     public class Module
     {
         public Guid Guid { get; }
@@ -27,6 +28,7 @@ namespace HuiDesktop.NextGen
         }
     }
 
+    [Obsolete]
     class ModuleForList
     {
         public readonly Module module;
@@ -42,6 +44,7 @@ namespace HuiDesktop.NextGen
         }
     }
 
+    [Obsolete]
     public static class ModuleManager
     {
         public static Dictionary<Guid, Module> ModuleDictionary { get; private set; } = new Dictionary<Guid, Module>();
