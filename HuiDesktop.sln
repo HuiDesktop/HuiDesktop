@@ -11,12 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.Wpf", "HuiDeskto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.NextGen", "HuiDesktop.NextGen\HuiDesktop.NextGen.csproj", "{DE473904-2DFD-41C9-BD25-9A72803C7F1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.NextGen.Pod", "HuiDesktop.NextGen.Pod\HuiDesktop.NextGen.Pod.csproj", "{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NextGen.Pod", "NextGen.Pod", "{353BF8E1-9299-4696-96A5-0DC000A0597E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.NextGen.Pod.ManagerGui", "HuiDesktop.NextGen.Pod.ManagerGui\HuiDesktop.NextGen.Pod.ManagerGui.csproj", "{033159D7-ACDA-4CB6-A499-114E949C6F26}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,29 +51,9 @@ Global
 		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Release|x64.ActiveCfg = Release|Any CPU
 		{DE473904-2DFD-41C9-BD25-9A72803C7F1E}.Release|x64.Build.0 = Release|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Debug|x64.Build.0 = Debug|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Release|x64.ActiveCfg = Release|Any CPU
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7}.Release|x64.Build.0 = Release|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Debug|x64.Build.0 = Debug|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Release|x64.ActiveCfg = Release|Any CPU
-		{033159D7-ACDA-4CB6-A499-114E949C6F26}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{5743FFCB-95DB-41C4-929B-B7CF8679B7A7} = {353BF8E1-9299-4696-96A5-0DC000A0597E}
-		{033159D7-ACDA-4CB6-A499-114E949C6F26} = {353BF8E1-9299-4696-96A5-0DC000A0597E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77C8A8D8-4BDA-4732-A187-F18BBA6A40B9}
