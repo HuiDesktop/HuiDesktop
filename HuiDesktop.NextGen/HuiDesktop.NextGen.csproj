@@ -54,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -78,6 +79,7 @@
     </Compile>
     <Compile Include="Asset\Module.cs" />
     <Compile Include="Asset\ModuleManager.cs" />
+    <Compile Include="Asset\HuiDesktopRequestHandler.cs" />
     <Compile Include="Asset\Sandbox.cs" />
     <Compile Include="Asset\SandboxManager.cs" />
     <Compile Include="DownloadPackageDialog.xaml.cs">

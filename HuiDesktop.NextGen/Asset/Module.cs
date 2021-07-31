@@ -114,6 +114,7 @@ namespace HuiDesktop.NextGen.Asset
         private readonly ModuleLaunchInfo[] setupInfos;
         private readonly ModuleSuggestion[] suggestions;
 
+        public string BasePath { get; }
         public Guid Id { get; }
         public ModuleName Name { get; }
         public string FriendlyName { get; }
@@ -122,8 +123,9 @@ namespace HuiDesktop.NextGen.Asset
         public IEnumerable<ModuleLaunchInfo> SetupInfos => setupInfos;
         public IEnumerable<ModuleSuggestion> Suggestions => suggestions;
 
-        private Module(Guid id, ModuleName name, string friendlyName, string[] features, ModuleLaunchInfoJson[] launchInfos, ModuleLaunchInfoJson[] setupInfos, ModuleSuggestion[] suggestions)
+        private Module(string basePath, Guid id, ModuleName name, string friendlyName, string[] features, ModuleLaunchInfoJson[] launchInfos, ModuleLaunchInfoJson[] setupInfos, ModuleSuggestion[] suggestions)
         {
+            BasePath = basePath;
             Id = id;
             Name = name;
             FriendlyName = friendlyName;
@@ -166,7 +168,7 @@ namespace HuiDesktop.NextGen.Asset
             var s = JsonConvert.DeserializeObject<ModuleDeclareJson>(File.ReadAllText(Path.Combine(directory, "declare.json")));
             if (s is null) throw new ArgumentException("Failed to deserialize declare.json", nameof(directory));
             if (s.Id == Guid.Empty) throw new FormatException("Module's id should not be empty");
-            return new Module(s.Id, s.Name, Path.GetFileName(directory.TrimEnd('/', '\\')), s.Featrues, s.Launch, s.Setup, s.Suggestions);
+            return new Module(directory, s.Id, s.Name, Path.GetFileName(directory.TrimEnd('/', '\\')), s.Featrues, s.Launch, s.Setup, s.Suggestions);
         }
     }
 }

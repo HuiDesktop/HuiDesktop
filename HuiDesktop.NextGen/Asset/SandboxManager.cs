@@ -16,18 +16,14 @@ namespace HuiDesktop.NextGen.Asset
             sandboxes.Clear();
             foreach (var i in Directory.EnumerateDirectories(directory))
             {
-                if (File.Exists(i + ".hdtinc"))
+                try
                 {
-
-                    try
-                    {
-                        var sandbox = Sandbox.LoadFromDirectoryWithName(directory, i.Substring(directory.Length + 1));
-                        sandboxes.Add(sandbox);
-                    }
-                    catch
-                    {
-                        //TODO: Something should be applied
-                    }
+                    var sandbox = Sandbox.LoadFromDirectory(i);
+                    sandboxes.Add(sandbox);
+                }
+                catch
+                {
+                    //TODO: Something should be applied
                 }
             }
         }

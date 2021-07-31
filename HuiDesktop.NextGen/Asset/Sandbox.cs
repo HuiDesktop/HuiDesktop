@@ -9,23 +9,21 @@ namespace HuiDesktop.NextGen.Asset
     {
         private readonly Guid[] dependencies;
 
+        public string BasePath { get; }
         public string Name { get; }
         public IEnumerable<Guid> Dependencies => dependencies;
 
-        private Sandbox(string name, Guid[] dependencies)
+        private Sandbox(string basePath, string name, Guid[] dependencies)
         {
+            BasePath = basePath;
             Name = name;
             this.dependencies = dependencies;
         }
 
-        public static Sandbox LoadFromDirectoryWithName(string directory, string name)
+        public static Sandbox LoadFromDirectory(string directory)
         {
-            if (string.IsNullOrWhiteSpace(name) || name.EndsWith(".hdtinc")) throw new ArgumentException("Invalid sandbox name.");
-            foreach (var c in Path.GetInvalidFileNameChars())
-            {
-                if (name.Contains(c)) throw new ArgumentException("Invalid sandbox name.");
-            }
-            var ls = File.ReadAllLines(Path.Combine(directory, name + ".hdtinc"));
+            if (string.IsNullOrWhiteSpace(directory)) throw new ArgumentException("Invalid sandbox name.");
+            var ls = File.ReadAllLines(Path.Combine(directory, "includes.txt"));
             var gs = new List<Guid>();
             foreach (var i in ls)
             {
@@ -39,7 +37,7 @@ namespace HuiDesktop.NextGen.Asset
                     //TODO: Something should be applied
                 }
             }
-            return new Sandbox(name, gs.ToArray());
+            return new Sandbox(directory, Path.GetFileName(directory.TrimEnd('/', '\\')), gs.ToArray());
         }
 
         /// <summary>
