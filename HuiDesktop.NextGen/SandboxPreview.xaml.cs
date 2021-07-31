@@ -20,21 +20,23 @@ namespace HuiDesktop.NextGen
     /// </summary>
     public partial class SandboxPreview : UserControl
     {
-        private readonly Sandbox sandbox;
+        private readonly Asset.Sandbox sandbox;
+        private readonly Asset.ModuleLaunchInfo startInfo;
         private readonly Action reloadRequest;
 
-        public SandboxPreview(Sandbox sandbox, Action reloadRequest)
+        public SandboxPreview(Asset.Sandbox sandbox, Asset.ModuleLaunchInfo startInfo, Action reloadRequest)
         {
             InitializeComponent();
             this.sandbox = sandbox;
+            this.startInfo = startInfo;
             this.reloadRequest = reloadRequest;
-            SandboxName.Text = sandbox.SandboxName;
-            if (sandbox.MainModule == null)
+            SandboxName.Text = $"{sandbox.Name}\r\n{startInfo.Name}";
+            if (sandbox.CheckDependencies() != Guid.Empty)
             {
                 RunButton.IsEnabled = false;
                 FailedToLoadBadge.Visibility = Visibility.Visible;
                 var stackPanel = new StackPanel();
-                stackPanel.Children.Add(new TextBlock() { Text = "无法加载启动模块" });
+                stackPanel.Children.Add(new TextBlock() { Text = "无法加载某个模块" });
                 FailedToLoadBadge.ToolTip = new ToolTip
                 {
                     Content = stackPanel
@@ -59,7 +61,7 @@ namespace HuiDesktop.NextGen
 
         private void RunButtonClicked(object sender, RoutedEventArgs e)
         {
-            if (sandbox.MainModule != null)
+            if (sandbox.CheckDependencies() == Guid.Empty)
             {
                 Wpf();
                 Application.Current.MainWindow.Close();
@@ -68,22 +70,22 @@ namespace HuiDesktop.NextGen
 
         private void Wpf()
         {
-            var win = new BasicWindow(new NextGenRequestHandler(sandbox), sandbox.MainModule.Entry, AppConfig.Instance.ForceWebGL);
+            var win = new BasicWindow(new Asset.HuiDesktopRequestHandler(sandbox), startInfo.Url, AppConfig.Instance.ForceWebGL);
             win.Show();
         }
 
-        private void Dc()
-        {
-            var requestHandler = new NextGenRequestHandler(sandbox);
-            var start = new DirectComposition.CefApplication(sandbox.MainModule.Entry, requestHandler);
-            start.Run();
-        }
+        //private void Dc()
+        //{
+        //    var requestHandler = new NextGenRequestHandler(startInfo);
+        //    var start = new DirectComposition.CefApplication(startInfo.MainModule.Entry, requestHandler);
+        //    start.Run();
+        //}
 
         private void ManageButtonClicked(object sender, RoutedEventArgs e)
         {
-            new SandboxManageWindow(sandbox.SandboxName).ShowDialog();
-            SandboxManager.LoadSandboxes();
-            reloadRequest();
+            //new SandboxManageWindow(startInfo.SandboxName).ShowDialog();
+            //SandboxManager.LoadSandboxes();
+            //reloadRequest();
         }
     }
 }

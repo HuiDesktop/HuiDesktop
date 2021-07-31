@@ -20,6 +20,32 @@ namespace HuiDesktop.NextGen.Asset
             this.dependencies = dependencies;
         }
 
+        public IEnumerable<ModuleLaunchInfo> GetLaunchInfos()
+        {
+            var l = new List<ModuleLaunchInfo>();
+            foreach (var i in dependencies)
+            {
+                if (ModuleManager.GetModule(i) is Module m)
+                {
+                    l.AddRange(m.LaunchInfos);
+                }
+            }
+            return l;
+        }
+
+        public IEnumerable<ModuleLaunchInfo> GetSetupLaunchInfos()
+        {
+            var l = new List<ModuleLaunchInfo>();
+            foreach (var i in dependencies)
+            {
+                if (ModuleManager.GetModule(i) is Module m)
+                {
+                    l.AddRange(m.SetupInfos);
+                }
+            }
+            return l;
+        }
+
         public static Sandbox LoadFromDirectory(string directory)
         {
             if (string.IsNullOrWhiteSpace(directory)) throw new ArgumentException("Invalid sandbox name.");

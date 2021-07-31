@@ -38,7 +38,7 @@ namespace HuiDesktop.NextGen
                     var win = new DownloadPackageDialog(downloadPackageRequest.path, downloadPackageRequest.name);
                     if (win.ShowDialog() == true)
                     {
-                        SandboxManager.LoadSandboxes();
+                        Asset.SandboxManager.LoadSandboxes();
                     }
                 }
             }
@@ -75,9 +75,10 @@ namespace HuiDesktop.NextGen
         private void LoadSandboxes()
         {
             SandboxWaterfallViewer.Children.Clear();
-            foreach (var i in SandboxManager.SandboxDictionary)
+            foreach (var i in Asset.SandboxManager.Sandboxes)
+                foreach(var j in i.GetLaunchInfos())
             {
-                SandboxWaterfallViewer.Children.Add(new SandboxPreview(i.Value, LoadSandboxes));
+                SandboxWaterfallViewer.Children.Add(new SandboxPreview(i, j, LoadSandboxes));
             }
         }
 

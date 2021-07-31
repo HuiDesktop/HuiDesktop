@@ -21,6 +21,7 @@ namespace HuiDesktop.NextGen.Asset
             if (sandbox.CheckDependencies() != Guid.Empty) throw new ArgumentException("Sandbox should be dependency-satisified.");
             sandboxPath = sandbox.BasePath;
             if (!sandboxPath.EndsWith("/") && !sandboxPath.EndsWith("\\")) sandboxPath += '\\';
+            sandboxPath += "Root/";
             foreach (var i in sandbox.Dependencies)
             {
                 var m = ModuleManager.GetModule(i);
@@ -32,6 +33,16 @@ namespace HuiDesktop.NextGen.Asset
 
         protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser wb, IBrowser b, IFrame f, IRequest request, bool n, bool d, string i, ref bool df)
         {
+            Guid GetGuid(string s, int skip, out int pos)
+            {
+                pos = s.IndexOf('/', skip);
+                if (pos == -1) return Guid.Empty;
+                if (Guid.TryParse(s.Substring(skip, pos - skip), out var r))
+                {
+                    return r;
+                }
+                return Guid.Empty;
+            }
             if (!request.Url.StartsWith(URL_HEAD, StringComparison.OrdinalIgnoreCase))
             {
                 return base.GetResourceRequestHandler(wb, b, f, request, n, d, i, ref df);
@@ -42,11 +53,29 @@ namespace HuiDesktop.NextGen.Asset
             }
             if (request.Url.StartsWith(MODULE_ROOT_HEAD))
             {
-                return new FileSystemResourceRequestHandler(sandboxPath + request.Url.Substring(MODULE_ROOT_HEAD.Length), false);
+                var id = GetGuid(request.Url, MODULE_ROOT_HEAD.Length, out var pos);
+                if (id != Guid.Empty)
+                {
+                    if (modules.TryGetValue(id, out var mp))
+                    {
+                        return new FileSystemResourceRequestHandler(mp + request.Url.Substring(pos + 1), false);
+                    }
+                    return notFoundResourceRequestHandler;
+                }
+                return notFoundResourceRequestHandler;
             }
             if (request.Url.StartsWith(MODULE_STORAGE_HEAD))
             {
-                return new FileSystemResourceRequestHandler(sandboxPath + request.Url.Substring(MODULE_STORAGE_HEAD.Length), true);
+                var id = GetGuid(request.Url, MODULE_STORAGE_HEAD.Length, out var pos);
+                if (id != Guid.Empty)
+                {
+                    if (modules.ContainsKey(id))
+                    {
+                        return new FileSystemResourceRequestHandler($"{sandboxPath}{id}/{request.Url.Substring(pos + 1)}", false);
+                    }
+                    return notFoundResourceRequestHandler;
+                }
+                return notFoundResourceRequestHandler;
             }
             return notFoundResourceRequestHandler;
         }
@@ -67,10 +96,6 @@ namespace HuiDesktop.NextGen.Asset
 
         public FileSystemResourceRequestHandler(string file, bool allowWrite)
         {
-            if (!file.EndsWith("/") && !file.EndsWith("\\"))
-            {
-                file += '\\';
-            }
             this.file = file;
             this.allowWrite = allowWrite;
         }

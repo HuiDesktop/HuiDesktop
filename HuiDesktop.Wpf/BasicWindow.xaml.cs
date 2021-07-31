@@ -34,12 +34,12 @@ namespace HuiDesktop
             Startup(requestHandler, info.url, GlobalSettings.DisableBlackList);
         }
 
-        public BasicWindow(RequestHandler requestHandler, string url, bool disableBlackList)
+        public BasicWindow(IRequestHandler requestHandler, string url, bool disableBlackList)
         {
             Startup(requestHandler, url, disableBlackList);
         }
 
-        public void Startup(RequestHandler requestHandler, string url, bool disableBlackList)
+        public void Startup(IRequestHandler requestHandler, string url, bool disableBlackList)
         {
             CefInitialize.InitializeCefSharp(disableBlackList);
             InitializeComponent();

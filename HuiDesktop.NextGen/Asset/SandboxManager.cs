@@ -11,6 +11,8 @@ namespace HuiDesktop.NextGen.Asset
     {
         static List<Sandbox> sandboxes = new List<Sandbox>();
 
+        public static IEnumerable<Sandbox> Sandboxes => sandboxes;
+
         public static void LoadSandboxesFromDirectory(string directory)
         {
             sandboxes.Clear();
@@ -26,6 +28,11 @@ namespace HuiDesktop.NextGen.Asset
                     //TODO: Something should be applied
                 }
             }
+        }
+
+        public static void LoadSandboxes()
+        {
+            LoadSandboxesFromDirectory(FileSystemManager.NextGenSandboxPath);
         }
     }
 }
