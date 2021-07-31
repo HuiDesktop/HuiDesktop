@@ -27,7 +27,7 @@ namespace HuiDesktop.NextGen
         {
             InitializeComponent();
 
-            VersionLabel.Content = $"version: {UpdateService.Version}";
+            VersionLabel.Content = $"version: {UpdateService.Version} ({UpdateService.GitCommitId.Substring(0, 6)})";
 
             object operation = null;
             operation = HuiDesktopProtocolHelper.CheckType(Environment.GetCommandLineArgs());
@@ -43,7 +43,6 @@ namespace HuiDesktop.NextGen
                 }
             }
             LoadSandboxes();
-            VersionLabel.Content = UpdateService.Version;
             if (AppConfig.Instance.AutoCheckUpdate)
             {
                 UpdateNotifyLabel.Content = "正在检测更新...";

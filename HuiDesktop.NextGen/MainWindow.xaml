@@ -10,7 +10,7 @@
     <Grid>
         <Label Content="HuiDesktop" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="24"/>
         <Label Content="NextGen" HorizontalAlignment="Left" Margin="160,22,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="VersionLabel" Content="version:" HorizontalAlignment="Left" Margin="220,22,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="VersionLabel" Content="version:" HorizontalAlignment="Left" Margin="220,22,0,0" VerticalAlignment="Top" Width="412"/>
         <Button Content="模块管理" Margin="487,55,160,0" VerticalAlignment="Top" Click="ModuleManageButtonClick"/>
         <Button Content="首选项" Margin="637,55,10,0" VerticalAlignment="Top" Click="AppConfigButtonClicked"/>
         <pu:WaterfallViewer x:Name="SandboxWaterfallViewer" Margin="10,100,10,10" Groups="5" ChildrenShape="Square" BorderBrush="LightGray" BorderThickness="1"/>

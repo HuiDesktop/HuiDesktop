@@ -26,7 +26,7 @@ namespace HuiDesktop.NextGen
             Task.Run(async () =>
             {
                 var cli = new HttpClient();
-                await cli.GetAsync("https://desktop.huix.cc/api/stat/online?ver=" + UpdateService.Version);
+                await cli.GetAsync("https://desktop.huix.cc/api/stat/online?ver=" + UpdateService.Version + "&commit=" + UpdateService.GitCommitId);
             });
 
             base.OnStartup(e);
