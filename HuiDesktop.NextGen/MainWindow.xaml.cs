@@ -82,23 +82,11 @@ namespace HuiDesktop.NextGen
             }
         }
 
-        private void CreateSandboxButtonClick(object sender, RoutedEventArgs e)
-        {
-            var win = new CreateSandboxDialog();
-            win.ShowDialog();
-            if (win.DialogResult == true && !string.IsNullOrEmpty(win.SandboxName))
-            {
-                new SandboxManageWindow(win.SandboxName).ShowDialog();
-                SandboxManager.LoadSandboxes();
-                LoadSandboxes();
-            }
-        }
-
         private void ModuleManageButtonClick(object sender, RoutedEventArgs e)
         {
             new ModuleManagerWindow().ShowDialog();
-            ModuleManager.LoadModules();
-            SandboxManager.LoadSandboxes();
+            Asset.ModuleManager.LoadModules();
+            Asset.SandboxManager.LoadSandboxes();
             LoadSandboxes();
         }
 

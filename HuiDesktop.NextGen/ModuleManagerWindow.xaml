@@ -13,8 +13,7 @@
         <Label Content="模块名称：" HorizontalAlignment="Left" Margin="315,55,0,0" VerticalAlignment="Top"/>
         <Label Content="入口点：" HorizontalAlignment="Left" Margin="315,85,0,0" VerticalAlignment="Top"/>
         <Label Content="GUID：" HorizontalAlignment="Left" Margin="315,114,0,0" VerticalAlignment="Top"/>
-        <Button Content="导入模块" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="119"/>
-        <Button Content="新增符号链接" Margin="134,55,539,0" VerticalAlignment="Top"/>
+        <Button Visibility="Hidden" Content="导入模块" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="243"/>
         <Button Content="&#xf021;" FontFamily="{StaticResource FontAwesome}" Margin="258,55,482,0" VerticalAlignment="Top" Height="20" Click="RefreshListButtonClicked"/>
         <Button IsEnabled="False" Content="删除模块" Margin="315,144,246,0" VerticalAlignment="Top" Height="30"/>
         <Button Content="打开文件夹" Margin="551,144,10,0" VerticalAlignment="Top" Height="30" Click="OpenFolderButtonClicked"/>

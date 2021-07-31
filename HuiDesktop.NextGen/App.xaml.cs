@@ -20,8 +20,6 @@ namespace HuiDesktop.NextGen
             AppDomain.CurrentDomain.AssemblyResolve += CefStartupInitialize.Resolver;
 
             FileSystemManager.SetPath();
-            ModuleManager.LoadModules();
-            SandboxManager.LoadSandboxes();
             Asset.ModuleManager.LoadModulesFromDirectory(FileSystemManager.NextGenModulePath);
             Asset.SandboxManager.LoadSandboxesFromDirectory(FileSystemManager.NextGenSandboxPath);
 

@@ -67,5 +67,10 @@ namespace HuiDesktop.NextGen
             }
             System.Diagnostics.Process.Start("explorer.exe", module.module.Path);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

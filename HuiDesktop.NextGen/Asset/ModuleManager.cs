@@ -28,6 +28,11 @@ namespace HuiDesktop.NextGen.Asset
             }
         }
 
+        public static void LoadModules()
+        {
+            LoadModulesFromDirectory(FileSystemManager.NextGenModulePath);
+        }
+
         public static Module GetModule(Guid id)
         {
             if (modules.TryGetValue(id, out var value))
