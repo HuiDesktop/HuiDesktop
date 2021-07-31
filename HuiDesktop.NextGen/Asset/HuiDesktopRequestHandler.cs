@@ -21,7 +21,6 @@ namespace HuiDesktop.NextGen.Asset
             if (sandbox.CheckDependencies() != Guid.Empty) throw new ArgumentException("Sandbox should be dependency-satisified.");
             sandboxPath = sandbox.BasePath;
             if (!sandboxPath.EndsWith("/") && !sandboxPath.EndsWith("\\")) sandboxPath += '\\';
-            sandboxPath += "Root/";
             foreach (var i in sandbox.Dependencies)
             {
                 var m = ModuleManager.GetModule(i);
@@ -29,6 +28,7 @@ namespace HuiDesktop.NextGen.Asset
                 modules[i] = Path.Combine(m.BasePath, "Root") + '\\';
                 Directory.CreateDirectory(sandboxPath + i.ToString());
             }
+            sandboxPath += "Root/";
         }
 
         protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser wb, IBrowser b, IFrame f, IRequest request, bool n, bool d, string i, ref bool df)
@@ -102,15 +102,39 @@ namespace HuiDesktop.NextGen.Asset
 
         protected override IResourceHandler GetResourceHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request)
         {
-            try
+            bool isPost = string.Compare(request.Method, "POST", ignoreCase: true) == 0;
+            bool isGet = string.Compare(request.Method, "GET", ignoreCase: true) == 0;
+            if (!isGet && !isPost)
             {
-                var s = File.OpenRead(file);
-                return ResourceHandler.FromStream(s, System.Web.MimeMapping.GetMimeMapping(file), true); //TODO: can replace MimeMapping?
+                return ResourceHandler.ForErrorMessage("Bad request", System.Net.HttpStatusCode.BadRequest);
             }
-            catch
+            if (isGet)
             {
-                return ResourceHandler.ForErrorMessage("Not found", System.Net.HttpStatusCode.NotFound);
+                try
+                {
+                    var s = File.OpenRead(file);
+                    return ResourceHandler.FromStream(s, System.Web.MimeMapping.GetMimeMapping(file), true); //TODO: can replace MimeMapping?
+                }
+                catch
+                {
+                    return ResourceHandler.ForErrorMessage("Not found", System.Net.HttpStatusCode.NotFound);
+                }
             }
+            if (isPost)
+            {
+                if (!allowWrite)
+                {
+                    return ResourceHandler.ForErrorMessage("Bad request", System.Net.HttpStatusCode.BadRequest);
+                }
+                if (request.PostData.Elements.Count == 0)
+                {
+                    return ResourceHandler.ForErrorMessage("Internal server error", System.Net.HttpStatusCode.InternalServerError);
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(file));
+                File.WriteAllBytes(file, request.PostData.Elements[0].Bytes);
+                return ResourceHandler.ForErrorMessage(string.Empty, System.Net.HttpStatusCode.NoContent);
+            }
+            throw new Exception("Never happened!");
         }
     }
 }
