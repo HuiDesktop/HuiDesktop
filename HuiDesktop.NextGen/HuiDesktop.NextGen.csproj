@@ -76,6 +76,8 @@
     <Compile Include="AppConfigWindow.xaml.cs">
       <DependentUpon>AppConfigWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Asset\Module.cs" />
+    <Compile Include="Asset\ModuleManager.cs" />
     <Compile Include="DownloadPackageDialog.xaml.cs">
       <DependentUpon>DownloadPackageDialog.xaml</DependentUpon>
     </Compile>
@@ -203,8 +205,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Asset\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
