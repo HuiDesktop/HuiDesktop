@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HuiDesktop.NextGen.Asset
+{
+    public static class SandboxManager
+    {
+        static List<Sandbox> sandboxes = new List<Sandbox>();
+
+        public static void LoadSandboxesFromDirectory(string directory)
+        {
+            sandboxes.Clear();
+            foreach (var i in Directory.EnumerateDirectories(directory))
+            {
+                if (File.Exists(i + ".hdtinc"))
+                {
+
+                    try
+                    {
+                        var sandbox = Sandbox.LoadFromDirectoryWithName(directory, i.Substring(directory.Length + 1));
+                        sandboxes.Add(sandbox);
+                    }
+                    catch
+                    {
+                        //TODO: Something should be applied
+                    }
+                }
+            }
+        }
+    }
+}

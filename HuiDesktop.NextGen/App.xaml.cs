@@ -23,6 +23,7 @@ namespace HuiDesktop.NextGen
             ModuleManager.LoadModules();
             SandboxManager.LoadSandboxes();
             Asset.ModuleManager.LoadModulesFromDirectory(FileSystemManager.NextGenModulePath);
+            Asset.SandboxManager.LoadSandboxesFromDirectory(FileSystemManager.NextGenSandboxPath);
 
             Task.Run(async () =>
             {

@@ -27,5 +27,14 @@ namespace HuiDesktop.NextGen.Asset
                 }
             }
         }
+
+        public static Module GetModule(Guid id)
+        {
+            if (modules.TryGetValue(id, out var value))
+            {
+                return value;
+            }
+            return null;
+        }
     }
 }

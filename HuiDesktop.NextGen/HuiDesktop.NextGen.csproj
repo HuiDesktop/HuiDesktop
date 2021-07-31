@@ -78,6 +78,8 @@
     </Compile>
     <Compile Include="Asset\Module.cs" />
     <Compile Include="Asset\ModuleManager.cs" />
+    <Compile Include="Asset\Sandbox.cs" />
+    <Compile Include="Asset\SandboxManager.cs" />
     <Compile Include="DownloadPackageDialog.xaml.cs">
       <DependentUpon>DownloadPackageDialog.xaml</DependentUpon>
     </Compile>
