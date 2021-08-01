@@ -129,8 +129,8 @@ namespace HuiDesktop.NextGen.Asset
             Id = id;
             Name = name;
             FriendlyName = friendlyName;
-            this.features = features;
-            this.suggestions = suggestions;
+            this.features = features ?? Array.Empty<string>();
+            this.suggestions = suggestions ?? Array.Empty<ModuleSuggestion>();
 
             this.launchInfos = new ModuleLaunchInfo[launchInfos.Length];
             for (uint i = 0; i < launchInfos.Length; ++i)

@@ -83,9 +83,9 @@ namespace HuiDesktop.NextGen
 
         private void ManageButtonClicked(object sender, RoutedEventArgs e)
         {
-            //new SandboxManageWindow(startInfo.SandboxName).ShowDialog();
-            //SandboxManager.LoadSandboxes();
-            //reloadRequest();
+            new SandboxManageWindow(sandbox).ShowDialog();
+            Asset.SandboxManager.LoadSandboxes();
+            reloadRequest();
         }
     }
 }

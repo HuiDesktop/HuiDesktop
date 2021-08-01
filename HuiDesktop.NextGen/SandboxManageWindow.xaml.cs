@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,82 +22,231 @@ namespace HuiDesktop.NextGen
     /// </summary>
     public partial class SandboxManageWindow : Window
     {
-        private readonly string name, basePath, filesPath;
-        private readonly Dictionary<Guid, ModuleForList> mainModules = new Dictionary<Guid, ModuleForList>();
+        private SandboxManageWindowModel dataContext;
 
-        private string MainModuleFile => Path.Combine(basePath, "mainModule");
-        private string ConfigFile => Path.Combine(basePath, "config");
-
-        public SandboxManageWindow(string name)
+        public SandboxManageWindow(Asset.Sandbox sandbox)
         {
-            this.name = name;
             InitializeComponent();
-            LoadMainModules();
-            SandboxNameLabel.Content = name;
-            basePath = Path.Combine(FileSystemManager.SandboxPath, name);
-            filesPath = Path.Combine(basePath, "files");
-            if (!Directory.Exists(basePath)) Directory.CreateDirectory(basePath);
-            if (!Directory.Exists(filesPath)) Directory.CreateDirectory(filesPath);
-            if (File.Exists(MainModuleFile))
-            {
-                string guidStr = File.ReadAllText(MainModuleFile);
-                if (Guid.TryParse(guidStr, out var guid))
-                {
-                    if (mainModules.TryGetValue(guid, out var val))
-                    {
-                        MainModulesComboBox.SelectedItem = val;
-                    }
-                    else
-                    {
-                        FailedToLoadBadge.Visibility = Visibility.Visible;
-                        var stackPanel = new StackPanel();
-                        stackPanel.Children.Add(new TextBlock() { Text = "无法加载启动模块" });
-                        stackPanel.Children.Add(new TextBlock() { Text = "GUID:" + guidStr });
-                        FailedToLoadBadge.ToolTip = new ToolTip
-                        {
-                            Content = stackPanel
-                        };
-                    }
-                }
-            }
-            if (File.Exists(ConfigFile))
-            {
-                Editor.Text = File.ReadAllText(ConfigFile, Encoding.UTF8);
-            }
+            dataContext = new SandboxManageWindowModel(sandbox);
+            DataContext = dataContext;
         }
 
         private void SaveButtonClicked(object sender, RoutedEventArgs e)
         {
-            if (!(MainModulesComboBox.SelectedItem is var selectedModule) || !(selectedModule is ModuleForList))
-            {
-                MainModulesComboBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                return;
-            }
-            File.WriteAllText(MainModuleFile, (selectedModule as ModuleForList).module.Guid.ToString());
-            File.WriteAllText(ConfigFile, Editor.Text, Encoding.UTF8);
+
             DialogResult = true;
-        }
-
-        private void MainModulesComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MainModulesComboBox.BorderBrush = new SolidColorBrush(Color.FromRgb(211, 211, 211));
-        }
-
-        private void LoadMainModules()
-        {
-            var list = new List<ModuleForList>();
-            foreach (var i in ModuleManager.ModuleDictionary)
-            {
-                var module = new ModuleForList(i.Value);
-                list.Add(module);
-                mainModules.Add(i.Key, module);
-            }
-            MainModulesComboBox.ItemsSource = list;
         }
 
         private void OpenFolderButtonClicked(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("explorer.exe", filesPath);
+            System.Diagnostics.Process.Start("explorer.exe", dataContext.Sandbox.BasePath);
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataContext.RightSelectedModule is Asset.Module m)
+            {
+                dataContext.Modules.Add(m);
+                dataContext.InvokeModulesChaned();
+            }
+        }
+
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            dataContext.Modules.Remove(dataContext.LeftSelectedModule);
+            dataContext.InvokeModulesChaned();
+        }
+    }
+
+    class SandboxManageWindowModel : ModelBase
+    {
+        public Asset.Sandbox Sandbox { get; }
+
+        private HashSet<object> modules;
+        public HashSet<object> Modules
+        {
+            get => modules;
+            set
+            {
+                modules = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool canSave = false;
+        public bool CanSave
+        {
+            get
+            {
+                foreach (var i in modules)
+                {
+                    if (i is string)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        public void InvokeModulesChaned()
+        {
+            Modules = new HashSet<object>(modules);
+        }
+
+        private object leftSelectedModule;
+        public object LeftSelectedModule
+        {
+            get => leftSelectedModule;
+            set
+            {
+                leftSelectedModule = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanSave));
+                UpdateSelectedModule();
+            }
+        }
+
+        private object rightSelectedModule;
+        public object RightSelectedModule
+        {
+            get => rightSelectedModule;
+            set
+            {
+                rightSelectedModule = value;
+                OnPropertyChanged();
+                UpdateSelectedModule();
+            }
+        }
+
+        private object selectedModule;
+        public object SelectedModule
+        {
+            get => selectedModule;
+            set
+            {
+                selectedModule = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private void UpdateSelectedModule()
+        {
+            if (leftSelectedModule != null)
+            {
+                SelectedModule = leftSelectedModule;
+                return;
+            }
+            if (rightSelectedModule != null)
+            {
+                SelectedModule = rightSelectedModule;
+                return;
+            }
+            SelectedModule = null;
+        }
+
+        public SandboxManageWindowModel(Asset.Sandbox sandbox)
+        {
+            Sandbox = sandbox;
+            modules = new HashSet<object>();
+            foreach (var i in sandbox.Dependencies)
+            {
+                var m = Asset.ModuleManager.GetModule(i);
+                modules.Add(m ?? (object)$"（未加载）{i}");
+            }
+        }
+    }
+
+    public class UnusedModulesConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var r = new HashSet<Asset.Module>(Asset.ModuleManager.Modules);
+            if (value is IEnumerable<object> ls)
+            {
+                foreach (var i in ls)
+                {
+                    if (i is Asset.Module m)
+                    {
+                        r.Remove(m);
+                    }
+                }
+            }
+            return r;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SuggestionsConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var r = new List<string>();
+            if (value is IEnumerable<object> ls)
+            {
+                foreach (var i in ls)
+                {
+                    if (i is Asset.Module m)
+                    {
+                        foreach (var j in m.Suggestions)
+                        {
+                            r.Add($"{j.Name} | {j.Message} | 来自模块{m.FriendlyName}");
+                        }
+                    }
+                }
+            }
+            return r;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class NullDisableConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value != null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ModuleDetailConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string) return value;
+            if (value is Asset.Module m)
+            {
+                if (m.Features.Count() == 0)
+                {
+                    return "(未实现任何特性)";
+                }
+                var s = new StringBuilder();
+                foreach (var i in m.Features)
+                {
+                    s.Append(i);
+                    s.Append(", ");
+                }
+                s.Length -= 2;
+                return s.ToString();
+            }
+            return "选中一个模块查看其实现的特性。";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
