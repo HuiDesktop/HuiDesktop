@@ -11,6 +11,8 @@ namespace HuiDesktop.NextGen.Asset
     {
         static Dictionary<Guid, Module> modules = new Dictionary<Guid, Module>();
 
+        public static IEnumerable<Module> Modules => modules.Values;
+
         public static void LoadModulesFromDirectory(string directroy)
         {
             modules.Clear();

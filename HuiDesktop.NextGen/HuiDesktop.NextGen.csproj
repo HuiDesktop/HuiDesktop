@@ -88,6 +88,7 @@
     <Compile Include="CreateSandboxDialog.xaml.cs">
       <DependentUpon>CreateSandboxDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ModelBase.cs" />
     <Compile Include="PackageDownloadManager.cs" />
     <Compile Include="SandboxManager.cs" />
     <Compile Include="SandboxPreview.xaml.cs">

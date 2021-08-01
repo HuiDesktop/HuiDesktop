@@ -145,6 +145,11 @@ namespace HuiDesktop.NextGen.Asset
             }
         }
 
+        public override string ToString()
+        {
+            return $"{FriendlyName} ({Name})";
+        }
+
         class ModuleLaunchInfoJson
         {
             public string Url { get; set; }
