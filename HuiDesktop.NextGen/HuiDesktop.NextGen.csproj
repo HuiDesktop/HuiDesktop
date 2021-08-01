@@ -82,8 +82,8 @@
     <Compile Include="Asset\HuiDesktopRequestHandler.cs" />
     <Compile Include="Asset\Sandbox.cs" />
     <Compile Include="Asset\SandboxManager.cs" />
-    <Compile Include="DownloadPackageDialog.xaml.cs">
-      <DependentUpon>DownloadPackageDialog.xaml</DependentUpon>
+    <Compile Include="DownloadModuleDialog.xaml.cs">
+      <DependentUpon>DownloadModuleDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="CreateSandboxDialog.xaml.cs">
       <DependentUpon>CreateSandboxDialog.xaml</DependentUpon>
@@ -99,9 +99,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DownloadPackageDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="DownloadModuleDialog.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CreateSandboxDialog.xaml">
       <SubType>Designer</SubType>

@@ -12,12 +12,12 @@ namespace HuiDesktop.NextGen
 {
     static class HuiDesktopProtocolHelper
     {
-        public class DownloadPackageRequest
+        public class DownloadModuleRequest
         {
             readonly public string path;
             readonly public string name;
 
-            public DownloadPackageRequest(string path, string name)
+            public DownloadModuleRequest(string path, string name)
             {
                 this.path = path;
                 this.name = name;
@@ -33,16 +33,16 @@ namespace HuiDesktop.NextGen
             var uri = new Uri(string.Join(" ", args.Skip(2).ToArray()));
             switch (uri.Host)
             {
-                case "download-package":
+                case "download-module":
                     if (uri.AbsolutePath.Length == 1)
                     {
-                        throw new FormatException("Path argument is not given for download-package");
+                        throw new FormatException("Path argument is not given for download-module");
                     }
                     if (uri.Query.Length <= 1)
                     {
-                        throw new FormatException("Name argument is not given for download-package");
+                        throw new FormatException("Name argument is not given for download-module");
                     }
-                    return new DownloadPackageRequest(uri.AbsolutePath.Substring(1), Uri.UnescapeDataString(uri.Query.Substring(1)));
+                    return new DownloadModuleRequest(uri.AbsolutePath.Substring(1), Uri.UnescapeDataString(uri.Query.Substring(1)));
                 default:
                     return null;
             }
@@ -50,38 +50,25 @@ namespace HuiDesktop.NextGen
 
         static public void UnzipTo(string src, string dest)
         {
-            var d = Path.GetTempFileName();
-            File.Delete(d);
-            Directory.CreateDirectory(d);
-            ZipFile.ExtractToDirectory(src, d);
-            var sub = Directory.GetDirectories(d);
-            if (sub.Length == 1)
-            {
-                Copy(sub[0], dest.TrimEnd('/', '\\'));
-            }
-        }
-
-        static private void Copy(string src, string dest)
-        {
-            foreach (var i in Directory.EnumerateDirectories(src))
-            {
-                Directory.CreateDirectory(dest + i.Substring(src.Length));
-                Copy(i, dest + i.Substring(src.Length));
-            }
-            foreach (var i in Directory.EnumerateFiles(src))
-            {
-                File.Copy(i, dest + i.Substring(src.Length));
-            }
+            Directory.CreateDirectory(dest);
+            ZipFile.ExtractToDirectory(src, dest);
         }
     }
 
     static class PackageDownloadManager
     {
-        static Lazy<HttpClient> httpClient = new Lazy<HttpClient>();
+        class ProgressMessageHandler : HttpMessageHandler
+        {
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public static async Task<string> DownloadPackage(string path, CancellationToken cancellationToken, IProgress<(int, int)> progress)
         {
-            var client = httpClient.Value;
+            //这实现，有问题
+            var client = new HttpClient();
             var response = await client.GetAsync(path, cancellationToken);
             if (!response.IsSuccessStatusCode)
             {

@@ -33,12 +33,12 @@ namespace HuiDesktop.NextGen
             operation = HuiDesktopProtocolHelper.CheckType(Environment.GetCommandLineArgs());
             if (operation != null)
             {
-                if (operation is HuiDesktopProtocolHelper.DownloadPackageRequest downloadPackageRequest)
+                if (operation is HuiDesktopProtocolHelper.DownloadModuleRequest downloadPackageRequest)
                 {
-                    var win = new DownloadPackageDialog(downloadPackageRequest.path, downloadPackageRequest.name);
+                    var win = new DownloadModuleDialog(downloadPackageRequest.path, downloadPackageRequest.name);
                     if (win.ShowDialog() == true)
                     {
-                        Asset.SandboxManager.LoadSandboxes();
+                        Asset.ModuleManager.LoadModules();
                     }
                 }
             }
