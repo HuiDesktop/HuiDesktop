@@ -105,5 +105,18 @@ namespace HuiDesktop.NextGen.Asset
         {
             Directory.Delete(BasePath, true);
         }
+
+        public string StringfySandboxInfo()
+        {
+            var root = new { name = Name, dependencies = new List<object>() };
+            foreach (var i in Dependencies)
+            {
+                if (ModuleManager.GetModule(i) is Module m)
+                {
+                    root.dependencies.Add(new { id = m.Id, name = m.Name.ToString(), friendlyName = m.FriendlyName, features = m.Features });
+                }
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(root);
+        }
     }
 }

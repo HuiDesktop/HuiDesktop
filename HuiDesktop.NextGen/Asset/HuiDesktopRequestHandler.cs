@@ -8,6 +8,7 @@ namespace HuiDesktop.NextGen.Asset
     public class HuiDesktopRequestHandler : CefSharp.Handler.RequestHandler
     {
         public const string URL_HEAD = "https://huidesktop";
+        public const string SANDBOX_INFO_URL = URL_HEAD + "/info";
         public const string SANDBOX_HEAD = URL_HEAD + "/sandbox/";
         public const string MODULE_ROOT_HEAD = URL_HEAD + "/module/";
         public const string MODULE_STORAGE_HEAD = URL_HEAD + "/storage/";
@@ -15,6 +16,7 @@ namespace HuiDesktop.NextGen.Asset
         NotFoundResourceRequestHandler notFoundResourceRequestHandler = new NotFoundResourceRequestHandler();
         Dictionary<Guid, string> modules = new Dictionary<Guid, string>();
         readonly string sandboxPath;
+        readonly string sandboxInfo;
 
         public HuiDesktopRequestHandler(Sandbox sandbox)
         {
@@ -29,6 +31,7 @@ namespace HuiDesktop.NextGen.Asset
                 Directory.CreateDirectory(sandboxPath + i.ToString());
             }
             sandboxPath += "Root/";
+            sandboxInfo = sandbox.StringfySandboxInfo();
         }
 
         protected override IResourceRequestHandler GetResourceRequestHandler(IWebBrowser wb, IBrowser b, IFrame f, IRequest request, bool n, bool d, string i, ref bool df)
@@ -46,6 +49,10 @@ namespace HuiDesktop.NextGen.Asset
             if (!request.Url.StartsWith(URL_HEAD, StringComparison.OrdinalIgnoreCase))
             {
                 return base.GetResourceRequestHandler(wb, b, f, request, n, d, i, ref df);
+            }
+            if (request.Url == SANDBOX_INFO_URL)
+            {
+                return new StringResourceRequestHandler(sandboxInfo);
             }
             if (request.Url.StartsWith(SANDBOX_HEAD))
             {
@@ -86,6 +93,21 @@ namespace HuiDesktop.NextGen.Asset
         protected override IResourceHandler GetResourceHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request)
         {
             return ResourceHandler.ForErrorMessage("Not found", System.Net.HttpStatusCode.NotFound);
+        }
+    }
+
+    class StringResourceRequestHandler : CefSharp.Handler.ResourceRequestHandler
+    {
+        readonly string r;
+
+        public StringResourceRequestHandler(string r)
+        {
+            this.r = r;
+        }
+
+        protected override IResourceHandler GetResourceHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request)
+        {
+            return ResourceHandler.FromString(r);
         }
     }
 
