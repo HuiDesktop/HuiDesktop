@@ -75,9 +75,8 @@ namespace HuiDesktop.NextGen
         {
             SandboxWaterfallViewer.Children.Clear();
             foreach (var i in Asset.SandboxManager.Sandboxes)
-                foreach(var j in i.GetLaunchInfos())
             {
-                SandboxWaterfallViewer.Children.Add(new SandboxPreview(i, j, LoadSandboxes));
+                SandboxWaterfallViewer.Children.Add(new SandboxPreview(i, LoadSandboxes));
             }
         }
 
@@ -138,6 +137,17 @@ namespace HuiDesktop.NextGen
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start(UpdateService.ViewUpdatePage);
+        }
+
+        private void CreateSandboxButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var win = new CreateSandboxDialog();
+            if (win.ShowDialog() == true)
+            {
+                Asset.Sandbox.Create(win.SandboxName);
+                Asset.SandboxManager.LoadSandboxes();
+                LoadSandboxes();
+            }
         }
     }
 }

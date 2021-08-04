@@ -14,9 +14,10 @@
         <Button Content="模块管理" Margin="487,55,160,0" VerticalAlignment="Top" Click="ModuleManageButtonClick"/>
         <Button Content="首选项" Margin="637,55,10,0" VerticalAlignment="Top" Click="AppConfigButtonClicked"/>
         <pu:WaterfallViewer x:Name="SandboxWaterfallViewer" Margin="10,100,10,10" Groups="5" ChildrenShape="Square" BorderBrush="LightGray" BorderThickness="1"/>
-        <Button Content="打开用户数据目录" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="145" Click="OpenUserDataFolderClicked"/>
+        <Button Content="打开用户数据目录" HorizontalAlignment="Left" Margin="160,55,0,0" VerticalAlignment="Top" Width="145" Click="OpenUserDataFolderClicked"/>
         <Label x:Name="UpdateNotifyLabel" Content="自动检测更新被禁用" HorizontalAlignment="Left" Margin="637,22,0,0" VerticalAlignment="Top" Width="145"/>
         <Label Content="内测版本，不代表最终品质。启动强制自动上传启动记录，仅记录IP与软件版本，不提供给第三方，谢谢支持！" HorizontalAlignment="Left" Margin="160,0,0,0" VerticalAlignment="Top" Width="622" Background="Red" Foreground="Yellow"/>
-        <Button Content="前往网站下载新的模块" HorizontalAlignment="Left" Margin="160,55,0,0" VerticalAlignment="Top" Width="230" Click="Button_Click"/>
+        <Button Content="前往网站下载新的模块" HorizontalAlignment="Left" Margin="310,55,0,0" VerticalAlignment="Top" Width="172" Click="Button_Click"/>
+        <Button Content="新建沙盒" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="145" Click="CreateSandboxButtonClicked"/>
     </Grid>
 </Window>

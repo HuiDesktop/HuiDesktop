@@ -33,7 +33,15 @@ namespace HuiDesktop.NextGen
 
         private void SaveButtonClicked(object sender, RoutedEventArgs e)
         {
-
+            var list = new List<Guid>();
+            foreach (var i in dataContext.Modules)
+            {
+                if (i is Asset.Module m)
+                {
+                    list.Add(m.Id);
+                }
+            }
+            dataContext.Sandbox.SetDependencies(list);
             DialogResult = true;
         }
 
@@ -73,7 +81,6 @@ namespace HuiDesktop.NextGen
             }
         }
 
-        private bool canSave = false;
         public bool CanSave
         {
             get

@@ -21,19 +21,16 @@ namespace HuiDesktop.NextGen
     public partial class SandboxPreview : UserControl
     {
         private readonly Asset.Sandbox sandbox;
-        private readonly Asset.ModuleLaunchInfo startInfo;
         private readonly Action reloadRequest;
 
-        public SandboxPreview(Asset.Sandbox sandbox, Asset.ModuleLaunchInfo startInfo, Action reloadRequest)
+        public SandboxPreview(Asset.Sandbox sandbox, Action reloadRequest)
         {
             InitializeComponent();
             this.sandbox = sandbox;
-            this.startInfo = startInfo;
             this.reloadRequest = reloadRequest;
-            SandboxName.Text = $"{sandbox.Name}\r\n{startInfo.Name}";
+            SandboxName.Text = $"{sandbox.Name}";
             if (sandbox.CheckDependencies() != Guid.Empty)
             {
-                RunButton.IsEnabled = false;
                 FailedToLoadBadge.Visibility = Visibility.Visible;
                 var stackPanel = new StackPanel();
                 stackPanel.Children.Add(new TextBlock() { Text = "无法加载某个模块" });
@@ -42,6 +39,15 @@ namespace HuiDesktop.NextGen
                     Content = stackPanel
                 };
             }
+            var items = new List<object>(sandbox.GetLaunchInfos());
+            items.Add("---");
+            //TODO
+            //items.AddRange(sandbox.GetSetupLaunchInfos());
+            //items.Add("---");
+            items.Add("[打开沙盒设置]");
+            items.Add("[删除沙盒]");
+            StartInfoComboBox.ItemsSource = items;
+            StartInfoComboBox.SelectedIndex = -1;
         }
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
@@ -54,24 +60,11 @@ namespace HuiDesktop.NextGen
             MainGrid.Background = new SolidColorBrush(Color.FromRgb(238, 238, 238));
         }
 
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void RunButtonClicked(object sender, RoutedEventArgs e)
-        {
-            if (sandbox.CheckDependencies() == Guid.Empty)
-            {
-                Wpf();
-                Application.Current.MainWindow.Close();
-            }
-        }
-
-        private void Wpf()
+        private void Wpf(Asset.ModuleLaunchInfo startInfo)
         {
             var win = new BasicWindow(new Asset.HuiDesktopRequestHandler(sandbox), startInfo.Url, AppConfig.Instance.ForceWebGL);
             win.Show();
+            Application.Current.MainWindow.Close();
         }
 
         //private void Dc()
@@ -86,6 +79,41 @@ namespace HuiDesktop.NextGen
             new SandboxManageWindow(sandbox).ShowDialog();
             Asset.SandboxManager.LoadSandboxes();
             reloadRequest();
+        }
+
+        private void StartInfoComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (StartInfoComboBox.SelectedItem == null) return;
+            if (StartInfoComboBox.SelectedItem is Asset.ModuleLaunchInfo f)
+            {
+                if (StartInfoComboBox.SelectedIndex < sandbox.GetLaunchInfos().Count())
+                {
+                    Wpf(f);
+                }
+                else
+                {
+                    MessageBox.Show("暂不支持，请等待更新版本的HuiDesktop!");
+                }
+            }
+            else if (StartInfoComboBox.SelectedItem is string s)
+            {
+                switch (s)
+                {
+                    case "[打开沙盒设置]":
+                        new SandboxManageWindow(sandbox).ShowDialog();
+                        Asset.SandboxManager.LoadSandboxes();
+                        reloadRequest();
+                        break;
+                    case "[删除沙盒]":
+                        if (MessageBox.Show("确认吗？此操作不可撤回！", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            sandbox.Remove();
+                            Asset.SandboxManager.LoadSandboxes();
+                            reloadRequest();
+                        }
+                        break;
+                }
+            }
         }
     }
 }

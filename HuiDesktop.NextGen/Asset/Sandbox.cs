@@ -46,6 +46,17 @@ namespace HuiDesktop.NextGen.Asset
             return l;
         }
 
+        internal void SetDependencies(List<Guid> list)
+        {
+            using (var f = new StreamWriter(Path.Combine(BasePath, "includes.txt")))
+            {
+                foreach (var i in list)
+                {
+                    f.WriteLine(i);
+                }
+            }
+        }
+
         public static Sandbox LoadFromDirectory(string directory)
         {
             if (string.IsNullOrWhiteSpace(directory)) throw new ArgumentException("Invalid sandbox name.");
@@ -66,6 +77,14 @@ namespace HuiDesktop.NextGen.Asset
             return new Sandbox(directory, Path.GetFileName(directory.TrimEnd('/', '\\')), gs.ToArray());
         }
 
+        public static void Create(string name, string baseDirectory = null)
+        {
+            if (baseDirectory == null) baseDirectory = FileSystemManager.NextGenSandboxPath;
+            Directory.CreateDirectory(Path.Combine(baseDirectory, name));
+            Directory.CreateDirectory(Path.Combine(baseDirectory, name, "Root"));
+            File.WriteAllText(Path.Combine(baseDirectory, name, "includes.txt"), "");
+        }
+
         /// <summary>
         /// 检查此沙盒的依赖
         /// </summary>
@@ -80,6 +99,11 @@ namespace HuiDesktop.NextGen.Asset
                 }
             }
             return Guid.Empty;
+        }
+
+        public void Remove()
+        {
+            Directory.Delete(BasePath, true);
         }
     }
 }
