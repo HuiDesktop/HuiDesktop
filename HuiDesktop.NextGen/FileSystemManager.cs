@@ -17,6 +17,8 @@ namespace HuiDesktop.NextGen
         public static string NextGenModulePath { get; private set; }
         public static string NextGenSandboxPath { get; private set; }
 
+        public static string SkipUpdatePath { get; private set; }
+
         public static void SetPath()
         {
             if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files"))) BasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Files");
@@ -26,10 +28,12 @@ namespace HuiDesktop.NextGen
             AppConfigPath= Path.Combine(BasePath, "config.json");
             NextGenModulePath = Path.Combine(BasePath, "NextGenModules");
             NextGenSandboxPath = Path.Combine(BasePath, "NextGenSandboxes");
+            SkipUpdatePath = Path.Combine(BasePath, "skipUpdate");
             if (!Directory.Exists(ModulePath)) Directory.CreateDirectory(ModulePath);
             if (!Directory.Exists(SandboxPath)) Directory.CreateDirectory(SandboxPath);
             if (!Directory.Exists(NextGenModulePath)) Directory.CreateDirectory(NextGenModulePath);
             if (!Directory.Exists(NextGenSandboxPath)) Directory.CreateDirectory(NextGenSandboxPath);
+            if (!File.Exists(SkipUpdatePath)) File.WriteAllText(SkipUpdatePath, "");
             AppConfig.Load();
         }
     }

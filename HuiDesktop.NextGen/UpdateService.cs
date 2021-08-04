@@ -35,5 +35,11 @@ namespace HuiDesktop.NextGen
             if (res.IsSuccessStatusCode) return (await res.Content.ReadAsStringAsync()).Trim();
             return string.Empty;
         }
+
+        public static string SkippedVersion
+        {
+            get => File.ReadAllText(FileSystemManager.SkipUpdatePath);
+            set => File.WriteAllText(FileSystemManager.SkipUpdatePath, value);
+        }
     }
 }

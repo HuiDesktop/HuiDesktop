@@ -102,6 +102,10 @@ namespace HuiDesktop.NextGen
                     {
                         Dispatcher.Invoke(() => UpdateNotifyLabel.Content = "当前为最新版本");
                     }
+                    else if (task.Result == UpdateService.SkippedVersion)
+                    {
+                        Dispatcher.Invoke(() => UpdateNotifyLabel.Content = "已跳过版本");
+                    }
                     else
                     {
                         Dispatcher.Invoke(() =>
@@ -112,6 +116,15 @@ namespace HuiDesktop.NextGen
                                 System.Diagnostics.Process.Start(UpdateService.ViewUpdatePage);
                             };
                         });
+                        var choice = MessageBox.Show($"检测到更新{task.Result}\r\n按“是”前往更新\r\n按“否”跳过本版本\r\n按“取消”下次启动时提醒。", "HuiDesktop", MessageBoxButton.YesNoCancel, MessageBoxImage.Information);
+                        if (choice == MessageBoxResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start(UpdateService.ViewUpdatePage);
+                        }
+                        else if (choice == MessageBoxResult.No)
+                        {
+                            UpdateService.SkippedVersion = task.Result;
+                        }
                     }
                 });
             }
