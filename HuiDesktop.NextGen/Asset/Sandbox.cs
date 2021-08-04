@@ -120,5 +120,11 @@ namespace HuiDesktop.NextGen.Asset
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(root);
         }
+
+        internal void LaunchWpf(string url)
+        {
+            var win = new BasicWindow(new HuiDesktopRequestHandler(this), url, AppConfig.Instance.ForceWebGL);
+            win.Show();
+        }
     }
 }

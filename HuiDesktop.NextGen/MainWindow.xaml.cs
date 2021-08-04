@@ -87,7 +87,23 @@ namespace HuiDesktop.NextGen
                         Environment.Exit(1);
                     }
                 }
+                else if (operation is HuiDesktopProtocolHelper.AutoRunRequest)
+                {
+                    AppConfig.Load();
+                    string autoRunSandboxName = AppConfig.Instance.AutoRunSandboxName;
+                    var pos = autoRunSandboxName.IndexOf('\\');
+                    if (pos != -1)
+                    {
+                        Asset.SandboxManager.LoadSandboxes();
+                        if (Asset.SandboxManager.Sandboxes.FirstOrDefault(x => x.Name == autoRunSandboxName.Substring(0, pos)) is Asset.Sandbox s)
+                        {
+                            s.LaunchWpf(autoRunSandboxName.Substring(pos + 1));
+                        }
+                    }
+                    Close();
+                }
             }
+            Asset.SandboxManager.LoadSandboxes();
             LoadSandboxes();
             if (AppConfig.Instance.AutoCheckUpdate)
             {
@@ -130,12 +146,22 @@ namespace HuiDesktop.NextGen
             }
         }
 
+        private bool setAutoRun = false;
+
         private void LoadSandboxes()
         {
             SandboxWaterfallViewer.Children.Clear();
             foreach (var i in Asset.SandboxManager.Sandboxes)
             {
-                SandboxWaterfallViewer.Children.Add(new SandboxPreview(i, LoadSandboxes));
+                SandboxWaterfallViewer.Children.Add(new SandboxPreview(i, LoadSandboxes, (s) =>
+                {
+                    if (setAutoRun)
+                    {
+                        AppConfig.Load();
+                        AppConfig.Instance.AutoRunSandboxName = i.Name + '\\' + s;
+                        AppConfig.Instance.Save();
+                    }
+                }));
             }
         }
 
@@ -207,6 +233,12 @@ namespace HuiDesktop.NextGen
                 Asset.SandboxManager.LoadSandboxes();
                 LoadSandboxes();
             }
+        }
+
+        private void AutoRunButtonClicked(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("本次会话启动的启动配置将作为自启动项目\r\n可以在首选项处关闭自启");
+            setAutoRun = true;
         }
     }
 }

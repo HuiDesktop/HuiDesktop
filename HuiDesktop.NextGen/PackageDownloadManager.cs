@@ -37,9 +37,15 @@ namespace HuiDesktop.NextGen
                 this.recommendation = recommendation;
             }
         }
+        
+        public class AutoRunRequest { }
 
         static public object CheckType(string[] args)
         {
+            if (args.Length == 2 && args[1] == "--autorun")
+            {
+                return new AutoRunRequest();
+            }
             if (args.Length < 3 || args[1] != "--hdt-url")
             {
                 return null;

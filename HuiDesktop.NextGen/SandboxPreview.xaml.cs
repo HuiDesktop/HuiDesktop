@@ -22,12 +22,14 @@ namespace HuiDesktop.NextGen
     {
         private readonly Asset.Sandbox sandbox;
         private readonly Action reloadRequest;
+        private readonly Action<string> onStart;
 
-        public SandboxPreview(Asset.Sandbox sandbox, Action reloadRequest)
+        public SandboxPreview(Asset.Sandbox sandbox, Action reloadRequest, Action<string> OnStart)
         {
             InitializeComponent();
             this.sandbox = sandbox;
             this.reloadRequest = reloadRequest;
+            onStart = OnStart;
             SandboxName.Text = $"{sandbox.Name}";
             if (sandbox.CheckDependencies() != Guid.Empty)
             {
@@ -62,8 +64,7 @@ namespace HuiDesktop.NextGen
 
         private void Wpf(Asset.ModuleLaunchInfo startInfo)
         {
-            var win = new BasicWindow(new Asset.HuiDesktopRequestHandler(sandbox), startInfo.Url, AppConfig.Instance.ForceWebGL);
-            win.Show();
+            sandbox.LaunchWpf(startInfo.Url);
             Application.Current.MainWindow.Close();
         }
 
@@ -88,6 +89,7 @@ namespace HuiDesktop.NextGen
             {
                 if (StartInfoComboBox.SelectedIndex < sandbox.GetLaunchInfos().Count())
                 {
+                    onStart(f.Url);
                     Wpf(f);
                 }
                 else
