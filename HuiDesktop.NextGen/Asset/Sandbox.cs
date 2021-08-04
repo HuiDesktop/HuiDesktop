@@ -77,12 +77,14 @@ namespace HuiDesktop.NextGen.Asset
             return new Sandbox(directory, Path.GetFileName(directory.TrimEnd('/', '\\')), gs.ToArray());
         }
 
-        public static void Create(string name, string baseDirectory = null)
+        public static string Create(string name, string baseDirectory = null)
         {
             if (baseDirectory == null) baseDirectory = FileSystemManager.NextGenSandboxPath;
-            Directory.CreateDirectory(Path.Combine(baseDirectory, name));
+            var path = Path.Combine(baseDirectory, name);
+            Directory.CreateDirectory(path);
             Directory.CreateDirectory(Path.Combine(baseDirectory, name, "Root"));
             File.WriteAllText(Path.Combine(baseDirectory, name, "includes.txt"), "");
+            return path;
         }
 
         /// <summary>

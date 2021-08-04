@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace HuiDesktop.NextGen
 {
@@ -39,6 +40,51 @@ namespace HuiDesktop.NextGen
                     if (win.ShowDialog() == true)
                     {
                         Asset.ModuleManager.LoadModules();
+                    }
+                }
+                else if (operation is HuiDesktopProtocolHelper.CreateSandboxRequest createSandboxRequest)
+                {
+                    var b = new StringBuilder("某个链接唤起了HuiDesktop并请求创建沙盒，且将在沙盒中写入以下文件：\r\n");
+                    foreach (var i in createSandboxRequest.files)
+                    {
+                        b.AppendLine(i.Item1);
+                    }
+                    b.AppendLine("调用方提示：");
+                    b.AppendLine(createSandboxRequest.recommendation);
+                    b.Append("需要自己在创建沙盒的界面选择加入沙盒的模块，您应该了解了做法。\r\n是否打开沙盒创建界面？");
+                    if (MessageBox.Show(b.ToString(), "提示", MessageBoxButton.YesNo, MessageBoxImage.Asterisk) == MessageBoxResult.Yes)
+                    {
+                        var win = new CreateSandboxDialog(createSandboxRequest.sandboxName);
+                        if (win.ShowDialog() == true)
+                        {
+                            var path = Asset.Sandbox.Create(win.SandboxName) + "\\Root\\";
+                            foreach (var i in createSandboxRequest.files)
+                            {
+                                string dest = Path.GetFullPath(Path.Combine(path, i.Item1));
+                                if (dest.StartsWith(path))
+                                {
+                                    if (i.Item2 is string s)
+                                    {
+                                        File.WriteAllText(dest, s);
+                                    }
+                                    else if (i.Item2 is byte[] bs)
+                                    {
+                                        File.WriteAllBytes(dest, bs);
+                                    }
+                                }
+                            }
+                            Asset.SandboxManager.LoadSandboxes();
+                            var sandbox = Asset.SandboxManager.Sandboxes.FirstOrDefault(x => x.Name == win.SandboxName);
+                            if (sandbox != default(Asset.Sandbox))
+                            {
+                                new SandboxManageWindow(sandbox).ShowDialog();
+                                Asset.SandboxManager.LoadSandboxes();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Environment.Exit(1);
                     }
                 }
             }
