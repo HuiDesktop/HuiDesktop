@@ -33,7 +33,19 @@ namespace HuiDesktop.NextGen
         private bool IsOk()
         {
             var content = SandboxNameTextBox.Text;
-            return !(string.IsNullOrEmpty(content) || Directory.Exists(Path.Combine(FileSystemManager.NextGenSandboxPath, content)));
+            var invalid = Path.GetInvalidFileNameChars();
+            foreach (var i in content)
+            {
+                if (invalid.Contains(i))
+                {
+                    return false;
+                }
+            }
+            if (string.IsNullOrEmpty(content) ||Directory.Exists(Path.Combine(FileSystemManager.NextGenSandboxPath, content)))
+            {
+                return false;
+            }
+            return true;
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
