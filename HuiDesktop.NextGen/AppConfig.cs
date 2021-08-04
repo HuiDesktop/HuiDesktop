@@ -44,5 +44,19 @@ namespace HuiDesktop.NextGen
                 key.SetValue("HuiDesktop.NextGen", System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName + " --autorun");
             }
         }
+
+        public static void BindScheme()
+        {
+            Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\Classes\hdt", false);
+            using (var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Classes\hdt", true))
+            {
+                key.SetValue("", "URL:HuiDesktop Protocol");
+                key.SetValue("URL Protocol", "");
+            }
+            using (var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Classes\hdt\Shell\Open\Command", true))
+            {
+                key.SetValue("", $"\"{typeof(AppConfig).Assembly.Location}\" --hdt-url %1");
+            }
+        }
     }
 }

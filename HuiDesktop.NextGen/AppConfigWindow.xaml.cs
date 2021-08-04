@@ -62,5 +62,15 @@ namespace HuiDesktop.NextGen
                 CheckUpdateButton.IsEnabled = true;
             }
         }
+
+        private void BindSchemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppConfig.BindScheme();
+        }
+
+        private void UnbindSchemeButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
