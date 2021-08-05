@@ -94,7 +94,6 @@
     </Compile>
     <Compile Include="ModelBase.cs" />
     <Compile Include="PackageDownloadManager.cs" />
-    <Compile Include="SandboxManager.cs" />
     <Compile Include="SandboxPreview.xaml.cs">
       <DependentUpon>SandboxPreview.xaml</DependentUpon>
     </Compile>
@@ -142,7 +141,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModuleManager.cs" />
     <Compile Include="ModuleManagerWindow.xaml.cs">
       <DependentUpon>ModuleManagerWindow.xaml</DependentUpon>
     </Compile>

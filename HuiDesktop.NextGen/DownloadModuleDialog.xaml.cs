@@ -23,7 +23,6 @@ namespace HuiDesktop.NextGen
     public partial class DownloadModuleDialog : Window
     {
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-        Exception err;
 
         public DownloadModuleDialog(string source, string name)
         {
