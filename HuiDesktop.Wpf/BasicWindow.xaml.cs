@@ -122,8 +122,8 @@ namespace HuiDesktop
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             notifyIcon.Visible = false;
-            Cef.Shutdown();
-            Environment.Exit(0);
+            //Cef.Shutdown(); https://github.com/cefsharp/CefSharp/issues/820
+            //Environment.Exit(0);
         }
     }
 
