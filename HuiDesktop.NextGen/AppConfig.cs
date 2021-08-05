@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace HuiDesktop.NextGen
 {
@@ -13,9 +14,9 @@ namespace HuiDesktop.NextGen
         public static AppConfig Instance { get; private set; }
 
         public string AutoRunSandboxName { get; set; } = "";
-        public bool AutoCheckUpdate { get; set; }
+        public bool AutoCheckUpdate { get; set; } = false;
         public bool ForceWebGL { get; set; } = true;
-        public bool JoinSharePlan { get; set; }
+        public bool JoinSharePlan { get; set; } = false;
 
         public static void Load()
         {
@@ -57,6 +58,13 @@ namespace HuiDesktop.NextGen
             {
                 key.SetValue("", $"\"{typeof(AppConfig).Assembly.Location}\" --hdt-url %1");
             }
+            MessageBox.Show("OK");
+        }
+
+        internal static void UnbindScheme()
+        {
+            Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\Classes\hdt", false);
+            MessageBox.Show("OK");
         }
     }
 }

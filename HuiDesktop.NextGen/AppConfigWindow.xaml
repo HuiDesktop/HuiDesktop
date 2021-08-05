@@ -35,7 +35,7 @@
         <Label Grid.Row="4" Content="请搜索‘Chromium显卡黑名单’" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2"/>
         <Label Grid.Row="5" Content="加入用户体验改善计划：" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <CheckBox IsChecked="{Binding Path=JoinSharePlan}" x:Name="CheckUpdateOnStartup_Copy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center"/>
-        <Button Content="查看日志上传记录" HorizontalAlignment="Left" VerticalAlignment="Center" Width="352" Grid.Row="5" Grid.Column="2" Margin="0,2"/>
+        <Button Content="查看日志上传记录" HorizontalAlignment="Left" VerticalAlignment="Center" Width="352" Grid.Row="5" Grid.Column="2" Margin="0,2" Click="OpenSharePlanLog"/>
         <Label Grid.Row="6" Content="手动检查更新：" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button x:Name="CheckUpdateButton" Content="检查更新" HorizontalAlignment="Left" VerticalAlignment="Center" Width="240" Grid.Row="6" Grid.Column="1" Margin="0,2" Click="CheckUpdateButtonClicked"/>
         <Button FontFamily="{StaticResource FontAwesome}" Content="&#xF00C;" FontSize="24" HorizontalAlignment="Right" Width="40" Click="SaveButtonClicked" Grid.Column="2"/>

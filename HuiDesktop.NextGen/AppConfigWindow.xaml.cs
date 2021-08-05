@@ -55,7 +55,7 @@ namespace HuiDesktop.NextGen
             }
             catch
             {
-                
+
             }
             finally
             {
@@ -70,7 +70,12 @@ namespace HuiDesktop.NextGen
 
         private void UnbindSchemeButton_Click(object sender, RoutedEventArgs e)
         {
+            AppConfig.UnbindScheme();
+        }
 
+        private void OpenSharePlanLog(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("explorer.exe", FileSystemManager.SharePlanLogPath);
         }
     }
 }

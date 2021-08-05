@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:HuiDesktop.NextGen"
              mc:Ignorable="d" 
              d:DesignHeight="160" d:DesignWidth="160">
-    <Grid x:Name="MainGrid" Width="150" Background="#FFEEEEEE" MouseEnter="Grid_MouseEnter">
+    <Grid x:Name="MainGrid" Width="150" Background="#FFEEEEEE" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
         <TextBlock x:Name="SandboxName" Margin="10,10,10,0" TextWrapping="Wrap" Text="一二三四五，上山打老虎， 老虎打不到，老猫不发威" VerticalAlignment="Top" FontSize="16" />
         <pu:Badge Visibility="Hidden" x:Name="FailedToLoadBadge" HorizontalAlignment="Right" Margin="0,0,10,10" Background="#FF0000" RenderTransformOrigin="0.6,2.8" Height="20" VerticalAlignment="Bottom"/>
         <ComboBox x:Name="StartInfoComboBox" Margin="10,0,10,10" SelectionChanged="StartInfoComboBox_SelectionChanged" Height="20" VerticalAlignment="Bottom"/>
