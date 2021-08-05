@@ -46,7 +46,7 @@ namespace HuiDesktop.NextGen
                 Dispatcher.Invoke(() => { DialogResult = false; });
                 return;
             }
-            HuiDesktopProtocolHelper.UnzipTo(tmp, Path.Combine(FileSystemManager.NextGenModulePath, NameTextBox.Text));
+            HuiDesktopProtocolHelper.UnzipTo(tmp, Path.Combine(FileSystemManager.ModulePath, NameTextBox.Text));
             Dispatcher.Invoke(() => { DialogResult = true; });
         }
 
@@ -54,7 +54,7 @@ namespace HuiDesktop.NextGen
         {
             if (DownloadButton != null)
             {
-                if (NameTextBox.Text.Intersect(Path.GetInvalidFileNameChars()).Any() || Directory.Exists(Path.Combine(FileSystemManager.NextGenModulePath, NameTextBox.Text)))
+                if (NameTextBox.Text.Intersect(Path.GetInvalidFileNameChars()).Any() || Directory.Exists(Path.Combine(FileSystemManager.ModulePath, NameTextBox.Text)))
                 {
                     DownloadButton.IsEnabled = false;
 

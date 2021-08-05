@@ -32,7 +32,7 @@ namespace HuiDesktop.NextGen.Asset
 
         public static void LoadModules()
         {
-            LoadModulesFromDirectory(FileSystemManager.NextGenModulePath);
+            LoadModulesFromDirectory(FileSystemManager.ModulePath);
         }
 
         public static Module GetModule(Guid id)

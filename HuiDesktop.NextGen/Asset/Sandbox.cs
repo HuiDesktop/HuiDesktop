@@ -79,7 +79,7 @@ namespace HuiDesktop.NextGen.Asset
 
         public static string Create(string name, string baseDirectory = null)
         {
-            if (baseDirectory == null) baseDirectory = FileSystemManager.NextGenSandboxPath;
+            if (baseDirectory == null) baseDirectory = FileSystemManager.SandboxPath;
             var path = Path.Combine(baseDirectory, name);
             Directory.CreateDirectory(path);
             Directory.CreateDirectory(Path.Combine(baseDirectory, name, "Root"));

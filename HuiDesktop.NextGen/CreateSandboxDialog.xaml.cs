@@ -41,7 +41,7 @@ namespace HuiDesktop.NextGen
                     return false;
                 }
             }
-            if (string.IsNullOrEmpty(content) ||Directory.Exists(Path.Combine(FileSystemManager.NextGenSandboxPath, content)))
+            if (string.IsNullOrEmpty(content) ||Directory.Exists(Path.Combine(FileSystemManager.SandboxPath, content)))
             {
                 return false;
             }

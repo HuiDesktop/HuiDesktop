@@ -32,7 +32,7 @@ namespace HuiDesktop.NextGen.Asset
 
         public static void LoadSandboxes()
         {
-            LoadSandboxesFromDirectory(FileSystemManager.NextGenSandboxPath);
+            LoadSandboxesFromDirectory(FileSystemManager.SandboxPath);
         }
     }
 }
