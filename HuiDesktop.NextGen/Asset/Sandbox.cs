@@ -123,6 +123,10 @@ namespace HuiDesktop.NextGen.Asset
 
         internal void LaunchWpf(string url)
         {
+            if (AppConfig.Instance.JoinSharePlan)
+            {
+                _ = SharePlanService.UploadAtLaunch(Dependencies);
+            }
             var win = new BasicWindow(new HuiDesktopRequestHandler(this), url, AppConfig.Instance.ForceWebGL);
             win.Show();
         }

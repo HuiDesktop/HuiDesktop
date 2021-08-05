@@ -49,7 +49,7 @@
             <Button x:Name="BindSchemeButton" Content="绑定" VerticalAlignment="Center" Margin="0,2,10,2" Click="BindSchemeButton_Click"/>
             <Button x:Name="UnbindSchemeButton" Content="解绑" VerticalAlignment="Center" Margin="10,2,0,2" Grid.Column="1" Click="UnbindSchemeButton_Click"/>
         </Grid>
-        <Label Content="关于’用户体验改善计划‘：&#xD;&#xA;现阶段‘用户体验改善计划’会收集：&#xD;&#xA;1. 每次启动时的软件版本号&#xD;&#xA;2. 每次启动时的软硬件信息&#xD;&#xA;    现包含Windows版本，CPU、GPU型号&#xD;&#xA;3. 每次启动沙盒后沙盒包含模块的GUID" Grid.Column="1" Grid.Row="8" VerticalAlignment="Top" Height="185"/>
+        <Label Content="关于'用户体验改善计划'：&#xA;现阶段'用户体验改善计划'会收集：&#xA;1. 每次启动时的软件版本号&#xA;2. 每次启动时的软硬件信息&#xA;    现包含Windows版本&#xD;&#xA;    CPU、GPU型号&#xD;&#xA;    内存大小、启动时剩余内存&#xA;3. 每次启动沙盒后沙盒包含模块的GUID" Grid.Column="1" Grid.Row="8" VerticalAlignment="Top" Height="185"/>
         <Label Content="Source code: under MPL v2" Grid.Column="2" Grid.Row="8" VerticalAlignment="Top" HorizontalAlignment="Left" Width="352"/>
         <Label Content="All 3rd party packages are included using NuGet." Grid.Column="2" HorizontalAlignment="Left" Margin="0,25,0,0" Grid.Row="8" VerticalAlignment="Top" Width="352"/>
         <TextBox x:Name="___无名称_" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="5,50,0,0" Grid.Row="8" TextWrapping="Wrap" Text="Detail: https://github.com/HuiDesktop/HuiDesktop" VerticalAlignment="Top" Width="347" FontSize="12" IsReadOnly="True" BorderThickness="0,0,0,1"/>

@@ -24,7 +24,7 @@ namespace HuiDesktop.NextGen
                 Stream stream = _assembly.GetManifestResourceStream(aname + ".GitCommitId");
                 StreamReader reader = new StreamReader(stream);
                 string str = reader.ReadToEnd();
-                return str;
+                return str.Trim();
             }
         }
 

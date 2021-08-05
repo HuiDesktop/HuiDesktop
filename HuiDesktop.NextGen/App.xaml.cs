@@ -23,11 +23,11 @@ namespace HuiDesktop.NextGen
             Asset.ModuleManager.LoadModulesFromDirectory(FileSystemManager.NextGenModulePath);
             Asset.SandboxManager.LoadSandboxesFromDirectory(FileSystemManager.NextGenSandboxPath);
 
-            Task.Run(async () =>
+            AppConfig.Load();
+            if (AppConfig.Instance.JoinSharePlan)
             {
-                var cli = new HttpClient();
-                await cli.GetAsync("https://desktop.huix.cc/api/stat/online?ver=" + UpdateService.Version + "&commit=" + UpdateService.GitCommitId);
-            });
+                _ = SharePlanService.UploadAtExe();
+            }
 
             base.OnStartup(e);
         }
