@@ -6,7 +6,7 @@
         xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
         xmlns:local="clr-namespace:HuiDesktop.NextGen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" AllowDrop="True" DragEnter="Window_DragEnter" Drop="Window_Drop">
+        Title="MainWindow" Height="450" Width="800" AllowDrop="True" DragEnter="Window_DragEnter" Drop="Window_Drop" Icon="GlobalIcon.png">
     <Grid>
         <Label Content="HuiDesktop" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="24"/>
         <Label Content="NextGen" HorizontalAlignment="Left" Margin="160,22,0,0" VerticalAlignment="Top"/>
@@ -16,7 +16,6 @@
         <pu:WaterfallViewer x:Name="SandboxWaterfallViewer" Margin="10,100,10,10" Groups="5" ChildrenShape="Square" BorderBrush="LightGray" BorderThickness="1"/>
         <Button Content="数据目录" HorizontalAlignment="Left" Margin="115,55,0,0" VerticalAlignment="Top" Width="100" Click="OpenUserDataFolderClicked"/>
         <Label x:Name="UpdateNotifyLabel" Content="自动检测更新被禁用" HorizontalAlignment="Left" Margin="637,22,0,0" VerticalAlignment="Top" Width="145"/>
-        <Label Content="内测版本，不代表最终品质。启动强制自动上传启动记录，仅记录IP与软件版本，不提供给第三方，谢谢支持！" HorizontalAlignment="Left" Margin="160,0,0,0" VerticalAlignment="Top" Width="622" Background="Red" Foreground="Yellow"/>
         <Button Content="前往网站下载新的模块" HorizontalAlignment="Left" Margin="220,55,0,0" VerticalAlignment="Top" Width="172" Click="Button_Click"/>
         <Button Content="新建沙盒" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="100" Click="CreateSandboxButtonClicked"/>
         <Button Content="设置自启" HorizontalAlignment="Left" Margin="472,55,0,0" VerticalAlignment="Top" Width="100" Click="AutoRunButtonClicked"/>

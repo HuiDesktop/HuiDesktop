@@ -50,6 +50,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>GlobalIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -211,6 +214,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GitCommitId" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GlobalIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GlobalIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="GlobalIconNotFilled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
