@@ -14,6 +14,7 @@ namespace HuiDesktop.NextGen
 
         public static string ModulePath { get; private set; }
         public static string SandboxPath { get; private set; }
+        public static string BrowserStoragePath { get; private set; }
 
         public static string SkipUpdatePath { get; private set; }
         public static string SharePlanLogPath { get; private set; }
@@ -25,10 +26,12 @@ namespace HuiDesktop.NextGen
             AppConfigPath= Path.Combine(BasePath, "config.json");
             ModulePath = Path.Combine(BasePath, "Modules");
             SandboxPath = Path.Combine(BasePath, "Sandboxes");
+            BrowserStoragePath = Path.Combine(BasePath, "BrowserStorage");
             SkipUpdatePath = Path.Combine(BasePath, "skipUpdate");
             SharePlanLogPath = Path.Combine(BasePath, "SharePlanLog");
             if (!Directory.Exists(ModulePath)) Directory.CreateDirectory(ModulePath);
             if (!Directory.Exists(SandboxPath)) Directory.CreateDirectory(SandboxPath);
+            if (!Directory.Exists(BrowserStoragePath)) Directory.CreateDirectory(BrowserStoragePath);
             if (!File.Exists(SkipUpdatePath)) File.WriteAllText(SkipUpdatePath, "");
             if (!Directory.Exists(SharePlanLogPath)) Directory.CreateDirectory(SharePlanLogPath);
             AppConfig.Load();

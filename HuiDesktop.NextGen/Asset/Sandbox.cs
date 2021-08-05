@@ -127,7 +127,7 @@ namespace HuiDesktop.NextGen.Asset
             {
                 _ = SharePlanService.UploadAtLaunch(Dependencies);
             }
-            var win = new BasicWindow(new HuiDesktopRequestHandler(this), url, AppConfig.Instance.ForceWebGL);
+            var win = new BasicWindow(new HuiDesktopRequestHandler(this), url, AppConfig.Instance.ForceWebGL, FileSystemManager.BrowserStoragePath);
             win.Show();
         }
     }

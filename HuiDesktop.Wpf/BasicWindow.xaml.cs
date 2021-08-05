@@ -27,22 +27,22 @@ namespace HuiDesktop
         private ShowDevToolsLifeSpanHandler showDevToolsLifeSpanHandler = new ShowDevToolsLifeSpanHandler();
         private NextGenJsApi api;
 
-        public BasicWindow(Package.StartupInfo info)
+        public BasicWindow(Package.StartupInfo info, string browserStoragePath)
         {
             var requestHandler = new RequestHandler();
             requestHandler.AddPackage(info.fromPackage);
             foreach (var i in info.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
-            Startup(requestHandler, info.url, GlobalSettings.DisableBlackList);
+            Startup(requestHandler, info.url, GlobalSettings.DisableBlackList, browserStoragePath);
         }
 
-        public BasicWindow(IRequestHandler requestHandler, string url, bool disableBlackList)
+        public BasicWindow(IRequestHandler requestHandler, string url, bool disableBlackList, string browserStoragePath)
         {
-            Startup(requestHandler, url, disableBlackList);
+            Startup(requestHandler, url, disableBlackList, browserStoragePath);
         }
 
-        public void Startup(IRequestHandler requestHandler, string url, bool disableBlackList)
+        public void Startup(IRequestHandler requestHandler, string url, bool disableBlackList, string browserStoragePath)
         {
-            CefInitialize.InitializeCefSharp(disableBlackList);
+            CefInitialize.InitializeCefSharp(disableBlackList, browserStoragePath);
             InitializeComponent();
 
             Top = 0;
@@ -151,14 +151,14 @@ namespace HuiDesktop
 
     static class CefInitialize
     {
-        public static void InitializeCefSharp(bool disableBlackList)
+        public static void InitializeCefSharp(bool disableBlackList, string browserStoragePath)
         {
             var settings = new CefSettings
             {
                 BrowserSubprocessPath = System.IO.Path.Combine(ApplicationInfo.CefSharpFolder, "CefSharp.BrowserSubprocess.exe"),
-                CachePath = ApplicationInfo.RelativePath("BrowserStorage", "Cache"),
-                UserDataPath = ApplicationInfo.RelativePath("BrowserStorage", "UserData"),
-                LogFile = ApplicationInfo.RelativePath("Debug.log"),
+                CachePath = System.IO.Path.Combine(browserStoragePath, "Cache"),
+                UserDataPath = System.IO.Path.Combine(browserStoragePath, "UserData"),
+                LogFile = System.IO.Path.Combine(browserStoragePath, "Debug.log"),
                 AcceptLanguageList = "zh-CN,en-US,en"
             };
             if (disableBlackList)
