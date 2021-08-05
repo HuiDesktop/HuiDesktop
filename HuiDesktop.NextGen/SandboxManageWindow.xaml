@@ -46,5 +46,6 @@
         <TextBox Text="{Binding SelectedModule, Converter={StaticResource ModuleDetailConverter}, Mode=OneWay}" Margin="10,40,10,10" Grid.Row="3" VerticalContentAlignment="Top"/>
         <Label Content="建议列表：" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="4" Height="25" VerticalAlignment="Top"/>
         <ListBox ItemsSource="{Binding Modules, Converter={StaticResource SuggestionsConverter}, Mode=OneWay}" Margin="10,40,10,10" Grid.Row="4"/>
+        <Label Content="已选择模块      |      未选择模块" Margin="298,10,298,0" Grid.Row="2" Height="24" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
     </Grid>
 </Window>
