@@ -1,0 +1,64 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HuiDesktop.NextGen"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" d:DataContext="{d:DesignInstance Type=local:ModuleManagerWindowModel}" x:Class="HuiDesktop.NextGen.ModuleManagerWindow"
+        mc:Ignorable="d"
+        Title="ModuleManagerWindow" Height="450" Width="800" WindowStyle="ToolWindow" ResizeMode="NoResize">
+    <Window.Resources>
+        <local:ShowingTypeRadioBoxConverter x:Key="ShowingTypeRadioBoxConverter"></local:ShowingTypeRadioBoxConverter>
+        <local:PropertyValueStringConverter x:Key="PropertyValueStringConverter"></local:PropertyValueStringConverter>
+        <local:NullVisibleConverter x:Key="NullVisibleConverter"></local:NullVisibleConverter>
+        <local:DetailConverter x:Key="DetailConverter"></local:DetailConverter>
+    </Window.Resources>
+    <Grid>
+        <Button Visibility="Hidden" Content="导入模块" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="243"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Content="管理模块" HorizontalAlignment="Left" Margin="10,10,0,10" FontSize="24"/>
+            <ListBox x:Name="ModuleListBox" Margin="10,0,10,10" SelectionChanged="ListBox_SelectionChanged" Grid.Row="1" SelectedItem="{Binding Module}"/>
+            <Button Content="&#xF021;" FontFamily="{StaticResource FontAwesome}" Margin="0,10,10,0" Click="RefreshListButtonClicked" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Width="40"/>
+            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="72"/>
+                    <RowDefinition Height="26"/>
+                    <RowDefinition Height="46"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="80"/>
+                </Grid.RowDefinitions>
+                <Label Content="模块名称：" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="25" Width="70"/>
+                <Label Content="GUID：" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Height="25" Width="53"/>
+                <TextBox Height="23" Margin="85,10,10,0" TextWrapping="Wrap" Text="{Binding Module, Converter={StaticResource PropertyValueStringConverter}, Mode=OneWay}" VerticalAlignment="Top" BorderThickness="0,0,0,1" IsReadOnly="True"/>
+                <TextBox Height="23" Margin="85,41,10,0" TextWrapping="Wrap" Text="{Binding Module.Id, Mode=OneWay}" VerticalAlignment="Top" BorderThickness="0,0,0,1" IsReadOnly="True" FontFamily="Consolas"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button IsEnabled="False" Content="删除模块" Margin="10,0"/>
+                    <Button Content="打开文件夹" Margin="10,0" Click="OpenFolderButtonClicked" Grid.Column="1"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <RadioButton Content="启动选项" IsChecked="{Binding ShowingType,Converter={StaticResource ShowingTypeRadioBoxConverter},ConverterParameter=0}" HorizontalAlignment="Left" Margin="80,13,0,11" Checked="RadioButton_Checked"/>
+                    <RadioButton Content="配置选项" IsChecked="{Binding ShowingType,Converter={StaticResource ShowingTypeRadioBoxConverter},ConverterParameter=1}" HorizontalAlignment="Left" Margin="162,15,0,13" Checked="RadioButton_Checked"/>
+                    <RadioButton Content="建议配套" IsChecked="{Binding ShowingType,Converter={StaticResource ShowingTypeRadioBoxConverter},ConverterParameter=2}" HorizontalAlignment="Left" Margin="244,15,0,13" Checked="RadioButton_Checked"/>
+                    <Label Content="查看内容：" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Height="25" Width="70" RenderTransformOrigin="0.566,0.869"/>
+                </Grid>
+                <ListBox x:Name="DetailListBox" Margin="10,0" Grid.Row="3" ItemsSource="{Binding DetailList, Mode=OneWay}" SelectedItem="{Binding Detail,Mode=OneWayToSource}"/>
+                <TextBox Margin="10" Text="{Binding Detail,Converter={StaticResource DetailConverter}}" Grid.Row="4" BorderBrush="{x:Null}" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" IsReadOnly="True" VerticalContentAlignment="Top"/>
+            </Grid>
+        </Grid>
+        <Grid Visibility="{Binding Module, Mode=OneWay, Converter={StaticResource NullVisibleConverter}}" x:Name="MaskGrid" HorizontalAlignment="Left" Height="400" Margin="315,10,0,0" VerticalAlignment="Top" Width="469" Background="#B2FFFFFF">
+            <TextBlock Text="请先选择一个模块" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

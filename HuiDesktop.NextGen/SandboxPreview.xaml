@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="HuiDesktop.NextGen.SandboxPreview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
+             xmlns:local="clr-namespace:HuiDesktop.NextGen"
+             mc:Ignorable="d" 
+             d:DesignHeight="160" d:DesignWidth="160">
+    <Grid x:Name="MainGrid" Width="150" Background="#FFEEEEEE" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+        <TextBlock x:Name="SandboxName" Margin="10,10,10,0" TextWrapping="Wrap" Text="一二三四五，上山打老虎， 老虎打不到，老猫不发威" VerticalAlignment="Top" FontSize="16" />
+        <pu:Badge Visibility="Hidden" x:Name="FailedToLoadBadge" HorizontalAlignment="Right" Margin="0,0,10,10" Background="#FF0000" RenderTransformOrigin="0.6,2.8" Height="20" VerticalAlignment="Bottom"/>
+        <ComboBox x:Name="StartInfoComboBox" Margin="10,0,10,10" SelectionChanged="StartInfoComboBox_SelectionChanged" Height="20" VerticalAlignment="Bottom"/>
+    </Grid>
+</UserControl>

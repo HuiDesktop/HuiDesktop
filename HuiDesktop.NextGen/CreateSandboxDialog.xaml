@@ -1,0 +1,14 @@
+﻿<Window x:Class="HuiDesktop.NextGen.CreateSandboxDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HuiDesktop.NextGen"
+        mc:Ignorable="d"
+        Title="CreateSandboxDialog" Height="69.812" Width="400" ResizeMode="NoResize" WindowStyle="ToolWindow">
+    <Grid>
+        <Button x:Name="OkButton" IsEnabled="False" FontFamily="{StaticResource FontAwesome}" Content="&#xF00C;" Margin="0,10,10,0" FontSize="16" HorizontalAlignment="Right" Width="24" Height="24" VerticalAlignment="Top" Click="OkButton_Click"/>
+        <TextBox x:Name="SandboxNameTextBox" Margin="85,10,39,0" TextWrapping="Wrap" Text="" TextChanged="TextBox_TextChanged" Height="24" VerticalAlignment="Top"/>
+        <Label Content="应用名称：" HorizontalAlignment="Left" Margin="10,9,0,0" Height="23" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
