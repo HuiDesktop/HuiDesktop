@@ -221,7 +221,7 @@ namespace HuiDesktop.NextGen
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start(UpdateService.ViewUpdatePage);
+            Process.Start("https://desktop.huix.cc");
         }
 
         private void CreateSandboxButtonClicked(object sender, RoutedEventArgs e)
