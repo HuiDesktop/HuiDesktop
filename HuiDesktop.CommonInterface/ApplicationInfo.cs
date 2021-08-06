@@ -12,7 +12,11 @@ namespace HuiDesktop
     {
         public const string VersionName = "v1.2 CT#3";
         public static string BaseFolder => AppDomain.CurrentDomain.SetupInformation.ApplicationBase;
+#if MULTIARCH
         public static string CefSharpFolder => Path.Combine(BaseFolder, Environment.Is64BitProcess ? "x64" : "x86");
+#else
+        public static string CefSharpFolder => BaseFolder;
+#endif
 
         public static string RelativePath(params string[] paths)
         {
