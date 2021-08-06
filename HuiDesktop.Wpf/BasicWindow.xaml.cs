@@ -159,7 +159,7 @@ namespace HuiDesktop
             {
 
 #if MULTIARCH
-                BrowserSubprocessPath = System.IO.Path.Combine(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, Environment.Is64BitProcess ? "x64" : "x86"), "CefSharp.BrowserSubprocess.exe"),
+                BrowserSubprocessPath = System.IO.Path.Combine(System.IO.Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, Environment.Is64BitProcess ? "x64" : "x86"), "CefSharp.BrowserSubprocess.exe"),
 #else
                 BrowserSubprocessPath = System.IO.Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "CefSharp.BrowserSubprocess.exe"),
 #endif
