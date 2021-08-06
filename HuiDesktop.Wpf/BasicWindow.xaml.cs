@@ -29,20 +29,20 @@ namespace HuiDesktop
         private ShowDevToolsLifeSpanHandler showDevToolsLifeSpanHandler = new ShowDevToolsLifeSpanHandler();
         private NextGenJsApi api;
 
-        public BasicWindow(Package.StartupInfo info, string browserStoragePath)
+        public BasicWindow(Package.StartupInfo info, string browserStoragePath, bool play)
         {
             var requestHandler = new RequestHandler();
             requestHandler.AddPackage(info.fromPackage);
             foreach (var i in info.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
-            Startup(requestHandler, info.url, GlobalSettings.DisableBlackList, browserStoragePath);
+            Startup(requestHandler, info.url, GlobalSettings.DisableBlackList, browserStoragePath, play);
         }
 
-        public BasicWindow(IRequestHandler requestHandler, string url, bool disableBlackList, string browserStoragePath)
+        public BasicWindow(IRequestHandler requestHandler, string url, bool disableBlackList, string browserStoragePath, bool play)
         {
-            Startup(requestHandler, url, disableBlackList, browserStoragePath);
+            Startup(requestHandler, url, disableBlackList, browserStoragePath, play);
         }
 
-        public void Startup(IRequestHandler requestHandler, string url, bool disableBlackList, string browserStoragePath)
+        public void Startup(IRequestHandler requestHandler, string url, bool disableBlackList, string browserStoragePath, bool play)
         {
             CefInitialize.InitializeCefSharp(disableBlackList, browserStoragePath);
             InitializeComponent();
@@ -70,13 +70,21 @@ namespace HuiDesktop
             api = new NextGenJsApi(this);
             browser.RequestHandler = requestHandler;
             browser.MenuHandler = new NullMenuHandler();
+
+            PlayApi playApi = null;
+            if (play) playApi = new PlayApi();
+
+            browser.JavascriptObjectRepository.NameConverter = new CefSharp.JavascriptBinding.CamelCaseJavascriptNameConverter();
             browser.JavascriptObjectRepository.ResolveObject += (sender, e) =>
             {
                 var repo = e.ObjectRepository;
                 if (e.ObjectName == "_huiDesktopIpcBridge")
                 {
-                    repo.NameConverter = new CefSharp.JavascriptBinding.CamelCaseJavascriptNameConverter();
                     repo.Register("_huiDesktopIpcBridge", api, isAsync: true);
+                }
+                else if (play && e.ObjectName == "_huiDesktopKeyboardSpacePlay")
+                {
+                    repo.Register("_huiDesktopKeyboardSpacePlay", playApi, isAsync: true);
                 }
             };
 
@@ -176,42 +184,35 @@ namespace HuiDesktop
     class PlayApi
     {
         KeyboardHook hook;
-        string name = null;
-        ChromiumWebBrowser browser;
+        IJavascriptCallback callback;
 
-        public static string CallWithTryCatch(string name)
-            => $"try{{{name}}}catch(e){{}}";
-
-        public PlayApi(ChromiumWebBrowser browser)
+        public PlayApi()
         {
-            this.browser = browser;
             hook = new KeyboardHook();
             hook.OnKeyDownEvent += x =>
             {
-                Debug.WriteLine(x, "key down");
-                if (name != null)
+                if (callback != null && callback.CanExecute)
                 {
-                    browser.GetBrowser().MainFrame.ExecuteJavaScriptAsync(CallWithTryCatch($"{name}(0, {x})"));
+                    callback.ExecuteAsync(0, x);
                 }
             };
             hook.OnKeyUpEvent += x =>
             {
-                Debug.WriteLine(x, "key up");
-                if (name != null)
+                if (callback != null && callback.CanExecute)
                 {
-                    browser.GetBrowser().MainFrame.ExecuteJavaScriptAsync(CallWithTryCatch($"{name}(1, {x})"));
+                    callback.ExecuteAsync(1, x);
                 }
             };
             hook.SetHook();
         }
 
-        public void SetReceiver(string name)
+        public void Get(IJavascriptCallback callback)
         {
-            this.name = name;
+            this.callback = callback;
         }
     }
 
-    class JsApi
+    class NextGenJsApi
     {
         private IJavascriptCallback positionChangedCallback, settingCallback;
         private BasicWindow window;

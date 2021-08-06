@@ -8,6 +8,7 @@ namespace HuiDesktop.NextGen.Asset
     public class Sandbox
     {
         private readonly Guid[] dependencies;
+        private readonly Guid playGuid = new Guid("d59f3124-b602-4423-ae40-a8cb3fa0fd3d");
 
         public string BasePath { get; }
         public string Name { get; }
@@ -127,7 +128,7 @@ namespace HuiDesktop.NextGen.Asset
             {
                 _ = SharePlanService.UploadAtLaunch(Dependencies);
             }
-            var win = new BasicWindow(new HuiDesktopRequestHandler(this), url, AppConfig.Instance.ForceWebGL, FileSystemManager.BrowserStoragePath);
+            var win = new BasicWindow(new HuiDesktopRequestHandler(this), url, AppConfig.Instance.ForceWebGL, FileSystemManager.BrowserStoragePath, dependencies.Any(x => x == playGuid));
             win.Show();
         }
     }

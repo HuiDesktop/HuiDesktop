@@ -167,7 +167,7 @@ namespace HuiDesktop.NextGen.Asset
             public Guid Id { get; set; }
             [JsonConverter(typeof(ModuleName.JsonConverter))]
             public ModuleName Name { get; set; }
-            public string[] Featrues { get; set; }
+            public string[] Features { get; set; }
             public ModuleLaunchInfoJson[] Launch { get; set; }
             public ModuleLaunchInfoJson[] Setup { get; set; }
             public ModuleSuggestion[] Suggestions { get; set; }
@@ -178,7 +178,7 @@ namespace HuiDesktop.NextGen.Asset
             var s = JsonConvert.DeserializeObject<ModuleDeclareJson>(File.ReadAllText(Path.Combine(directory, "declare.json")));
             if (s is null) throw new ArgumentException("Failed to deserialize declare.json", nameof(directory));
             if (s.Id == Guid.Empty) throw new FormatException("Module's id should not be empty");
-            return new Module(directory, s.Id, s.Name, Path.GetFileName(directory.TrimEnd('/', '\\')), s.Featrues, s.Launch, s.Setup, s.Suggestions);
+            return new Module(directory, s.Id, s.Name, Path.GetFileName(directory.TrimEnd('/', '\\')), s.Features, s.Launch, s.Setup, s.Suggestions);
         }
     }
 }
