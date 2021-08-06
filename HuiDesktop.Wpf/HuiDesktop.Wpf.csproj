@@ -56,6 +56,8 @@
     <Compile Include="BasicWindow.xaml.cs">
       <DependentUpon>BasicWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Play\KeyboardHook.cs" />
+    <Compile Include="Play\Win32Api.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
