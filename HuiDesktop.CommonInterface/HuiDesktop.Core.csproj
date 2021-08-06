@@ -64,23 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationInfo.cs" />
-    <Compile Include="BrowserResourceManager.cs" />
-    <Compile Include="BinaryFileHelper.cs" />
     <Compile Include="CefStartupInitialize.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="GlobalSettings.cs" />
-    <Compile Include="IPackage.cs" />
-    <Compile Include="PackageManager.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ServiceConnection.cs" />
-    <Compile Include="StartupInfo.cs" />
-    <Compile Include="V3Package.cs" />
-    <Compile Include="V4Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,12 +79,6 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\GlobalIcon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\GlobalIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

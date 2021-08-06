@@ -123,11 +123,5 @@
   <ItemGroup>
     <None Include="Resources\GlobalIcon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HuiDesktop.CommonInterface\HuiDesktop.Core.csproj">
-      <Project>{6d5b86b4-dab4-4ddc-a025-03cddea5409a}</Project>
-      <Name>HuiDesktop.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

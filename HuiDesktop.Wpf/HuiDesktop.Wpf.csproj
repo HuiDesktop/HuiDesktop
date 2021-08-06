@@ -106,15 +106,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HuiDesktop.CommonInterface\HuiDesktop.Core.csproj">
-      <Project>{6d5b86b4-dab4-4ddc-a025-03cddea5409a}</Project>
-      <Name>HuiDesktop.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="CefSharp.Wpf">
       <Version>90.6.70</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GlobalIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

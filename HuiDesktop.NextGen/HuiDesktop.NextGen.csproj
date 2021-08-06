@@ -207,10 +207,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HuiDesktop.CommonInterface\HuiDesktop.Core.csproj">
-      <Project>{6d5b86b4-dab4-4ddc-a025-03cddea5409a}</Project>
-      <Name>HuiDesktop.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HuiDesktop.Wpf\HuiDesktop.Wpf.csproj">
       <Project>{e52c4750-d65d-4751-9c90-ed99b75647ab}</Project>
       <Name>HuiDesktop.Wpf</Name>

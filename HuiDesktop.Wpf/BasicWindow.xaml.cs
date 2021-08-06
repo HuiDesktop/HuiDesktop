@@ -29,14 +29,6 @@ namespace HuiDesktop
         private ShowDevToolsLifeSpanHandler showDevToolsLifeSpanHandler = new ShowDevToolsLifeSpanHandler();
         private NextGenJsApi api;
 
-        public BasicWindow(Package.StartupInfo info, string browserStoragePath, bool play)
-        {
-            var requestHandler = new RequestHandler();
-            requestHandler.AddPackage(info.fromPackage);
-            foreach (var i in info.dependencies) requestHandler.AddPackage(Package.PackageManager.packages[i]);
-            Startup(requestHandler, info.url, GlobalSettings.DisableBlackList, browserStoragePath, play);
-        }
-
         public BasicWindow(IRequestHandler requestHandler, string url, bool disableBlackList, string browserStoragePath, bool play)
         {
             Startup(requestHandler, url, disableBlackList, browserStoragePath, play);
@@ -53,7 +45,7 @@ namespace HuiDesktop
             Width = SystemParameters.WorkArea.Width;
 
             notifyIcon.Text = "HuiDesktop";
-            notifyIcon.Icon = Properties.Resources.GlobalIcon;
+            notifyIcon.Icon = Wpf.Properties.Resources.GlobalIcon;
             notifyIcon.Visible = true;
             notifyIcon.MouseClick += NotifyIcon_MouseClick;
             notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu();
@@ -165,7 +157,12 @@ namespace HuiDesktop
         {
             var settings = new CefSettings
             {
-                BrowserSubprocessPath = System.IO.Path.Combine(ApplicationInfo.CefSharpFolder, "CefSharp.BrowserSubprocess.exe"),
+
+#if MULTIARCH
+                BrowserSubprocessPath = System.IO.Path.Combine(Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, Environment.Is64BitProcess ? "x64" : "x86"), "CefSharp.BrowserSubprocess.exe"),
+#else
+                BrowserSubprocessPath = System.IO.Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "CefSharp.BrowserSubprocess.exe"),
+#endif
                 CachePath = System.IO.Path.Combine(browserStoragePath, "Cache"),
                 UserDataPath = System.IO.Path.Combine(browserStoragePath, "UserData"),
                 LogFile = System.IO.Path.Combine(browserStoragePath, "Debug.log"),

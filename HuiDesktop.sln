@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.DirectComposition", "HuiDesktop.DirectComposition\HuiDesktop.DirectComposition.csproj", "{D8EC10B2-5418-42F7-8FA3-BE62C7EA3BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.Core", "HuiDesktop.CommonInterface\HuiDesktop.Core.csproj", "{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.Wpf", "HuiDesktop.Wpf\HuiDesktop.Wpf.csproj", "{E52C4750-D65D-4751-9C90-ED99B75647AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiDesktop.NextGen", "HuiDesktop.NextGen\HuiDesktop.NextGen.csproj", "{DE473904-2DFD-41C9-BD25-9A72803C7F1E}"
@@ -27,14 +25,6 @@ Global
 		{D8EC10B2-5418-42F7-8FA3-BE62C7EA3BE3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8EC10B2-5418-42F7-8FA3-BE62C7EA3BE3}.Release|x64.ActiveCfg = Release|x64
 		{D8EC10B2-5418-42F7-8FA3-BE62C7EA3BE3}.Release|x64.Build.0 = Release|x64
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Debug|x64.ActiveCfg = Debug|x64
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Debug|x64.Build.0 = Debug|x64
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Release|x64.ActiveCfg = Release|x64
-		{6D5B86B4-DAB4-4DDC-A025-03CDDEA5409A}.Release|x64.Build.0 = Release|x64
 		{E52C4750-D65D-4751-9C90-ED99B75647AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E52C4750-D65D-4751-9C90-ED99B75647AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E52C4750-D65D-4751-9C90-ED99B75647AB}.Debug|x64.ActiveCfg = Debug|x64
