@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HuiDesktop.NextGen"
         mc:Ignorable="d"
-        Title="AppConfigWindow" Height="400" Width="800">
+        Title="AppConfigWindow" Height="400" Width="800" ResizeMode="NoResize">
     <Grid Margin="20,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -28,11 +28,11 @@
         <Label Grid.Row="1" Content="启动软件时检查更新：" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <CheckBox IsChecked="{Binding Path=AutoCheckUpdate}" x:Name="CheckUpdateOnStartup" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center"/>
         <Label Grid.Row="2" Content="自启动应用名称：" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox x:Name="AutoRunSandboxNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Path=AutoRunSandboxName}" VerticalAlignment="Center" Width="240"/>
+        <TextBox x:Name="AutoRunSandboxNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="24" Grid.Row="2" TextWrapping="NoWrap" Text="{Binding Path=AutoRunSandboxName}" VerticalAlignment="Center" Width="240"/>
         <Label Grid.Row="2" Content="留空以禁用自启动" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2"/>
         <Label Grid.Row="4" Content="强制启用WebGL：" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <CheckBox IsChecked="{Binding Path=ForceWebGL}" x:Name="CheckUpdateOnStartup_Copy" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center"/>
-        <Label Grid.Row="4" Content="请搜索‘Chromium显卡黑名单’" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2"/>
+        <Label Grid.Row="4" Content="请搜索'Chromium显卡黑名单'" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2"/>
         <Label Grid.Row="5" Content="加入用户体验改善计划：" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <CheckBox IsChecked="{Binding Path=JoinSharePlan}" x:Name="CheckUpdateOnStartup_Copy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center"/>
         <Button Content="查看日志上传记录" HorizontalAlignment="Left" VerticalAlignment="Center" Width="352" Grid.Row="5" Grid.Column="2" Margin="0,2" Click="OpenSharePlanLog"/>
@@ -49,11 +49,11 @@
             <Button x:Name="BindSchemeButton" Content="绑定" VerticalAlignment="Center" Margin="0,2,10,2" Click="BindSchemeButton_Click"/>
             <Button x:Name="UnbindSchemeButton" Content="解绑" VerticalAlignment="Center" Margin="10,2,0,2" Grid.Column="1" Click="UnbindSchemeButton_Click"/>
         </Grid>
-        <Label Content="关于'用户体验改善计划'：&#xA;现阶段'用户体验改善计划'会收集：&#xA;1. 每次启动时的软件版本号&#xA;2. 每次启动时的软硬件信息&#xA;    现包含Windows版本&#xD;&#xA;    CPU、GPU型号&#xD;&#xA;    内存大小、启动时剩余内存&#xA;3. 每次启动沙盒后沙盒包含模块的GUID" Grid.Column="1" Grid.Row="8" VerticalAlignment="Top" Height="185"/>
+        <Label Content="关于'用户体验改善计划'：&#xA;现阶段'用户体验改善计划'会收集：&#xA;1. 每次启动时的软件版本号&#xA;2. 每次启动时的软硬件信息&#xA;    现包含Windows版本&#xD;&#xA;    CPU、GPU型号&#xD;&#xA;    内存大小、启动时剩余内存&#xA;3. 每次启动沙盒后沙盒包含模块的GUID" Grid.Column="1" Grid.Row="8"/>
         <Label Content="Source code: under MPL v2" Grid.Column="2" Grid.Row="8" VerticalAlignment="Top" HorizontalAlignment="Left" Width="352"/>
         <Label Content="All 3rd party packages are included using NuGet." Grid.Column="2" HorizontalAlignment="Left" Margin="0,25,0,0" Grid.Row="8" VerticalAlignment="Top" Width="352"/>
         <TextBox x:Name="___无名称_" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="5,50,0,0" Grid.Row="8" TextWrapping="Wrap" Text="Detail: https://github.com/HuiDesktop/HuiDesktop" VerticalAlignment="Top" Width="347" FontSize="12" IsReadOnly="True" BorderThickness="0,0,0,1"/>
-        <Image Margin="0,0,255,10" Source="GlobalIconNotFilled.png" Stretch="Fill" HorizontalAlignment="Right" Width="97" Grid.Row="8" Height="97" VerticalAlignment="Bottom" Grid.Column="2"/>
+        <Image Margin="0,0,0,10" Source="GlobalIconNotFilled.png" Stretch="Fill" Grid.Row="8" Height="97" VerticalAlignment="Bottom" Grid.Column="2" HorizontalAlignment="Left" Width="97"/>
         <Label Content="本图标不包含于本开源项目中&#xD;&#xA;亦不适用于MPLv2许可证&#xD;&#xA;https://www.pixiv.net/artworks/80492184&#xD;&#xA;画师: Jecosine&#xD;&#xA;https://www.pixiv.net/users/29328513" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Top" Width="250" Margin="102,78,0,0" Height="97"/>
     </Grid>
 </Window>

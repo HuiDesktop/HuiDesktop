@@ -7,7 +7,7 @@
         xmlns:av="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:local="clr-namespace:HuiDesktop.NextGen"
         mc:Ignorable="d"
-        Title="CreateSandbox" Height="600" Width="800" WindowStyle="ToolWindow" d:DataContext="{d:DesignInstance Type=local:SandboxManageWindowModel}">
+        Title="CreateSandbox" Height="600" Width="800" WindowStyle="ToolWindow" d:DataContext="{d:DesignInstance Type=local:SandboxManageWindowModel}" MinWidth="800" MinHeight="600">
     <Window.Resources>
         <local:UnusedModulesConverter x:Key="UnusedModulesConverter"></local:UnusedModulesConverter>
         <local:SuggestionsConverter x:Key="SuggestionsConverter"></local:SuggestionsConverter>

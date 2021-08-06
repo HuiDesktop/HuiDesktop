@@ -167,6 +167,7 @@ namespace HuiDesktop
                 settings.CefCommandLineArgs.Add("ignore-gpu-blacklist", "1");
             }
             CefSharp.Cef.Initialize(settings);
+            Cef.EnableHighDPISupport();
         }
     }
 
